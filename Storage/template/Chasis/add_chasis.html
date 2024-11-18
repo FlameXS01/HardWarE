@@ -1,4 +1,6 @@
-{% extends 'Pc/list_pc.html' %}
+{% extends 'Chasis/list_chasis.html' %}
+
+
 
 {% block table %}
 <form action="" method="POST">
@@ -6,7 +8,7 @@
 
     <div class="portlet-body form">
         <form role="form">
-            {% for field in pc_form %}
+            {% for field in chasis_form %}
             <div class="mb-3">
               <label for="{{field.name}}" class="form-label">{{field.name}}</label>
               <input type="{{field.field.widget.input_type}}" 
@@ -22,9 +24,8 @@
             <div class="col-12 help-text">{{field.errors}}</div>
             
             {% endfor %}
-            <input type="submit" class="btn blue" style="margin: 10px" value="Guardar">
-
+            <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
 
         </form>
     </div>
-{%endblock%}
+{% endblock %}

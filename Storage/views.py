@@ -14,7 +14,7 @@ def index (request):
     #LISTAR PC  
 def list_pc(request):
     pc = Pc.objects.all()
-    return render(request,'Pc/list_pc.html',{"pc":pc})
+    return render(request,'Pc/list_pc.html',{"pcs":pc})
 
     #ADD PC
 def add_pc(request): 
@@ -55,8 +55,8 @@ def del_pc(request, id_pc):
             
     #LISTAR CHASIS  
 def list_chasis(request):
-    pc = Pc.objects.all()
-    return render(request,'Pc/list_pc.html',{"pc":pc})
+    chasis = Chasis.objects.all()
+    return render(request,'Pc/list_pc.html',{"chasis":chasis})
 
     #ADD CHASIS
 def add_chasis(request): 

@@ -1,4 +1,4 @@
-{% extends 'Pc/list_pc.html' %}
+{% extends 'Chasis/list_chasis.html' %}
 
 {% block table %}
 <form action="" method="POST">
@@ -6,7 +6,7 @@
 
     <div class="portlet-body form">
         <form role="form">
-            {% for field in pc_form %}
+            {% for field in chasis_form %}
             <div class="mb-3">
               <label for="{{field.name}}" class="form-label">{{field.name}}</label>
               <input type="{{field.field.widget.input_type}}" 
