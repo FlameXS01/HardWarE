@@ -7,7 +7,7 @@ from Storage.models import*
     #index view 
 def index (request): 
     pc = Pc.objects.all()
-    return render(request, 'base/index.html', {'pc', pc})
+    return render(request, 'base/index.html', {'pc': pc})
 
 #=================================> Pc <======================================#
 
@@ -56,7 +56,7 @@ def del_pc(request, id_pc):
     #LISTAR CHASIS  
 def list_chasis(request):
     chasis = Chasis.objects.all()
-    return render(request,'Pc/list_pc.html',{"chasis":chasis})
+    return render(request,'Chasis/list_chasis.html',{"chasis":chasis})
 
     #ADD CHASIS
 def add_chasis(request): 

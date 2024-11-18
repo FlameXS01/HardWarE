@@ -4,19 +4,28 @@ from .models import *
 class PcForm(forms.ModelForm):
     class Meta:
         model = Pc
-        fields = ['so', 'nombre_equipo', 'ultimo_reporte']
+        fields = ['so', 'nombre_equipo', 'ultimo_reporte', 'id_chasis']
         widgets = {
             'so': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sistema Operativo', 'required': True}),
             'nombre_equipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Equipo', 'required': True}),
             'ultimo_reporte': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Último Reporte', 'required': True}),
-        }
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'required': True}),
+            }
+        
+    def __init__(self, *args, **kwargs):
+        super(PcForm, self).__init__(*args, **kwargs)
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
+        
+       
+
 
 class ChasisForm(forms.ModelForm):
     class Meta:
         model = Chasis
-        fields = ['tipo_chasis']
+        fields = ['tipo_chasis', 'ultimo_propietario']
         widgets = {
             'tipo_chasis': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Chasis', 'required': True}),
+            'ultimo_propietario': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Último propietario', 'required': True}),
         }
 
 class LectorForm(forms.ModelForm):
