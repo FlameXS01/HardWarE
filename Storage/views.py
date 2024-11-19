@@ -93,14 +93,44 @@ def del_chasis(request, id_chasis):
     return redirect('list_chasis')
     
         
-#=================================> Next <======================================#            
+#=================================> Incidencia <======================================#            
             
-        
-        
-            
-            
-        
-            
-        
+    #LISTAR INCIDENCIA
+def list_incidencia(request):
+    incidencias = Incidencias.objects.all() 
+    return render(request, 'Incidencia/list_incidencia.html', {'incidencias': incidencias})
+
+    #ADD INCIDENCIA
+def add_incidencia(request):
+    incidencia_form = IncidenciasForm()
     
+    if request.method == 'POST':
+        incidencia_form = IncidenciasForm(data = request.POST)
+        if incidencia_form.is_valid():
+            #guardar el pc
+            incidencia_form.save()
+            return redirect('list_incidencia')
     
+    return render(request, 'Incidencia/add_incidencia.html',{'incidencia_form':incidencia_form})
+    
+    #EDIT INCIDENCIA
+def edit_incidencia(request, id_incidencia):
+    incidencia = Incidencias.objects.get(id_incidencia=id_incidencia)
+    incidencia_form = IncidenciasForm(instance=incidencia)
+    
+    if request.method == 'POST':
+        incidencia_form = IncidenciasForm(request.POST, instance = incidencia)
+        if incidencia_form.is_valid():
+            incidencia_form.save()
+            return redirect('list_incidencia')
+    return render(request, 'Incidencia/edit_incidencia.html',{'incidencia_form': incidencia_form})
+
+    #DELETE INCIDENCIA
+def del_incidencia(request, id_incidencia):
+    incidencia_to_delete = Incidencias.objects.get(pk = id_incidencia)
+    incidencia_to_delete.delete()
+    
+    return redirect('list_incidencia')
+
+
+#==========================================> NEW <============================================#

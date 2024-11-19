@@ -20,6 +20,13 @@ urlpatterns = [
     path('edit_chasis/<int:id_chasis>', edit_chasis, name="edit_chasis"),
     path('del_chasis/<int:id_chasis>', del_chasis, name="del_chasis"), 
     
+    #===================== urls incidencia ===================#
+    
+    path('incidencia/', list_incidencia , name="list_incidencia"),
+    path('add_incidencia/',  add_incidencia ,name="add_incidencia"),
+    path('edit_incidencia/<int:id_incidencia>', edit_incidencia, name="edit_incidencia"),
+    path('del_incidencia/<int:id_incidencia>', del_incidencia, name="del_incidencia"), 
+    
     #===================== next ===================#
     
 ]

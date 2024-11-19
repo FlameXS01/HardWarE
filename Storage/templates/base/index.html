@@ -26,7 +26,7 @@
 
     <div id="main-wrapper">
         <div class="nav-header">
-            <a href="{% static 'index.html' %}" class="brand-logo">
+            <a href="{% url 'index' %}" class="brand-logo">
                 <img class="logo-abbr" src="{% static 'images/logo.png' %}" alt="">
                 <img class="logo-compact" src="{% static 'images/logo-text.png' %}" alt="">
                 <img class="brand-title" src="{% static 'images/logo-text.png' %}" alt="">
@@ -37,26 +37,26 @@
                 </div>
             </div>
         </div>
-
+        {%block navbarSuperior%}
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
+                        {%block buscar%}
                         <div class="header-left">
                             <div class="search_bar dropdown">
                                 <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
                                     <i class="mdi mdi-magnify"></i>
-                                </span>
-                                {%block buscar%}
+                                </span>                                
                                 <div class="dropdown-menu p-0 m-0">
                                     <form>
                                         <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
                                     </form>
                                 </div>
-                                {%endblock%}
                             </div>
                         </div>
-
+                        {%endblock%}
+                        {%block notification%}
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
@@ -122,27 +122,14 @@
                                 <a href="{% static 'app-profile.html' %}" class="dropdown-item">
                                     <i class="mdi mdi-account"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{% static 'app-profile.html' %}" class="dropdown-item">
-                                        <i class="icon-user"></i>
-                                        <span class="ml-2">Profile </span>
-                                    </a>
-                                    <a href="{% static 'email-inbox.html' %}" class="dropdown-item">
-                                        <i class="icon-envelope-open"></i>
-                                        <span class="ml-2">Inbox </span>
-                                    </a>
-                                    <a href="{% static 'page-login.html' %}" class="dropdown-item">                                
-                                        <i class="icon-key"></i>
-                                        <span class="ml-2">Logout </span>
-                                    </a>
-                                </div>
                             </li>
                         </ul>
+                        {%endblock%}
                     </div>
                 </nav>
             </div>
         </div>
-
+        {%endblock%}
         <div class="quixnav">
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
@@ -156,7 +143,13 @@
                     <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Gestionar Chasis</span></a>
                         <ul aria-expanded="false">
                             <li><a href="{% url 'list_chasis' %}">Listar Chasis</a></li>
-                            <li><a href="{% url 'add_chasis' %}">Conformar KIT</a></li>
+                            <li><a href="{% url 'add_chasis' %}">Agregar Chasis</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Incidencias</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'list_incidencia' %}">Listar Incidencias</a></li>
+                            <li><a href="{% url 'add_incidencia' %}">Agregar Incidencia</a></li>
                         </ul>
                     </li>
                 </ul>
