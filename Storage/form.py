@@ -9,14 +9,14 @@ class PcForm(forms.ModelForm):
             'so': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sistema Operativo', 'required': True}),
             'nombre_equipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Equipo', 'required': True}),
             'ultimo_reporte': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Último Reporte', 'required': True}),
-            'id_chasis': forms.Select(attrs={'class':'form-control', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
             }
         
     def __init__(self, *args, **kwargs):
         super(PcForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
         
-       
+    
 
 
 class ChasisForm(forms.ModelForm):

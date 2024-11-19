@@ -5,26 +5,18 @@
     {% csrf_token %}
 
     <div class="portlet-body form">
-        <form role="form">
-            {% for field in chasis_form %}
-            <div class="mb-3">
-            <label for="{{field.name}}" class="form-label">{{field.name}}</label>
-            <input type="{{field.field.widget.input_type}}" 
-                class="form-control"
-                name="{{field.name}}" 
-                id="{{field.name}}"
-                aria-describedby="helpId"
-                placeholder="{{field.name}}"
-                value="{{field.value | default:''}}">
-            
-            
+        <form action="" method="POST">
+            {% csrf_token %}
+        
+            <div class="portlet-body form">
+                <div class="mb-3">
+                    <h2>Agregar Chasis</h2>
+                </div>
+                
+                {{ chasis_form.as_p }} 
+        
+                <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
             </div>
-            <div class="col-12 help-text">{{field.errors}}</div>
-            
-            {% endfor %}
-            <input type="submit" class="btn blue" style="margin: 10px" value="Guardar">
-
-
         </form>
     </div>
 {%endblock%}
