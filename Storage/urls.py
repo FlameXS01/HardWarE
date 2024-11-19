@@ -27,6 +27,13 @@ urlpatterns = [
     path('edit_incidencia/<int:id_incidencia>', edit_incidencia, name="edit_incidencia"),
     path('del_incidencia/<int:id_incidencia>', del_incidencia, name="del_incidencia"), 
     
-    #===================== next ===================#
+    #===================== urls periferico ===================#
+    
+    path('periferico/', list_periferico , name="list_periferico"),
+    path('add_periferico/',  add_periferico ,name="add_periferico"),
+    path('edit_periferico/<int:id_periferico>', edit_periferico, name="edit_periferico"),
+    path('del_periferico/<int:id_periferico>', del_periferico, name="del_periferico"), 
+    
+    #===================== urls next ===================#
     
 ]

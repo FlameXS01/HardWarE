@@ -107,7 +107,7 @@ def add_incidencia(request):
     if request.method == 'POST':
         incidencia_form = IncidenciasForm(data = request.POST)
         if incidencia_form.is_valid():
-            #guardar el pc
+            #guardar el incidencia
             incidencia_form.save()
             return redirect('list_incidencia')
     
@@ -131,6 +131,46 @@ def del_incidencia(request, id_incidencia):
     incidencia_to_delete.delete()
     
     return redirect('list_incidencia')
+
+
+#==========================================> Periféricos <============================================#
+            
+    #LISTAR Periféricos
+def list_periferico(request):
+    perifericos = Perifericos.objects.all() 
+    return render(request, 'Periferico/list_periferico.html', {'perifericos': perifericos})
+
+    #ADD Periféricos
+def add_periferico(request):
+    periferico_form = PerifericosForm()
+    
+    if request.method == 'POST':
+        periferico_form = PerifericosForm(data = request.POST)
+        if periferico_form.is_valid():
+            #guardar el periferico
+            periferico_form.save()
+            return redirect('list_periferico')
+    
+    return render(request, 'Periferico/add_periferico.html',{'periferico_form':periferico_form})
+    
+    #EDIT Periféricos
+def edit_periferico(request, id_periferico):
+    periferico = Perifericos.objects.get(id_periferico=id_periferico)
+    periferico_form = PerifericosForm(instance=periferico)
+    
+    if request.method == 'POST':
+        periferico_form = PerifericosForm(request.POST, instance = periferico)
+        if periferico_form.is_valid():
+            periferico_form.save()
+            return redirect('list_periferico')
+    return render(request, 'Periferico/edit_periferico.html',{'periferico_form': periferico_form})
+
+    #DELETE Periféricos
+def del_periferico(request, id_periferico):
+    periferico_to_delete = Perifericos.objects.get(pk = id_periferico)
+    periferico_to_delete.delete()
+    
+    return redirect('list_periferico')
 
 
 #==========================================> NEW <============================================#
