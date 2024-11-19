@@ -26,7 +26,7 @@ def add_pc(request):
             #guardar el pc
             pc_form.save()
             return redirect('list_pc')
-       
+    
     return render(request, 'Pc/add_pc.html',{'pc_form':pc_form})
 
 
@@ -40,7 +40,7 @@ def edit_pc(request, id_pc):
         if pc_form.is_valid():
             pc_form.save()
             return redirect('list_pc')
-    return render(request, 'Pc/edit_pc.html',{'pc_form', pc_form})
+    return render(request, 'Pc/edit_pc.html',{'pc_form': pc_form})
 
 
     #DELETE_PC
@@ -52,7 +52,7 @@ def del_pc(request, id_pc):
     
 
 #=================================> Chasis <======================================#
-            
+
     #LISTAR CHASIS  
 def list_chasis(request):
     chasis = Chasis.objects.all()
@@ -68,13 +68,13 @@ def add_chasis(request):
             #guardar el chasis
             chasis_form.save()
             return redirect('list_chasis')
-       
+    
     return render(request, 'Chasis/add_chasis.html',{'chasis_form':chasis_form})
 
 
     #EDIT CHASIS
 def edit_chasis(request, id_chasis):
-    chasis = Chasis.objects.get(id_pc=id_chasis)
+    chasis = Chasis.objects.get(id_chasis=id_chasis)
     chasis_form = ChasisForm(instance=chasis)
     
     if request.method == 'POST':
@@ -82,7 +82,7 @@ def edit_chasis(request, id_chasis):
         if chasis_form.is_valid():
             chasis_form.save()
             return redirect('list_chasis')
-    return render(request, 'Chasis/edit_chasis.html',{'chasis_form', chasis_form})
+    return render(request, 'Chasis/edit_chasis.html',{'chasis_form': chasis_form})
 
 
     #DELETE CHASIS
@@ -99,7 +99,7 @@ def del_chasis(request, id_chasis):
         
             
             
-           
+        
             
         
     
