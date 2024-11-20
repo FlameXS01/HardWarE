@@ -46,6 +46,7 @@ class Almacenamiento(models.Model):
     no_serie_alm = models.CharField(max_length=50)
     tipo_alm = models.CharField(max_length=50)
     interface_alm = models.CharField(max_length=50)
+    #Durabilidad_alm = models.CharField(max_length=50)    
     modelo_alm = models.CharField(max_length=50)
     capacidad_alm = models.CharField(max_length=50)
     id_chasis = models.ForeignKey(Chasis, null = False, blank = False, on_delete = models.CASCADE)
@@ -61,12 +62,12 @@ class Placa_Base(models.Model):
     id_chasis = models.OneToOneField(Chasis, null = False, blank = False, on_delete = models.CASCADE)
 
     def __str__(self):
-        return self.id_chasis
+        return self.modelo_placa
 class Procesador(models.Model):
     id_procesador = models.BigAutoField(primary_key=True)
     desc_procesador = models.CharField(max_length=100)
     velocidad_procesador = models.IntegerField()
-    conector = models.CharField(max_length=50)
+    #conector = models.CharField(max_length=50)
     arq_procesador = models.CharField(max_length=50)
     id_placa = models.OneToOneField(Placa_Base, null = False, blank = False, on_delete = models.CASCADE)
 

@@ -1,4 +1,4 @@
-{% extends 'Almacenamiento/list_almacenamiento.html' %}
+{% extends 'Procesador/list_procesador.html' %}
 
 {% block table %}
 <form action="" method="POST">
@@ -13,7 +13,7 @@
                     <h2>Editar</h2>
                 </div>
                 
-                {{ almacenamiento_form.as_p }} 
+                {{ procesador_form.as_p }} 
         
                 <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
             </div>

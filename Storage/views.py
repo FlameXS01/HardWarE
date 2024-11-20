@@ -252,5 +252,44 @@ def del_almacenamiento(request, id_almacenamiento):
     
     return redirect('list_almacenamiento')
 
+#==========================================> Procesador <============================================#
+            
+    #LISTAR Procesador
+def list_procesador(request):
+    procesadores = Procesador.objects.all() 
+    return render(request, 'Procesador/list_procesador.html', {'procesadores': procesadores})
+
+    #ADD Procesador
+def add_procesador(request):
+    procesador_form = ProcesadorForm()
+    
+    if request.method == 'POST':
+        procesador_form = ProcesadorForm(data = request.POST)
+        if procesador_form.is_valid():
+            #guardar el Procesador
+            procesador_form.save()
+            return redirect('list_procesador')
+    
+    return render(request, 'Procesador/add_procesador.html',{'procesador_form':procesador_form})
+    
+    #EDIT Procesador
+def edit_procesador(request, id_procesador):
+    procesador = Procesador.objects.get(id_procesador=id_procesador)
+    procesador_form = ProcesadorForm(instance=procesador)
+    
+    if request.method == 'POST':
+        procesador_form = ProcesadorForm(request.POST, instance = procesador)
+        if procesador_form.is_valid():
+            procesador_form.save()
+            return redirect('list_procesador')
+    return render(request, 'Procesador/edit_procesador.html',{'procesador_form': procesador_form})
+
+    #DELETE Procesador
+def del_procesador(request, id_procesador):
+    procesador_to_delete = Procesador.objects.get(pk = id_procesador)
+    procesador_to_delete.delete()
+    
+    return redirect('list_procesador')
+
 
 #==========================================> NEW <============================================#

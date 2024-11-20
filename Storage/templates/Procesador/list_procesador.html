@@ -1,0 +1,69 @@
+{% extends 'base/index.html' %}
+
+{%block welcome%}
+<h2></h2>
+{%endblock%}
+{%block detalles%}
+<h2></h2>
+{%endblock%}
+{%block grafico%}
+<h2></h2>
+{%endblock%}
+{%block notifications%}
+<h2></h2>
+{%endblock%}
+
+
+{% block table %}
+<div class="table-responsive">
+                                    
+    <!-- Tabla de Procesadores -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Kit</th>
+                <th>Descripción</th>
+                <th>Velocidad</th>
+                <th>Arquitectura</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pro in procesadores %}
+            <tr>
+                <td>{{ pro.id_placa }}</td>
+                <td>{{ pro.desc_procesador }}</td>
+                <td>{{ pro.velocidad_procesador }}</td>
+                <td>{{ pro.arq_procesador }}</td>
+                <td>
+                    <!-- Iconos de opciones -->
+                    <a href="{% url 'edit_procesador' pro.id_procesador %}" class="btn btn-warning btn-sm" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'list_procesador' %}" class="btn btn-info btn-sm" title="Mostrar">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <form action="{% url 'del_procesador' pro.id_procesador %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este Procesador?');">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+            <i class="fas fa-info-circle"></i> Volver
+        </a> 
+        <a href="{% url 'add_procesador' %}" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Agregar PC
+        </a>
+    </div>
+
+</div>
+{% endblock %}

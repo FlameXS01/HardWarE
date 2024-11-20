@@ -67,13 +67,17 @@ class PlacaBaseForm(forms.ModelForm):
 class ProcesadorForm(forms.ModelForm):
     class Meta:
         model = Procesador
-        fields = ['desc_procesador', 'velocidad_procesador', 'conector', 'arq_procesador']
+        fields = ['desc_procesador', 'velocidad_procesador','arq_procesador']
         widgets = {
             'desc_procesador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción del Procesador', 'required': True}),
             'velocidad_procesador': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Velocidad del Procesador (MHz)', 'required': True}),
-            'conector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Conector', 'required': True}),
+            #'conector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Conector', 'required': True}),
             'arq_procesador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Arquitectura del Procesador', 'required': True}),
+            'id_placa': forms.Select(attrs={'class':'form-control', 'placeholder': 'Placa base', 'required': True}),
         }
+    def __init__(self, *args, **kwargs):
+        super(ProcesadorForm, self).__init__(*args, **kwargs)
+        self.fields['id_placa'].queryset = Placa_Base.objects.all()
 
 class RamForm(forms.ModelForm):
     class Meta:

@@ -48,6 +48,13 @@ urlpatterns = [
     path('edit_almacenamiento/<int:id_almacenamiento>', edit_almacenamiento, name="edit_almacenamiento"),
     path('del_almacenamiento/<int:id_almacenamiento>', del_almacenamiento, name="del_almacenamiento"), 
     
+    #===================== urls procesador ===================#
+    
+    path('procesador/', list_procesador , name="list_procesador"),
+    path('add_procesador/',  add_procesador ,name="add_procesador"),
+    path('edit_procesador/<int:id_procesador>', edit_procesador, name="edit_procesador"),
+    path('del_procesador/<int:id_procesador>', del_procesador, name="del_procesador"), 
+    
     #===================== urls next ===================#
     
 ]

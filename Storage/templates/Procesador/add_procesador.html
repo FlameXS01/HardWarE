@@ -1,0 +1,17 @@
+{% extends 'Procesador/list_procesador.html' %}
+
+{% block table %}
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <div class="portlet-body form">
+        <div class="mb-3">
+            <h2>Agregar Procesador</h2>
+        </div>
+        
+        {{ procesador_form.as_p }} 
+
+        <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
+    </div>
+</form>
+{% endblock %}
