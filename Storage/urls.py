@@ -55,12 +55,20 @@ urlpatterns = [
     path('edit_procesador/<int:id_procesador>', edit_procesador, name="edit_procesador"),
     path('del_procesador/<int:id_procesador>', del_procesador, name="del_procesador"), 
     
-    #===================== urls next ===================#
+    #===================== urls motherb ===================#
     
     path('placa/', list_placa , name="list_placa"),
     path('add_placa/',  add_placa ,name="add_placa"),
     path('edit_placa/<int:id_placa>', edit_placa, name="edit_placa"),
     path('del_placa/<int:id_placa>', del_placa, name="del_placa"), 
+    
+    #===================== urls ram ===================#
+    
+    
+    path('ram/', list_ram , name="list_ram"),
+    path('add_ram/',  add_ram ,name="add_ram"),
+    path('edit_ram/<int:id_ram>', edit_ram, name="edit_ram"),
+    path('del_ram/<int:id_ram>', del_ram, name="del_ram"), 
     
     #===================== urls next ===================#
     

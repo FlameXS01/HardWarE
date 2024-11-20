@@ -330,5 +330,44 @@ def del_placa(request, id_placa):
     
     return redirect('list_placa')
 
+#==========================================> RAM Base <============================================#
+            
+    #LISTAR Ram
+def list_ram(request):
+    rams = Ram.objects.all() 
+    return render(request, 'Ram/list_ram.html', {'rams': rams})
+
+    #ADD Ram
+def add_ram(request):
+    ram_form = RamForm()
+    
+    if request.method == 'POST':
+        ram_form = RamForm(data = request.POST)
+        if ram_form.is_valid():
+            #guardar la Ram
+            ram_form.save()
+            return redirect('list_ram')
+    
+    return render(request, 'Ram/add_ram.html',{'ram_form':ram_form})
+    
+    #EDIT Ram
+def edit_ram(request, id_ram):
+    ram = ram.objects.get(id_ram=id_ram)
+    ram_form = RamForm(instance=ram)
+    
+    if request.method == 'POST':
+        ram_form = RamForm(request.POST, instance = ram)
+        if ram_form.is_valid():
+            ram_form.save()
+            return redirect('list_ram')
+    return render(request, 'Ram/edit_ram.html',{'ram_form': ram_form})
+
+    #DELETE Ram
+def del_ram(request, id_ram):
+    ram_to_delete = Ram.objects.get(pk = id_ram)
+    ram_to_delete.delete()
+    
+    return redirect('list_ram')
+
 
 #==========================================> NEW <============================================#

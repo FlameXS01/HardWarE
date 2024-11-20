@@ -85,16 +85,16 @@ class ProcesadorForm(forms.ModelForm):
 class RamForm(forms.ModelForm):
     class Meta:
         model = Ram
-        fields = ['capacidad_ram', 'no_serie_ram', 'tipo_ram', 'id_chasis']
+        fields = ['capacidad_ram', 'no_serie_ram', 'tipo_ram', 'id_placa']
         widgets = {
             'capacidad_ram': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Capacidad de la RAM (GB)', 'required': True}),
             'no_serie_ram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de Serie de la RAM', 'required': True}),
             'tipo_ram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de RAM', 'required': True}),
-            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
+            'id_placa': forms.Select(attrs={'class':'form-control', 'placeholder': '----', 'required': True}),
         }
     def __init__(self, *args, **kwargs):
         super(RamForm, self).__init__(*args, **kwargs)
-        self.fields['id_chasis'].queryset = Chasis.objects.all()
+        self.fields['id_placa'].queryset = Placa_Base.objects.all()
 
 
 class TarjetaRedForm(forms.ModelForm):
