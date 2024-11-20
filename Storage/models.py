@@ -99,6 +99,7 @@ class Fuente(models.Model):
     id_fuente = models.BigAutoField(primary_key=True) 
     fabricante_fuente = models.CharField(max_length=50) 
     no_serie_fuente = models.CharField(max_length=50)
+    potencia_fuente = models.CharField(max_length=50)
     id_chasis = models.OneToOneField(Chasis, null = False, blank = False, on_delete = models.CASCADE)
 
     def __str__(self):

@@ -40,19 +40,19 @@ class LectorForm(forms.ModelForm):
 class AlmacenamientoForm(forms.ModelForm):
     class Meta:
         model = Almacenamiento
-        fields = ['no_serie_alm', 'tipo_alm', 'interface_alm', 'modelo_alm', 'capacidad_alm']
+        fields = ['no_serie_alm','tipo_alm','interface_alm','modelo_alm','capacidad_alm','id_chasis']
         widgets = {
-            'no_serie_alm': forms.TextInput(attrs={'placeholder': 'Número de Serie', 'required': True}),
-            'tipo_alm': forms.TextInput(attrs={'placeholder': 'Tipo de Almacenamiento', 'required': True}),
-            'interface_alm': forms.TextInput(attrs={'placeholder': 'Interfaz', 'required': True}),
-            'modelo_alm': forms.TextInput(attrs={'placeholder': 'Modelo', 'required': True}),
-            'capacidad_alm': forms.TextInput(attrs={'placeholder': 'Capacidad', 'required': True}),
+            'no_serie_alm': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Número de Serie', 'required': True}),
+            'tipo_alm': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Tipo de Almacenamiento', 'required': True}),
+            'interface_alm': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Interfaz', 'required': True}),
+            'modelo_alm': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Modelo', 'required': True}),
+            'capacidad_alm': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Capacidad', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
         }
 
     def __init__(self, *args, **kwargs):
         super(AlmacenamientoForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
             
 class PlacaBaseForm(forms.ModelForm):
     class Meta:
@@ -108,11 +108,16 @@ class TarjetaRedForm(forms.ModelForm):
 class FuenteForm(forms.ModelForm):
     class Meta:
         model = Fuente
-        fields = ['fabricante_fuente', 'no_serie_fuente']
+        fields = ['fabricante_fuente', 'no_serie_fuente', 'potencia_fuente', 'id_chasis']
         widgets = {
             'fabricante_fuente': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fabricante', 'required': True}),
             'no_serie_fuente': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de Serie', 'required': True},),
+            'potencia_fuente': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Potencia', 'required': True},),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'required': True}),
         }
+    def __init__(self, *args, **kwargs):
+        super(FuenteForm, self).__init__(*args, **kwargs)
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
 
 class PerifericosForm(forms.ModelForm):
     class Meta:

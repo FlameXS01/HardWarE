@@ -1,4 +1,4 @@
-{% extends 'Periferico/list_periferico.html' %}
+{% extends 'Fuente/list_fuente.html' %}
 
 {% block table %}
 <form action="" method="POST">
@@ -6,10 +6,10 @@
 
     <div class="portlet-body form">
         <div class="mb-3">
-            <h2>Agregar Periféricos</h2>
+            <h2>Agregar Fuente</h2>
         </div>
         
-        {{ periferico_form.as_p }} 
+        {{ fuente_form.as_p }} 
 
         <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
     </div>

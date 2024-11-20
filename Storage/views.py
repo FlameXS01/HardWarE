@@ -173,4 +173,84 @@ def del_periferico(request, id_periferico):
     return redirect('list_periferico')
 
 
+#==========================================> Fuente <============================================#
+            
+    #LISTAR FUENTE
+def list_fuente(request):
+    fuentes = Fuente.objects.all() 
+    return render(request, 'Fuente/list_fuente.html', {'fuentes': fuentes})
+
+    #ADD FUENTE
+def add_fuente(request):
+    fuente_form = FuenteForm()
+    
+    if request.method == 'POST':
+        fuente_form = FuenteForm(data = request.POST)
+        if fuente_form.is_valid():
+            #guardar el periferico
+            fuente_form.save()
+            return redirect('list_fuente')
+    
+    return render(request, 'Fuente/add_fuente.html',{'fuente_form':fuente_form})
+    
+    #EDIT FUENTE
+def edit_fuente(request, id_fuente):
+    fuente = Fuente.objects.get(id_fuente=id_fuente)
+    fuente_form = FuenteForm(instance=fuente)
+    
+    if request.method == 'POST':
+        fuente_form = FuenteForm(request.POST, instance = fuente)
+        if fuente_form.is_valid():
+            fuente_form.save()
+            return redirect('list_fuente')
+    return render(request, 'Fuente/edit_fuente.html',{'fuente_form': fuente_form})
+
+    #DELETE FUENTE
+def del_fuente(request, id_fuente):
+    fuente_to_delete = Fuente.objects.get(pk = id_fuente)
+    fuente_to_delete.delete()
+    
+    return redirect('list_fuente')
+
+
+#==========================================> Almacenamiento <============================================#
+            
+    #LISTAR Almacenamiento
+def list_almacenamiento(request):
+    almacenamientos = Almacenamiento.objects.all() 
+    return render(request, 'Almacenamiento/list_almacenamiento.html', {'almacenamientos': almacenamientos})
+
+    #ADD Almacenamiento
+def add_almacenamiento(request):
+    almacenamiento_form = AlmacenamientoForm()
+    
+    if request.method == 'POST':
+        almacenamiento_form = AlmacenamientoForm(data = request.POST)
+        if almacenamiento_form.is_valid():
+            #guardar el almacenamiento
+            almacenamiento_form.save()
+            return redirect('list_almacenamiento')
+    
+    return render(request, 'Almacenamiento/add_almacenamiento.html',{'almacenamiento_form':almacenamiento_form})
+    
+    #EDIT Almacenamiento
+def edit_almacenamiento(request, id_almacenamiento):
+    almacenamiento = Almacenamiento.objects.get(id_almacenamiento=id_almacenamiento)
+    almacenamiento_form = AlmacenamientoForm(instance=almacenamiento)
+    
+    if request.method == 'POST':
+        almacenamiento_form = AlmacenamientoForm(request.POST, instance = almacenamiento)
+        if almacenamiento_form.is_valid():
+            almacenamiento_form.save()
+            return redirect('list_almacenamiento')
+    return render(request, 'Almacenamiento/edit_almacenamiento.html',{'almacenamiento_form': almacenamiento_form})
+
+    #DELETE Almacenamiento
+def del_almacenamiento(request, id_almacenamiento):
+    almacenamiento_to_delete = Almacenamiento.objects.get(pk = id_almacenamiento)
+    almacenamiento_to_delete.delete()
+    
+    return redirect('list_almacenamiento')
+
+
 #==========================================> NEW <============================================#

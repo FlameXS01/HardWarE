@@ -34,6 +34,20 @@ urlpatterns = [
     path('edit_periferico/<int:id_periferico>', edit_periferico, name="edit_periferico"),
     path('del_periferico/<int:id_periferico>', del_periferico, name="del_periferico"), 
     
+    #===================== urls fuente ===================#
+    
+    path('fuente/', list_fuente , name="list_fuente"),
+    path('add_fuente/',  add_fuente ,name="add_fuente"),
+    path('edit_fuente/<int:id_fuente>', edit_fuente, name="edit_fuente"),
+    path('del_fuente/<int:id_fuente>', del_fuente, name="del_fuente"), 
+    
+    #===================== urls almacenamiento ===================#
+    
+    path('almacenamiento/', list_almacenamiento , name="list_almacenamiento"),
+    path('add_almacenamiento/',  add_almacenamiento ,name="add_almacenamiento"),
+    path('edit_almacenamiento/<int:id_almacenamiento>', edit_almacenamiento, name="edit_almacenamiento"),
+    path('del_almacenamiento/<int:id_almacenamiento>', del_almacenamiento, name="del_almacenamiento"), 
+    
     #===================== urls next ===================#
     
 ]
