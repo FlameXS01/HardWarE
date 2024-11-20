@@ -57,17 +57,20 @@ class AlmacenamientoForm(forms.ModelForm):
 class PlacaBaseForm(forms.ModelForm):
     class Meta:
         model = Placa_Base
-        fields = ['no_serie_placa', 'fabricante_placa', 'modelo_placa']
+        fields = ['no_serie_placa', 'fabricante_placa', 'modelo_placa', 'id_chasis']
         widgets = {
             'no_serie_placa': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de Serie', 'required': True}),
             'fabricante_placa': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Fabricante', 'required': True}),
             'modelo_placa': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Modelo', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
         }
-
+    def __init__(self, *args, **kwargs):
+        super(PlacaBaseForm, self).__init__(*args, **kwargs)
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
 class ProcesadorForm(forms.ModelForm):
     class Meta:
         model = Procesador
-        fields = ['desc_procesador', 'velocidad_procesador','arq_procesador']
+        fields = ['desc_procesador', 'velocidad_procesador','arq_procesador', 'id_placa']
         widgets = {
             'desc_procesador': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción del Procesador', 'required': True}),
             'velocidad_procesador': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Velocidad del Procesador (MHz)', 'required': True}),
@@ -82,16 +85,16 @@ class ProcesadorForm(forms.ModelForm):
 class RamForm(forms.ModelForm):
     class Meta:
         model = Ram
-        fields = ['capacidad_ram', 'no_serie_ram', 'tipo_ram']
+        fields = ['capacidad_ram', 'no_serie_ram', 'tipo_ram', 'id_chasis']
         widgets = {
             'capacidad_ram': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Capacidad de la RAM (GB)', 'required': True}),
             'no_serie_ram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de Serie de la RAM', 'required': True}),
-            ' tipo_ram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de RAM', 'required': True}),
+            'tipo_ram': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de RAM', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
         }
     def __init__(self, *args, **kwargs):
         super(RamForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
 
 
 class TarjetaRedForm(forms.ModelForm):

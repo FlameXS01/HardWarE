@@ -291,5 +291,44 @@ def del_procesador(request, id_procesador):
     
     return redirect('list_procesador')
 
+#==========================================> Placa Base <============================================#
+            
+    #LISTAR Placa
+def list_placa(request):
+    placas = Placa_Base.objects.all() 
+    return render(request, 'Placa_Base/list_placa.html', {'placas': placas})
+
+    #ADD Placa
+def add_placa(request):
+    placa_form = PlacaBaseForm()
+    
+    if request.method == 'POST':
+        placa_form = PlacaBaseForm(data = request.POST)
+        if placa_form.is_valid():
+            #guardar la Placa
+            placa_form.save()
+            return redirect('list_placa')
+    
+    return render(request, 'Placa_Base/add_placa.html',{'placa_form':placa_form})
+    
+    #EDIT Placa
+def edit_placa(request, id_placa):
+    placa = placa.objects.get(id_placa=id_placa)
+    placa_form = PlacaBaseForm(instance=placa)
+    
+    if request.method == 'POST':
+        placa_form = PlacaBaseForm(request.POST, instance = placa)
+        if placa_form.is_valid():
+            placa_form.save()
+            return redirect('list_placa')
+    return render(request, 'Placa_Base/edit_placa.html',{'placa_form': placa_form})
+
+    #DELETE Placa
+def del_placa(request, id_placa):
+    placa_to_delete = Placa_Base.objects.get(pk = id_placa)
+    placa_to_delete.delete()
+    
+    return redirect('list_placa')
+
 
 #==========================================> NEW <============================================#

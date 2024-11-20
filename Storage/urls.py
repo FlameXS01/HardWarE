@@ -57,4 +57,11 @@ urlpatterns = [
     
     #===================== urls next ===================#
     
+    path('placa/', list_placa , name="list_placa"),
+    path('add_placa/',  add_placa ,name="add_placa"),
+    path('edit_placa/<int:id_placa>', edit_placa, name="edit_placa"),
+    path('del_placa/<int:id_placa>', del_placa, name="del_placa"), 
+    
+    #===================== urls next ===================#
+    
 ]
