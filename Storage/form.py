@@ -31,11 +31,15 @@ class ChasisForm(forms.ModelForm):
 class LectorForm(forms.ModelForm):
     class Meta:
         model = Lector
-        fields = ['desc_lector', 'tipo_lector']
+        fields = ['desc_lector', 'tipo_lector', 'id_chasis'] 
         widgets = {
             'desc_lector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Descripción del Lector', 'required': True}),
             'tipo_lector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Lector', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
         }
+    def __init__(self, *args, **kwargs):
+        super(LectorForm, self).__init__(*args, **kwargs)
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
 
 class AlmacenamientoForm(forms.ModelForm):
     class Meta:
@@ -111,6 +115,21 @@ class TarjetaRedForm(forms.ModelForm):
         super(TarjetaRedForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+            
+class Ranura_ExpansionForm(forms.ModelForm):
+    class Meta:
+        model = Ranura_Expansion
+        fields = ['id_slot', 'id_board', 'conector_ranura', 'uso', 'id_chasis']
+        widgets = {
+            'id_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slot', 'required': True}),
+            'id_board': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Board', 'required': True}),
+            'conector_ranura': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Conector', 'required': True}),
+            'uso': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Uso', 'required': True}),
+            'id_chasis': forms.Select(attrs={'class':'form-control', 'required': True}),
+        }
+    def __init__(self, *args, **kwargs):
+        super(Ranura_ExpansionForm, self).__init__(*args, **kwargs)
+        self.fields['id_chasis'].queryset = Chasis.objects.all()
 
 class FuenteForm(forms.ModelForm):
     class Meta:

@@ -330,7 +330,7 @@ def del_placa(request, id_placa):
     
     return redirect('list_placa')
 
-#==========================================> RAM Base <============================================#
+#==========================================> RAM <============================================#
             
     #LISTAR Ram
 def list_ram(request):
@@ -352,7 +352,7 @@ def add_ram(request):
     
     #EDIT Ram
 def edit_ram(request, id_ram):
-    ram = ram.objects.get(id_ram=id_ram)
+    ram = Ram.objects.get(id_ram=id_ram)
     ram_form = RamForm(instance=ram)
     
     if request.method == 'POST':
@@ -368,6 +368,86 @@ def del_ram(request, id_ram):
     ram_to_delete.delete()
     
     return redirect('list_ram')
+
+
+#==========================================> Lector <============================================#
+            
+    #LISTAR Lector
+def list_lector(request):
+    lectores = Lector.objects.all() 
+    return render(request, 'Lector/list_lector.html', {'lectores': lectores})
+
+    #ADD Lector
+def add_lector(request):
+    lector_form = LectorForm()
+    
+    if request.method == 'POST':
+        lector_form = LectorForm(data = request.POST)
+        if lector_form.is_valid():
+            #guardar la Ram
+            lector_form.save()
+            return redirect('list_lector')
+    
+    return render(request, 'Lector/add_lector.html',{'lector_form':lector_form})
+    
+    #EDIT Lector
+def edit_lector(request, id_lector):
+    lector = Lector.objects.get(id_lector=id_lector)
+    lector_form = LectorForm(instance=lector)
+    
+    if request.method == 'POST':
+        lector_form = LectorForm(request.POST, instance = lector)
+        if lector_form.is_valid():
+            lector_form.save()
+            return redirect('list_lector')
+    return render(request, 'Lector/edit_lector.html',{'lector_form': lector_form})
+
+    #DELETE Lector
+def del_lector(request, id_lector):
+    lector_to_delete = Lector.objects.get(pk = id_lector)
+    lector_to_delete.delete()
+    
+    return redirect('list_lector')
+
+
+#==========================================> Ranura Exp <============================================#
+            
+    #LISTAR Ranura Exp
+def list_ranura(request):
+    ranuras = Ranura_Expansion.objects.all() 
+    return render(request, 'Ranura_Expansion/list_ranura.html', {'ranuras': ranuras})
+
+    #ADD Ranura Exp
+def add_ranura(request):
+    ranura_form = Ranura_ExpansionForm()
+    
+    if request.method == 'POST':
+        ranura_form = Ranura_ExpansionForm(data = request.POST)
+        if ranura_form.is_valid():
+            #guardar Ranura Exp
+            ranura_form.save()
+            return redirect('list_ranura')
+    
+    return render(request, 'Ranura_Expansion/add_ranura.html',{'ranura_form':ranura_form})
+    
+    #EDIT Ranura Exp
+def edit_ranura(request, id_ranura):
+    ranura = Ranura_Expansion.objects.get(id_ranura=id_ranura)
+    ranura_form = Ranura_ExpansionForm(instance=ranura)
+    
+    if request.method == 'POST':
+        ranura_form = Ranura_ExpansionForm(request.POST, instance = ranura)
+        if ranura_form.is_valid():
+            ranura_form.save()
+            return redirect('list_ranura')
+    return render(request, 'Ranura_Expansion/edit_ranura.html',{'ranura_form': ranura_form})
+
+    #DELETE Ranura Exp
+def del_ranura(request, id_ranura):
+    ranura_to_delete = Ranura_Expansion.objects.get(pk = id_ranura)
+    ranura_to_delete.delete()
+    
+    return redirect('list_ranura')
 
 
 #==========================================> NEW <============================================#

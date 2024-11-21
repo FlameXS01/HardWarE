@@ -64,11 +64,24 @@ urlpatterns = [
     
     #===================== urls ram ===================#
     
-    
     path('ram/', list_ram , name="list_ram"),
     path('add_ram/',  add_ram ,name="add_ram"),
     path('edit_ram/<int:id_ram>', edit_ram, name="edit_ram"),
     path('del_ram/<int:id_ram>', del_ram, name="del_ram"), 
+    
+    #===================== urls lector ===================#
+    
+    path('lector/', list_lector , name="list_lector"),
+    path('add_lector/',  add_lector ,name="add_lector"),
+    path('edit_lector/<int:id_lector>', edit_lector, name="edit_lector"),
+    path('del_lector/<int:id_lector>', del_lector, name="del_lector"), 
+    
+    #===================== urls ranura ===================#
+    
+    path('ranura/', list_ranura , name="list_ranura"),
+    path('add_ranura/',  add_ranura ,name="add_ranura"),
+    path('edit_ranura/<int:id_ranura>', edit_ranura, name="edit_ranura"),
+    path('del_ranura/<int:id_ranura>', del_ranura, name="del_ranura"), 
     
     #===================== urls next ===================#
     
