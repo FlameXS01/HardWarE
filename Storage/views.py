@@ -49,7 +49,6 @@ def del_pc(request, id_pc):
     pc_to_delete.delete()
     
     return redirect('list_pc')
-    
 
 #=================================> Chasis <======================================#
 
@@ -91,8 +90,7 @@ def del_chasis(request, id_chasis):
     chasis_to_delete.delete()
     
     return redirect('list_chasis')
-    
-        
+
 #=================================> Incidencia <======================================#            
             
     #LISTAR INCIDENCIA
@@ -131,7 +129,6 @@ def del_incidencia(request, id_incidencia):
     incidencia_to_delete.delete()
     
     return redirect('list_incidencia')
-
 
 #==========================================> Periféricos <============================================#
             
@@ -172,7 +169,6 @@ def del_periferico(request, id_periferico):
     
     return redirect('list_periferico')
 
-
 #==========================================> Fuente <============================================#
             
     #LISTAR FUENTE
@@ -211,7 +207,6 @@ def del_fuente(request, id_fuente):
     fuente_to_delete.delete()
     
     return redirect('list_fuente')
-
 
 #==========================================> Almacenamiento <============================================#
             
@@ -369,7 +364,6 @@ def del_ram(request, id_ram):
     
     return redirect('list_ram')
 
-
 #==========================================> Lector <============================================#
             
     #LISTAR Lector
@@ -408,7 +402,6 @@ def del_lector(request, id_lector):
     lector_to_delete.delete()
     
     return redirect('list_lector')
-
 
 #==========================================> Ranura Exp <============================================#
             
@@ -449,5 +442,43 @@ def del_ranura(request, id_ranura):
     
     return redirect('list_ranura')
 
+#==========================================> Tarjeta Red <============================================#
+            
+    #LISTAR Tarjeta Red
+def list_tarjeta(request):
+    tarjetas = Tarjeta_Red.objects.all() 
+    return render(request, 'Tarjeta_Red/list_tarjeta.html', {'tarjetas': tarjetas})
+
+    #ADD Tarjeta Red
+def add_tarjeta(request):
+    tarjeta_form = TarjetaRedForm()
+    
+    if request.method == 'POST':
+        tarjeta_form = TarjetaRedForm(data = request.POST)
+        if tarjeta_form.is_valid():
+            #guardar Tarjeta Red
+            tarjeta_form.save()
+            return redirect('list_tarjeta')
+    
+    return render(request, 'Tarjeta_Red/add_tarjeta.html',{'tarjeta_form':tarjeta_form})
+    
+    #EDIT Tarjeta Red
+def edit_tarjeta(request, id_tarjeta):
+    tarjeta = Tarjeta_Red.objects.get(id_tarjeta=id_tarjeta)
+    tarjeta_form = TarjetaRedForm(instance=tarjeta)
+    
+    if request.method == 'POST':
+        tarjeta_form = TarjetaRedForm(request.POST, instance = tarjeta)
+        if tarjeta_form.is_valid():
+            tarjeta_form.save()
+            return redirect('list_tarjeta')
+    return render(request, 'Tarjeta_Red/edit_tarjeta.html',{'tarjeta_form': tarjeta_form})
+
+    #DELETE Tarjeta Red
+def del_tarjeta(request, id_tarjeta):
+    tarjeta_to_delete = Tarjeta_Red.objects.get(pk = id_tarjeta)
+    tarjeta_to_delete.delete()
+    
+    return redirect('list_tarjeta')
 
 #==========================================> NEW <============================================#

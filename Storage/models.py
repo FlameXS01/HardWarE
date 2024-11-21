@@ -9,8 +9,7 @@ class Chasis(models.Model):
     
     def __str__(self):
         return self.ultimo_propietario
-    
-    
+
 class Pc(models.Model):
     id_pc = models.BigAutoField(primary_key=True)
     so = models.CharField(max_length=50)
@@ -63,6 +62,7 @@ class Placa_Base(models.Model):
 
     def __str__(self):
         return self.modelo_placa
+
 class Procesador(models.Model):
     id_procesador = models.BigAutoField(primary_key=True)
     desc_procesador = models.CharField(max_length=100)
@@ -74,7 +74,6 @@ class Procesador(models.Model):
     def __str__(self):
         return self.id_placa
 
-
 class Ram(models.Model):
     id_ram = models.BigAutoField(primary_key=True)
     capacidad_ram = models.IntegerField()
@@ -84,7 +83,7 @@ class Ram(models.Model):
 
     def __str__(self):
         return self.id_placa
-    
+
 class Tarjeta_Red(models.Model):
     id_tarjeta = models.BigAutoField(primary_key=True)
     mac = models.CharField(max_length=50)
@@ -95,7 +94,7 @@ class Tarjeta_Red(models.Model):
 
     def __str__(self):
         return self.id_placa
-    
+
 class Fuente(models.Model):
     id_fuente = models.BigAutoField(primary_key=True) 
     fabricante_fuente = models.CharField(max_length=50) 
@@ -105,7 +104,7 @@ class Fuente(models.Model):
 
     def __str__(self):
         return self.id_chasis
-    
+
 class Perifericos(models.Model):
     id_periferico = models.BigAutoField(primary_key=True)
     tipo_periferico = models.CharField(max_length=50)
@@ -117,7 +116,7 @@ class Perifericos(models.Model):
     
     def __str__(self):
         return self.tipo_periferico    
-    
+
 class Incidencias(models.Model):
     id_incidencia = models.BigAutoField(primary_key=True)
     desc_incidencia = models.CharField(max_length=50)
@@ -127,4 +126,3 @@ class Incidencias(models.Model):
 
     def __str__(self):
         return self.observacion
-    

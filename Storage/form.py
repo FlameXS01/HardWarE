@@ -15,9 +15,6 @@ class PcForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PcForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-        
-    
-
 
 class ChasisForm(forms.ModelForm):
     class Meta:
@@ -57,7 +54,7 @@ class AlmacenamientoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AlmacenamientoForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-            
+
 class PlacaBaseForm(forms.ModelForm):
     class Meta:
         model = Placa_Base
@@ -71,6 +68,7 @@ class PlacaBaseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PlacaBaseForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
+
 class ProcesadorForm(forms.ModelForm):
     class Meta:
         model = Procesador
@@ -100,22 +98,21 @@ class RamForm(forms.ModelForm):
         super(RamForm, self).__init__(*args, **kwargs)
         self.fields['id_placa'].queryset = Placa_Base.objects.all()
 
-
 class TarjetaRedForm(forms.ModelForm):
     class Meta:
         model = Tarjeta_Red
-        fields = ['mac', 'ip', 'subnet', 'gateway']
+        fields = ['mac', 'ip', 'subnet', 'gateway', 'id_placa']
         widgets = {
             'mac': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección MAC', 'required': True}),
             'ip': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dirección IP', 'required': True}),
             'subnet': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Subred', 'required': True}),
             'gateway': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Gateway', 'required': True}),
+            'id_placa': forms.Select(attrs={'class':'form-control', 'placeholder': '----', 'required': True}),
         }
     def __init__(self, *args, **kwargs):
         super(TarjetaRedForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
-            
+        self.fields['id_placa'].queryset = Placa_Base.objects.all()
+
 class Ranura_ExpansionForm(forms.ModelForm):
     class Meta:
         model = Ranura_Expansion
@@ -159,7 +156,6 @@ class PerifericosForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PerifericosForm, self).__init__(*args, **kwargs)
         self.fields['id_pc'].queryset = Pc.objects.all() 
-        
 
 class IncidenciasForm(forms.ModelForm):
     class Meta: 

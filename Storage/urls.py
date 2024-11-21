@@ -85,4 +85,11 @@ urlpatterns = [
     
     #===================== urls next ===================#
     
+    path('tarjeta/', list_tarjeta , name="list_tarjeta"),
+    path('add_tarjeta/',  add_tarjeta ,name="add_tarjeta"),
+    path('edit_tarjeta/<int:id_tarjeta>', edit_tarjeta, name="edit_tarjeta"),
+    path('del_tarjeta/<int:id_tarjeta>', del_tarjeta, name="del_tarjeta"), 
+    
+    #===================== urls next ===================#
+    
 ]
