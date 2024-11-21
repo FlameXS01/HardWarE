@@ -7,7 +7,13 @@ from Storage.models import*
     #index view 
 def index (request): 
     pc = Pc.objects.all()
-    return render(request, 'base/index.html', {'pc': pc})
+    incidencias = Incidencias.objects.all()
+    
+    context = {
+        'pc': pc,
+        'incidencias': incidencias,
+    }
+    return render(request, 'base/index.html', context)
 
 #=================================> Pc <======================================#
 
