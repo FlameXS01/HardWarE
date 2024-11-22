@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os 
 from decouple import config 
+from .celery import app
+from celery.schedules import crontab
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Storage'
+    'Storage',
+    'django_celery_results',
     
 ]
 
@@ -135,3 +139,15 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_RESULT_BACKEND = 'django-db'  
+CELERY_TIMEZONE = 'UTC'
+app.conf.broker_connection_retry_on_startup = True
+
+
+CELERY_BEAT_SCHEDULE = {
+    'tarea-ejemplo': {
+        'task': 'Storage.tasks.mi_tarea',  # ruta a la tarea
+        'schedule': crontab(minute='*'),  # Ejecutar a las 3:10 PM
+    },
+}

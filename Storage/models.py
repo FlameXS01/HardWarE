@@ -126,3 +126,7 @@ class Incidencias(models.Model):
 
     def __str__(self):
         return self.observacion
+
+class Trys(models.Model):
+    id_trys = models.BigAutoField(primary_key=True)
+    resultado = models.IntegerField()
