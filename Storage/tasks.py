@@ -1,12 +1,7 @@
 from celery import shared_task
-from .models import Trys 
-import os
-import socket 
-
+from .import_data import import_data  
 
 @shared_task
-def scan_connected_devices():
-    print('hola')
+def run_import_data():
+    import_data()
     
-    # Procesar y devolver los dispositivos
-    return 1

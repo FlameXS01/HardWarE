@@ -163,3 +163,11 @@ cython_debug/
 
 #credentials
 .env
+# Ignorar archivos de Celery Beat
+celerybeat-schedule.dir
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+
+# Ignorar archivos de crash de Erlang
+erl_crash.dump
+.gitignore

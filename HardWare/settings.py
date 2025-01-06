@@ -147,7 +147,7 @@ app.conf.broker_connection_retry_on_startup = True
 
 CELERY_BEAT_SCHEDULE = {
     'tarea-ejemplo': {
-        'task': 'Storage.tasks.mi_tarea',  # ruta a la tarea
-        'schedule': crontab(minute='*'),  # Ejecutar a las 3:10 PM
+        'task': 'Storage.tasks.scan_connected_devices',  # ruta a la tarea
+        'schedule': crontab(hour='*'),  # Ejecutar a las 3:10 PM
     },
 }
