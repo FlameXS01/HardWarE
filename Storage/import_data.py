@@ -1,4 +1,3 @@
-
 import ftplib
 import pandas as pd
 import os
@@ -9,8 +8,8 @@ from django.conf import settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tu_proyecto.settings')  # Cambia 'tu_proyecto' por el nombre de tu proyecto
 django.setup()
 
-# Importar tu modelo
-from Storage.models import EjemploModel  #modelos
+# Importar tus modelos
+from Storage.models import Chasis, Pc, Lector, Ranura_Expansion, Almacenamiento, Placa_Base, Procesador, Ram, Tarjeta_Red, Fuente, Perifericos, Incidencias
 
 # Configuración del servidor FTP
 FTP_SERVER = 'ftp.ejemplo.com'  # Cambia esto a tu servidor FTP
@@ -38,15 +37,56 @@ for file in files:
         # Cargar el archivo Excel en un DataFrame
         df = pd.read_excel(file)
 
-        # Guardar los datos en la base de datos
+        # Procesar cada fila del DataFrame
         for index, row in df.iterrows():
-            # Suponiendo que tu modelo tiene tres campos: nombre1, nombre2, nombre3
-            ejemplo = EjemploModel(
-                nombre1=row['nombre1'],  # Cambia 'nombre1' por el nombre de la columna en tu Excel
-                nombre2=row['nombre2'],  # Cambia 'nombre2' por el nombre de la columna en tu Excel
-                nombre3=row['nombre3']   # Cambia 'nombre3' por el nombre de la columna en tu Excel
+            # Crear o obtener el chasis
+            chasis, created = Chasis.objects.get_or_create(
+                ultimo_propietario=row['ultimo_propietario'],  # Cambia según tu Excel
+                tipo_chasis=row['tipo_chasis']  # Cambia según tu Excel
             )
-            ejemplo.save()  # Guardar el objeto en la base de datos
+
+            # Crear o actualizar la PC
+            pc, created = Pc.objects.update_or_create(
+                nombre_equipo=row['nombre_equipo'],  # Cambia según tu Excel
+                defaults={
+                    'so': row['so'],  # Cambia según tu Excel
+                    'ultimo_reporte': row['ultimo_reporte'],  # Cambia según tu Excel
+                    'id_chasis': chasis
+                }
+            )
+
+            if created:
+                print(f"Se creó una nueva PC: {pc.nombre_equipo}")
+            else:
+                print(f"Se actualizó la PC existente: {pc.nombre_equipo}")
+
+            # Crear o actualizar otros modelos según sea necesario
+            # Por ejemplo, para el almacenamiento
+            
+            if 'no_serie_alm' in row and pd.notna(row['no_serie_alm']):
+                Almacenamiento.objects.update_or_create(
+                    no_serie_alm=row['no_serie_alm'],  # Cambia según tu Excel
+                    id_chasis=chasis,
+                    defaults={
+                        'tipo_alm': row['tipo_alm'],  # Cambia según tu Excel
+                        'interface_alm': row['interface_alm'],  # Cambia según tu Excel
+                        'modelo_alm': row['modelo_alm'],  # Cambia según tu Excel
+                        'capacidad_alm': row['capacidad_alm']  # Cambia según tu Excel
+                    }
+                )
+
+            # Repite el proceso para otros modelos como RAM, Procesador, etc.
+            if 'no_serie_ram' in row and pd.notna(row['no_serie_ram']):
+                Ram.objects.update_or_create(
+                    no_serie_ram=row['no_serie_ram'],  # Cambia según tu Excel
+                    id_placa=pc.id_chasis.placa_base,  # Asegúrate de que la relación sea correcta
+                    defaults={
+                        'capacidad_ram': row['capacidad_ram'],  # Cambia según tu Excel
+                        'tipo_ram': row['tipo_ram']  # Cambia según tu Excel
+                    }
+                )
+
+            # Agrega más lógica para otros componentes como Lector, Ranura_Expansion, etc.
 
         # Eliminar el archivo local después de procesarlo
         os.remove(file)
