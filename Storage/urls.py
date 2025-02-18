@@ -92,5 +92,5 @@ urlpatterns = [
     
     #===================== urls next ===================#
     
-    path('prueba/',  registe ,name="prueba"),
+    
 ]

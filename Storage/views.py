@@ -1,11 +1,9 @@
 from django.shortcuts import render,redirect
 from Storage.form import*
 from Storage.models import*
-from Storage.utils import*
 import wmi
 from django.utils import timezone
-import os
-import socket 
+
 
 
 # Create your views here.
@@ -496,7 +494,7 @@ def del_tarjeta(request, id_tarjeta):
 #==========================================> Properties <============================================#
             
     #Tomar las propiedades 
-def get_Properties():
+#def get_Properties():
     
     pc = wmi.WMI()
     
@@ -538,6 +536,3 @@ def get_Properties():
     arq_procesador = 'XXXX'
 
 
-def registe(request):
-    resss = registros_db()
-    return redirect('list_tarjeta')
