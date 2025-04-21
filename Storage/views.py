@@ -3,7 +3,14 @@ from Storage.form import*
 from Storage.models import*
 import wmi
 from django.utils import timezone
-
+#####
+import xml.etree.ElementTree as ET
+from django.utils import timezone
+from datetime import datetime
+from django.core.files.storage import FileSystemStorage
+from django.shortcuts import render
+from django.conf import settings
+import os
 
 
 # Create your views here.
@@ -492,47 +499,3 @@ def del_tarjeta(request, id_tarjeta):
     return redirect('list_tarjeta')
 
 #==========================================> Properties <============================================#
-            
-    #Tomar las propiedades 
-#def get_Properties():
-    
-    pc = wmi.WMI()
-    
-    #sacando de los modelos 
-    
-        #Pc
-    so = pc.Win32_OperatingSystem()[0].name[10:20] 
-    nombre_equipo = pc.Win32_OperatingSystem()[0].registeredUser  #puede ser el network 
-    ultimo_reporte = timezone.now()
-    
-        #Chasis
-    tipo_chasis = pc.Win32_ComputerSystem()[0].chassisSKUNumber
-    
-        #lector
-    desc_lector =" XXXX"
-    tipo_lector = 'XXXX'
-    
-        #Ranura expansion 
-    id_slot = 'XXXXX'
-    d_board = 'XXXX'
-    conector_ranura = 'XXXX'
-    uso = 'XXXX'
-    
-        #Almacenamiento
-    no_serie_alm = pc.Win32_DiskDrive()[0].SerialNumber
-    tipo_alm = 'XXXX'
-    interface_alm = pc.Win32_DiskDrive()[0].interfaceType
-    modelo_alm = pc.Win32_DiskDrive()[0].model
-    capacidad_alm = float(pc.Win32_DiskDrive()[0].size) / (1024**3)
-    
-        #Placa Base
-    no_serie_placa = pc.Win32_OperatingSystem()[0].serialNumber
-    fabricante_placa = pc.Win32_ComputerSystem()[0].manufacturer
-    modelo_placa = pc.Win32_ComputerSystem()[0].model
-
-        #Procesador
-    desc_procesador = 'XXXX'
-    velocidad_procesador = 'XXXX'
-    arq_procesador = 'XXXX'
-
-

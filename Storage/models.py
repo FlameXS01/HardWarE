@@ -4,18 +4,19 @@ from django.db import models
 
 class Chasis(models.Model):
     id_chasis = models.BigAutoField(primary_key=True)
-    ultimo_propietario = models.CharField(max_length=50)
     tipo_chasis = models.CharField(max_length=50)  
+    serial_board = models.CharField(max_length=50, null=True)  
     
     def __str__(self):
-        return self.ultimo_propietario
+        return self.serial_board  # Ensure this returns a valid field
 
 class Pc(models.Model):
     id_pc = models.BigAutoField(primary_key=True)
+    serial_pc = models.CharField(max_length=50, unique=True)
     so = models.CharField(max_length=50)
     nombre_equipo = models.CharField(max_length=50)
     ultimo_reporte = models.DateField()
-    id_chasis = models.OneToOneField(Chasis, null=False, blank=False, on_delete=models.CASCADE)
+    id_chasis = models.OneToOneField(Chasis, null=False, blank=False, on_delete=models.CASCADE, related_name='pc')
     
     def __str__(self):
         return self.nombre_equipo
@@ -42,12 +43,12 @@ class Ranura_Expansion(models.Model):
 
 class Almacenamiento(models.Model):
     id_almacenamiento = models.BigAutoField(primary_key=True)
-    no_serie_alm = models.CharField(max_length=50)
+    no_serie_alm = models.CharField(max_length=100, unique=True)
     tipo_alm = models.CharField(max_length=50)
     interface_alm = models.CharField(max_length=50)
     #Durabilidad_alm = models.CharField(max_length=50)    
     modelo_alm = models.CharField(max_length=50)
-    capacidad_alm = models.CharField(max_length=50)
+    capacidad_alm = models.BigIntegerField()
     id_chasis = models.ForeignKey(Chasis, null = False, blank = False, on_delete = models.CASCADE)
 
     def __str__(self):

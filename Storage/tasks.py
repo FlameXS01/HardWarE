@@ -1,7 +1,9 @@
 from celery import shared_task
-from .import_data import import_data  
+from .utils import *
 
-@shared_task
-def run_import_data():
-    import_data()
-    
+
+@shared_task(name='procesar_json_files')
+def task_procesar_json_files():
+    procesar_json_files()
+
+

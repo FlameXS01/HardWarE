@@ -146,8 +146,57 @@ app.conf.broker_connection_retry_on_startup = True
 
 
 CELERY_BEAT_SCHEDULE = {
-    'tarea-ejemplo': {
-        'task': 'Storage.tasks.scan_connected_devices',  # ruta a la tarea
-        'schedule': crontab(hour='*'),  # Ejecutar a las 3:10 PM
+    'process-jsons': {
+        'task': 'procesar_json_files',
+        'schedule': crontab(minute='*'),
+        'options': {
+            'expires': 300.0 
+        }
     },
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/app.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'HardWare': {  
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,  # ¡IMPORTANTE!
+        },
+        'Storage': {  # Logger para tu app Storage
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'celery': {  
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+        },
+    },
+}
+
+print("!!! Rrevisar LOGS en :", os.path.join(BASE_DIR, 'logs/app.log'))
+
+JSON_INCOMING_DIR = os.path.join(BASE_DIR, 'json_incoming')
+
+log_path = os.path.join(BASE_DIR, 'logs/app.log')
+os.makedirs(os.path.dirname(log_path), exist_ok=True)
+open(log_path, 'a').close() 
