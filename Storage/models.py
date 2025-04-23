@@ -128,7 +128,7 @@ class Incidencias(models.Model):
 
     def __str__(self):
         return self.observacion
-    
+
 class Entidad(models.Model):
     id_entidad = models.BigAutoField(primary_key=True)
     tipoEntidad = models.CharField(max_length=50)
@@ -136,3 +136,4 @@ class Entidad(models.Model):
     
     def __str__(self):
         return self.nombre
+

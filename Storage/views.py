@@ -3,6 +3,7 @@ from Storage.form import*
 from Storage.models import*
 import wmi
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 #####
 import xml.etree.ElementTree as ET
 from django.utils import timezone
@@ -11,7 +12,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.conf import settings
 import os
-
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -545,4 +546,45 @@ def del_entidad(request, id_entidad):
     
     return redirect('list_entidad')
 
+#==========================================> Expediente <============================================#
+def expediente_pc(request, id_pc):
+    # Obtener el PC principal con todas sus relaciones
+    pc = get_object_or_404(Pc.objects.select_related(
+        'id_chasis',
+        'id_entidad'
+    ).prefetch_related(
+        'perifericos_set',
+        'incidencias_set'
+    ), id_pc=id_pc)
+    
+    # Obtener todos los componentes relacionados
+    context = {'pc': pc}
+    
+    try:
+        # Componentes directos
+        context['chasis'] = pc.id_chasis
+        context['placa_base'] = Placa_Base.objects.get(id_chasis=context['chasis'])
+        context['procesador'] = Procesador.objects.get(id_placa=context['placa_base'])
+        context['rams'] = Ram.objects.filter(id_placa=context['placa_base'])
+        context['tarjetas_red'] = Tarjeta_Red.objects.filter(id_placa=context['placa_base'])
+        
+        # Componentes del chasis
+        context['almacenamientos'] = Almacenamiento.objects.filter(id_chasis=context['chasis'])
+        context['ranuras'] = Ranura_Expansion.objects.filter(id_chasis=context['chasis'])
+        context['fuente'] = Fuente.objects.get(id_chasis=context['chasis'])
+        context['lector'] = Lector.objects.get(id_chasis=context['chasis'])
+        
+        # Componentes adicionales
+        context['perifericos'] = pc.perifericos_set.all()
+        
+    except ObjectDoesNotExist as e:
+        context['error'] = f"Componente faltante: {str(e)}"
+    
+    return render(request, 'Expediente/expediente_pc.html', context)
+
+
+
+
+
+#==========================================> Properties <============================================#
 #==========================================> Properties <============================================#

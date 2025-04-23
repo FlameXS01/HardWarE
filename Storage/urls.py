@@ -101,5 +101,6 @@ urlpatterns = [
     
     #===================== urls next ===================#
     
+    path('expediente/<int:id_pc>/', expediente_pc, name='expediente_pc'),
     
 ]
