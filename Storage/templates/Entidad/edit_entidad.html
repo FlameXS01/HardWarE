@@ -1,0 +1,22 @@
+{% extends 'Entidad/list_entidad.html' %}
+
+{% block table %}
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <div class="portlet-body form">
+        <form action="" method="POST">
+            {% csrf_token %}
+        
+            <div class="portlet-body form">
+                <div class="mb-3">
+                    <h2>Editar</h2>
+                </div>
+                
+                {{ entidad_form.as_p }} 
+        
+                <input type="submit" class="btn btn-success" style="margin: 10px" value="Guardar">
+            </div>
+        </form>
+    </div>
+{%endblock%}

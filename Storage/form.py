@@ -4,18 +4,20 @@ from .models import *
 class PcForm(forms.ModelForm):
     class Meta:
         model = Pc
-        fields = ['so', 'nombre_equipo', 'ultimo_reporte', 'id_chasis', 'serial_pc']
+        fields = ['so', 'nombre_equipo', 'ultimo_reporte', 'id_chasis', 'serial_pc', 'id_entidad']
         widgets = {
             'so': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Sistema Operativo', 'required': True}),
             'nombre_equipo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del Equipo', 'required': True}),
             'ultimo_reporte': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Último Reporte', 'required': True}),
             'id_chasis': forms.Select(attrs={'class':'form-control', 'placeholder': 'Propietario anterior', 'required': True}),
             'serial_pc': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Serial del Equipo', 'required': True}),
+            'id_entidad': forms.Select(attrs={'class':'form-control', 'required': True}),
             }
         
     def __init__(self, *args, **kwargs):
         super(PcForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
+        self.fields['id_entidad'].queryset = Entidad.objects.all()
 
 class ChasisForm(forms.ModelForm):
     class Meta:
@@ -171,5 +173,23 @@ class IncidenciasForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(IncidenciasForm, self).__init__(*args, **kwargs)
         self.fields['id_pc'].queryset = Pc.objects.all() 
+class EntidadForm(forms.ModelForm):
+    class Meta: 
+
+        model = Entidad
+        fields = ['tipoEntidad', 'nombre']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Nombre', 'required': True}),
+            'tipoEntidad': forms.Select(
+                attrs={'class':'form-control', 'required': True},
+                choices=[ 
+                    ('Complejo', 'Complejo'),
+                    ('UEB', 'UEB'),
+                    ('Otro', 'Otro'),
+                ]
+            ),
+        }
+        
+        
 
 

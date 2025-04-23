@@ -83,12 +83,21 @@ urlpatterns = [
     path('edit_ranura/<int:id_ranura>', edit_ranura, name="edit_ranura"),
     path('del_ranura/<int:id_ranura>', del_ranura, name="del_ranura"), 
     
-    #===================== urls next ===================#
+    #===================== urls tarjeta ===================#
     
     path('tarjeta/', list_tarjeta , name="list_tarjeta"),
     path('add_tarjeta/',  add_tarjeta ,name="add_tarjeta"),
     path('edit_tarjeta/<int:id_tarjeta>', edit_tarjeta, name="edit_tarjeta"),
     path('del_tarjeta/<int:id_tarjeta>', del_tarjeta, name="del_tarjeta"), 
+    
+    #===================== urls next ===================#
+    
+    path('entidad/', list_entidad , name="list_entidad"),
+    path('complejo/', list_Complejo , name="list_Complejo"),
+    path('ueb/', list_Ueb , name="list_Ueb"),
+    path('add_entidad/',  add_entidad ,name="add_entidad"),
+    path('edit_entidad/<int:id_entidad>', edit_entidad, name="edit_entidad"),
+    path('del_entidad/<int:id_entidad>', del_entidad, name="del_entidad"), 
     
     #===================== urls next ===================#
     

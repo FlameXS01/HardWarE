@@ -19,10 +19,12 @@ import os
 def index (request): 
     pc = Pc.objects.all()
     incidencias = Incidencias.objects.all()
+    cont = pc.count()
     
     context = {
         'pc': pc,
         'incidencias': incidencias,
+        'cont':cont,
     }
     return render(request, 'base/index.html', context)
 
@@ -497,5 +499,50 @@ def del_tarjeta(request, id_tarjeta):
     tarjeta_to_delete.delete()
     
     return redirect('list_tarjeta')
+
+#=================================> Entidad <======================================#            
+            
+    #LISTAR Entidad
+def list_entidad(request):
+    entidades = Entidad.objects.all() 
+    return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
+def list_Complejo(request):
+    entidades = Entidad.objects.filter(tipoEntidad='Complejo') 
+    return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
+def list_Ueb(request):
+    entidades = Entidad.objects.filter(tipoEntidad='UEB')
+    return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
+
+    #ADD Entidad
+def add_entidad(request):
+    entidad_form = EntidadForm()
+    
+    if request.method == 'POST':
+        entidad_form = EntidadForm(data = request.POST)
+        if entidad_form.is_valid():
+            #guardar la entidad
+            entidad_form.save()
+            return redirect('list_entidad')
+    
+    return render(request, 'Entidad/add_entidad.html',{'entidad_form':entidad_form})
+    
+    #EDIT entidad
+def edit_entidad(request, id_entidad):
+    entidad = Entidad.objects.get(id_entidad=id_entidad)
+    entidad_form = EntidadForm(instance=entidad)
+    
+    if request.method == 'POST':
+        entidad_form = EntidadForm(request.POST, instance = entidad)
+        if entidad_form.is_valid():
+            entidad_form.save()
+            return redirect('list_entidad')
+    return render(request, 'Entidad/edit_entidad.html',{'entidad_form': entidad_form})
+
+    #DELETE entidad
+def del_entidad(request, id_entidad):
+    entidad_to_delete = Entidad.objects.get(pk = id_entidad)
+    entidad_to_delete.delete()
+    
+    return redirect('list_entidad')
 
 #==========================================> Properties <============================================#

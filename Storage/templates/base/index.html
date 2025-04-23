@@ -132,81 +132,99 @@
         {%endblock%}
         <div class="quixnav">
             <div class="quixnav-scroll">
+                
                 <ul class="metismenu" id="menu">
-                    <li class="nav-label first">Actividades Generales</li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Asignar Computador</span></a>
+                    <!-- Menú Principal -->        
+                    <li class="nav-label first">Utilidades</li>   
+                <!-- Expedientes -->
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                            <i class="icon icon-folder"></i><span class="nav-text">Expedientes</span>
+                        </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'list_pc' %}">Listar Computadores</a></li>
-                            <li><a href="{% url 'add_pc' %}">Vincular Usuario</a></li>
+                            <!-- Submenú UEB -->
+                            <li>
+                                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="icon icon-globe"></i><span class="nav-text">UEB</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    <li><a href="{% url 'list_Ueb' %}">Listar Expedientes</a></li>
+                                </ul>
+                            </li>                     
+
+                            <!-- Submenú Complejos -->
+
+                            <li>
+                                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="icon icon-building"></i><span class="nav-text">Complejos</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    <li><a href="{% url 'list_Complejo' %}">Listar Expedientes</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Manejar Chasis</span></a>
+
+                    <!-- Gestionar Entidades -->        
+                    <li>       
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">        
+                            <i class="icon icon-grid"></i><span class="nav-text">Gestionar Entidades</span>        
+                        </a>        
+                        <ul aria-expanded="false">        
+                            <li><a href="{% url 'list_entidad' %}">Listar Todas</a></li>  
+                            <li><a href="{% url 'list_Complejo' %}">Listar Complejos</a></li>
+                            <li><a href="{% url 'list_Ueb' %}">Listar Ueb</a></li>      
+                            <li><a href="{% url 'add_entidad' %}">Agregar Entidad</a></li>        
+                        </ul>        
+                    </li>     
+        
+                    <!-- Detalles Hardware -->
+        
+                    <li>        
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">        
+                            <i class="icon icon-cpu"></i><span class="nav-text">Detalles Hardware</span>        
+                        </a>       
+                        <ul aria-expanded="false">        
+                            <li><a href="{% url 'list_pc' %}">Pc</a></li>        
+                            <li><a href="{% url 'list_chasis' %}">Chasis</a></li>        
+                            <li><a href="{% url 'list_periferico' %}">Periféricos</a></li>        
+                            <li><a href="{% url 'list_fuente' %}">Fuentes</a></li>        
+                            <li><a href="{% url 'list_almacenamiento' %}">Almacenamiento</a></li>        
+                            <li><a href="{% url 'list_procesador' %}">Procesadores</a></li>        
+                            <li><a href="{% url 'list_placa' %}">Placas Base</a></li>        
+                            <li><a href="{% url 'list_ram' %}">Tarjetas Ram</a></li>        
+                            <li><a href="{% url 'list_lector' %}">Lectores</a></li>        
+                            <li><a href="{% url 'list_ranura' %}">Ranuras Expansión</a></li>        
+                            <li><a href="{% url 'list_tarjeta' %}">Tarjeta Red </a></li>        
+                        </ul>        
+                    </li>        
+        
+                    <!-- Incidencias -->
+        
+                    <li>        
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">        
+                            <i class="icon icon-alert"></i><span class="nav-text">Incidencias</span>        
+                        </a>        
+                        <ul aria-expanded="false">        
+                            <li><a href="{% url 'list_incidencia' %}">Listar Incidencias</a></li>        
+                            <li><a href="{% url 'add_incidencia' %}">Agregar Incidencia</a></li>        
+                        </ul>        
+                    </li>        
+        
+                    <!-- Reportes -->        
+                    <li>        
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">        
+                            <i class="icon icon-file-text"></i><span class="nav-text">Reportes</span>        
+                        </a>
                         <ul aria-expanded="false">
-                            <li><a href="{% url 'list_chasis' %}">Listar Chasis</a></li>
-                            <li><a href="{% url 'add_chasis' %}">Agregar Chasis</a></li>
+
+        
                         </ul>
+        
                     </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app-store"></i><span class="nav-text">Incidencias</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_incidencia' %}">Listar Incidencias</a></li>
-                            <li><a href="{% url 'add_incidencia' %}">Agregar Incidencia</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Periféricos</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_periferico' %}">Listar Periféricos</a></li>
-                            <li><a href="{% url 'add_periferico' %}">Agregar Periféricos</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Fuente</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_fuente' %}">Listar Fuentes</a></li>
-                            <li><a href="{% url 'add_fuente' %}">Agregar Fuente</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Discos</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_almacenamiento' %}">Listar Almacenamientos</a></li>
-                            <li><a href="{% url 'add_almacenamiento' %}">Agregar Almacenamiento</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Procesadores</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_procesador' %}">Listar Procesadores</a></li>
-                            <li><a href="{% url 'add_procesador' %}">Agregar Procesador</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar MotherB</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_placa' %}">Listar Placas</a></li>
-                            <li><a href="{% url 'add_placa' %}">Agregar PLaca Base</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Ram</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_ram' %}">Listar Rams</a></li>
-                            <li><a href="{% url 'add_ram' %}">Agregar Ram</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Lector</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_lector' %}">Listar Lector</a></li>
-                            <li><a href="{% url 'add_lector' %}">Agregar Lector</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Ranura</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_ranura' %}">Listar Ranuras</a></li>
-                            <li><a href="{% url 'add_ranura' %}">Agregar Ranura</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void(0)" aria-expanded="false"><i class="icon icon-app"></i><span class="nav-text">Manejar Tarjeta</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{% url 'list_tarjeta' %}">Listar Tarjetas</a></li>
-                            <li><a href="{% url 'add_tarjeta' %}">Agregar tarjeta</a></li>
-                        </ul>
-                    </li>
+        
                 </ul>
+
             </div>
         </div>
         {%block content%}
@@ -240,7 +258,7 @@
                                 
                                 <div class="stat-content d-inline-block">
                                     <div class="stat-text">Ordenadores</div>
-                                    <div class="stat-digit">111223134</div>
+                                    <div class="stat-digit">{{cont}}</div>
                                 </div>
                             </div>
                         </div>
