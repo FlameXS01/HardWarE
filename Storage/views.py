@@ -74,7 +74,7 @@ def del_pc(request, id_pc):
 
     #LISTAR CHASIS  
 def list_chasis(request):
-    chasis = Chasis.objects.all()
+    chasis = Chasis.objects.all().select_related('pc')
     return render(request,'Chasis/list_chasis.html',{"chasis":chasis})
 
     #ADD CHASIS

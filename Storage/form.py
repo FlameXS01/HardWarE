@@ -20,13 +20,19 @@ class PcForm(forms.ModelForm):
         self.fields['id_entidad'].queryset = Entidad.objects.all()
 
 class ChasisForm(forms.ModelForm):
+    
+    nombre_equipo = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     class Meta:
         model = Chasis
-        fields = ['tipo_chasis']
+        fields = ['tipo_chasis','nombre_equipo']
         widgets = {
             'tipo_chasis': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tipo de Chasis', 'required': True}),
             'pc': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'PC', 'required': True}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:  
+            self.initial['nombre_equipo'] = self.instance.nombre_equipo_relacionado
 
 class LectorForm(forms.ModelForm):
     class Meta:

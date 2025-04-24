@@ -7,8 +7,16 @@ class Chasis(models.Model):
     tipo_chasis = models.CharField(max_length=50)  
     serial_board = models.CharField(max_length=50, null=True)  
     
+    @property
+    def nombre_equipo_relacionado(self):
+        if hasattr(self, 'pc'):  
+            return self.pc.nombre_equipo
+        return "No asignado a ninguna PC"
+    
+    
     def __str__(self):
-        return self.serial_board  
+        return self.pc.nombre_equipo  
+
 
 class Pc(models.Model):
     id_pc = models.BigAutoField(primary_key=True)
