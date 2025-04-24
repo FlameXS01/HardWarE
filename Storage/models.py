@@ -8,7 +8,7 @@ class Chasis(models.Model):
     serial_board = models.CharField(max_length=50, null=True)  
     
     def __str__(self):
-        return self.serial_board  # Ensure this returns a valid field
+        return self.serial_board  
 
 class Pc(models.Model):
     id_pc = models.BigAutoField(primary_key=True)
@@ -47,7 +47,6 @@ class Almacenamiento(models.Model):
     no_serie_alm = models.CharField(max_length=100, unique=True)
     tipo_alm = models.CharField(max_length=50)
     interface_alm = models.CharField(max_length=50)
-    #Durabilidad_alm = models.CharField(max_length=50)    
     modelo_alm = models.CharField(max_length=50)
     capacidad_alm = models.BigIntegerField()
     id_chasis = models.ForeignKey(Chasis, null = False, blank = False, on_delete = models.CASCADE)
