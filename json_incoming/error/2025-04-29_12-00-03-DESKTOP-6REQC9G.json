@@ -1,0 +1,209 @@
+{
+  "pc_name": "DESKTOP-6REQC9G",
+  "chassis": [
+        {
+      "type_code": 9,
+      "type_name": "Laptop"
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 11 Pro",
+      "service_pack": "0.0",
+      "architecture": "64-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "Dell Inc.",
+      "product": "      ",
+      "serial": "/9MHSR72/              /"
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz",
+      "cores": 2,
+      "clock": 2501
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "LITEON L8H-256V2G-41 M.2 2280 256GB SED",
+      "size_gb": 238,
+      "interface": "SCSI",
+      "serial": "TW0PV3P45508565UH336"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "DIMM A",
+      "capacity_gb": 8,
+      "type_code": 0,
+      "form_factor": 12,
+      "serial": "12161215",
+      "speed_mhz": 2133
+    },
+        {
+      "location": "DIMM B",
+      "capacity_gb": 8,
+      "type_code": 0,
+      "form_factor": 12,
+      "serial": "12121212",
+      "speed_mhz": 2133
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-2",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-3",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-4",
+      "status": "available"
+    }
+  ],
+  "serial_ports": [
+  ],
+  "parallel_ports": [
+        {
+      "id": "LPT1",
+      "status": "operational",
+      "availability": "running"
+    }
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_9D2F&SUBSYS_06DC1028&REV_21\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "USB xHCI Compliant Host Controller"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] Intel(R) Dual Band Wireless-AC 8260",
+      "ip": "192.168.223.153",
+      "gateway": "192.168.223.127",
+      "subnet": "255.255.255.0"
+    },
+        {
+      "id": "[00000002] Intel(R) Ethernet Connection I219-LM",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] Microsoft Wi-Fi Direct Virtual Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] Microsoft Wi-Fi Direct Virtual Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000010] WAN Miniport (IP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000011] WAN Miniport (IPv6)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000012] WAN Miniport (Network Monitor)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000013] Bluetooth Device (Personal Area Network)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000014] Remote NDIS based Internet Sharing Device",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Intel(R) Dual Band Wireless-AC 8260",
+      "mac_address": "E4:B3:18:1D:DB:F2",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "OneNote (Desktop)",
+      "model": "Send to Microsoft OneNote 16 Driver",
+      "port_name": "nul:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    }
+  ]
+}

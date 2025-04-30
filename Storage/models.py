@@ -17,7 +17,6 @@ class Chasis(models.Model):
     def __str__(self):
         return self.pc.nombre_equipo  
 
-
 class Pc(models.Model):
     id_pc = models.BigAutoField(primary_key=True)
     serial_pc = models.CharField(max_length=50, unique=True)

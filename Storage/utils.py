@@ -20,7 +20,7 @@ def procesar_json_files():
             try:
                 with open(filepath, 'r', encoding='ISO-8859-1') as f:
                     data = json.load(f)
-                    procesar_pc(data, filename, filepath )
+                    procesar_pc( data )
                     # Eliminar el archivo después de procesarlo
                 if os.path.exists(filepath):
                     os.remove(filepath)
@@ -35,7 +35,7 @@ def procesar_json_files():
                 nuevo_nombre = f"{fecha_formateada}-{filename}"
                 os.rename(filepath, os.path.join(JSON_INCOMING_DIR, 'error', nuevo_nombre))
                 
-def procesar_pc(data, filename, filepath ):
+def procesar_pc(data):
     with transaction.atomic():
         pc, created = procesar_pc_base(data)
         if created:
@@ -45,6 +45,20 @@ def procesar_pc(data, filename, filepath ):
 
 def procesar_pc_base(data):
     serial_pc = data['motherboards'][0]['serial'].strip()
+    pc_name = data['pc_name']
+    
+    try:
+        segmento_medio = pc_name.split('-')[1].strip().upper()
+    except IndexError:
+        segmento_medio = "DESCONOCIDO"
+    
+    datos_entidad = obtener_entidad(segmento_medio)
+    
+    # Crear o obtener la entidad
+    entidad, _ = Entidad.objects.get_or_create(
+        nombre=datos_entidad['nombre'],
+        defaults={'tipoEntidad': datos_entidad['tipo']}
+    )   
     
     pc, created = Pc.objects.update_or_create(
         serial_pc=serial_pc,
@@ -52,7 +66,8 @@ def procesar_pc_base(data):
             'nombre_equipo': data['pc_name'],
             'so': data['operating_systems'][0]['version'],
             'ultimo_reporte': datetime.now().date(),
-            'id_chasis': procesar_chasis(data)
+            'id_chasis': procesar_chasis(data),
+            'id_entidad': entidad
         }
     )
     return pc, created
@@ -95,7 +110,7 @@ def crear_componentes(pc, data):
     for adapter in data['network_adapters']:
         if adapter['ip'] != 'N/A':
             Tarjeta_Red.objects.create(
-                mac=adapter['mac_address'],
+                mac=adapter['mac'],
                 ip=adapter['ip'],
                 subnet=adapter['subnet'],
                 gateway=adapter['gateway'],
@@ -164,4 +179,47 @@ def registrar_incidencia(pc, cambios):
         observacion=desc[:50], 
         id_pc=pc
     )
+
+def obtener_entidad(segmento):
+    # Buscar en el diccionario
+    entrada = MAPEO_ENTIDADES.get(segmento, None)
     
+    if entrada:
+        return {'nombre': entrada[0], 'tipo': entrada[1]}
+    else:
+        return {'nombre': segmento, 'tipo': 'Otros'}
+        
+
+MAPEO_ENTIDADES = {
+    # Complejos
+    'SSP': ('Complejo Sancti Spiritus', 'Complejo '),
+    'CAB': ('Complejo Cabaiguan', 'Complejo'),
+    'TAG': ('Complejo Taguasco', 'Complejo'),
+    'TRI': ('Complejo Trinidad', 'Complejo'),
+    
+    # UEBs
+    'REG': ('Almacén Distribuidor', 'UEB'),
+    
+    'CEL': ('Centro de Elaboración', 'UEB'),
+    
+    'SST': ('División Tecnológica', 'UEB'),
+    
+    'FX':  ('Fincimex', 'UEB'),
+    
+    'ADM': ('Sucursal', 'UEB'),
+    'COM': ('Sucursal', 'UEB'),
+    'ECO': ('Sucursal', 'UEB'),
+    'GER': ('Sucursal', 'UEB'),
+    'INF': ('Sucursal', 'UEB'),
+    'PRO': ('Sucursal', 'UEB'),
+    'RH':  ('Sucursal', 'UEB'),
+    
+    'VIR': ('Tiendas Virtuales', 'UEB'),
+    
+    'MAY': ('Mayorista', 'UEB'),
+    
+    'ECU': ('Logística', 'UEB'),
+    'INV': ('Logística', 'UEB'),
+    'MTTO':('Logística', 'UEB'),
+    'TRA': ('Logística', 'UEB')
+}
