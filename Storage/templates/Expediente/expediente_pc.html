@@ -3,7 +3,6 @@
 <head>
     <title>Expediente Técnico - {{ pc.nombre_equipo }}</title>
     <style>
-        /* Estilos generales optimizados */
         body { 
             font-family: 'Arial', sans-serif; 
             margin: 10px;
@@ -50,6 +49,9 @@
             border: 0.5px solid #ddd; 
             padding: 6px;
             font-size: 11px;
+            white-space: nowrap; /* Evitar que el texto se corte */
+            overflow: hidden; /* Ocultar el desbordamiento */
+            text-overflow: ellipsis; /* Agregar puntos suspensivos si es necesario */
         }
 
         th { 
@@ -86,24 +88,13 @@
             .seccion {
                 margin-bottom: 10px;
             }
-        }
 
-        .firma-section {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid #2c3e50;
-        }
-
-        .firma-box {
-            display: inline-block;
-            width: 48%;
-            margin: 5px;
-            padding: 8px;
+            .print-button {
+                display: none; /* Ocultar botón de imprimir en impresión */
+            }
         }
 
         .print-button {
-            position: relative;
-            z-index: 100;
             background: #2c3e50;
             color: white;
             padding: 8px 15px;
@@ -111,14 +102,7 @@
             border-radius: 4px;
             cursor: pointer;
             margin-bottom: 10px;
-            font-size: 12px;
         }
-        @media print {
-            .print-button {
-                display: none;
-            }
-        }
-
     </style>
 </head>
 <body>
@@ -131,29 +115,45 @@
     <!-- Sección de Datos Principales Compacta -->
     <div class="seccion">
         <table>
-            <tr><th width="25%">Serial PC:</th><td width="25%">{{ pc.serial_pc }}</td>
-                <th width="25%">S.O.:</th><td width="25%">{{ pc.so }}</td></tr>
+            <tr>
+                <th width="25%">Serial PC:</th>
+                <td width="25%">{{ pc.serial_pc }}</td>
+                <th width="25%">S.O.:</th>
+                <td width="25%">{{ pc.so }}</td>
+            </tr>
         </table>
     </div>
 
     <!-- Componentes en Tablas Compactas -->
     <div class="seccion">
-        <h2>Chasis</h2>
-        <table>
-            <tr><th>Tipo:</th><td colspan="3">{{ chasis.tipo_chasis }}</td></tr>
-        </table>
-
-        <h2>Placa Base</h2>
-        <table>
-            <tr><th>Modelo:</th><td>{{ placa_base.modelo_placa }}</td>
-                <th>Serial:</th><td>{{ placa_base.no_serie_placa }}</td></tr>
-        </table>
-
-        <h2>Procesador</h2>
-        <table>
-            <tr><th>Modelo:</th><td>{{ procesador.desc_procesador }}</td>
+        <table class="tabla-compacta">
+            <!-- Chasis -->
+            <tr class="seccion-header"><th colspan="4">Chasis</th></tr>
+            <tr>
+                <th width="20%">Tipo:</th>
+                <td width="30%">{{ chasis.tipo_chasis }}</td>
+                <th width="20%"># Sello:</th>
+                <td width="30%"></td>
+            </tr>
+    
+            <!-- Placa Base -->
+            <tr class="seccion-header"><th colspan="4">Placa Base</th></tr>
+            <tr>
+                <th>Modelo:</th>
+                <td>{{ placa_base.modelo_placa }}</td>
+                <th>Serial:</th>
+                <td>{{ placa_base.no_serie_placa }}</td>
+            </tr>
+    
+            <!-- Procesador -->
+            <tr class="seccion-header"><th colspan="4">Procesador</th></tr>
+            <tr>
+                <th>Modelo:</th>
+                <td colspan="3">{{ procesador.desc_procesador }}</td>
+            </tr>
         </table>
     </div>
+    
 
     <!-- Memoria RAM Compacta -->
     <div class="seccion">
@@ -163,7 +163,7 @@
             {% for ram in rams %}
             <tr>
                 <td>{{ ram.capacidad_ram }}</td>
-                <td>{{ ram.no_serie_ram|truncatechars:8 }}</td>
+                <td>{{ ram.no_serie_ram }}</td>
                 <td>{{ ram.tipo_ram }}</td>
                 <td>{{ ram.fabricante_ram|default:"-" }}</td>
             </tr>
@@ -181,9 +181,9 @@
             {% for almacenamiento in almacenamientos %}
             <tr>
                 <td>{{ almacenamiento.tipo_alm }}</td>
-                <td>{{ almacenamiento.capacidad_alm }}</td>
-                <td>{{ almacenamiento.modelo_alm|truncatechars:12 }}</td>
-                <td>{{ almacenamiento.no_serie_alm|truncatechars:8 }}</td>
+                <td>{{ almacenamiento.capacidad_gb }}</td>
+                <td>{{ almacenamiento.modelo_alm }}</td>
+                <td>{{ almacenamiento.no_serie_alm }}</td>
             </tr>
             {% empty %}
             <tr><td colspan="4" style="text-align: center;">Sin dispositivos</td></tr>
@@ -220,7 +220,7 @@
                 <tr><th>MAC</th><th>IP</th></tr>
                 {% for tarjeta in tarjetas_red %}
                 <tr>
-                    <td>{{ tarjeta.mac|truncatechars:12 }}</td>
+                    <td>{{ tarjeta.mac }}</td>
                     <td>{{ tarjeta.ip }}</td>
                 </tr>
                 {% empty %}
@@ -234,6 +234,7 @@
             <table>
                 <tr><th>Potencia:</th><td>{{ fuente.potencia_fuente }}W</td></tr>
                 <tr><th>Fabricante:</th><td>{{ fuente.fabricante_fuente }}</td></tr>
+                <tr><th>Serial:</th><td>{{ fuente.no_serie_fuente }}</td></tr>
             </table>
         </div>
     </div>
@@ -242,7 +243,10 @@
     <div class="firma-section">
         <div style="display: flex; justify-content: space-between; margin-top: 15px;">
             <div style="width: 48%;">
-                <p><strong>Usuario:</strong><br>_________________________<br>Firma: _________________________</p>
+                <p>
+                    <strong>Usuario:
+
+                    </strong>_____________________<br>Firma: _____________________</p>
             </div>
         </div>
     </div>

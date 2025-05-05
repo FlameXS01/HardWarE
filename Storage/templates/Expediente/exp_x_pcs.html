@@ -1,0 +1,54 @@
+{% extends 'base/index.html' %}
+
+{% block welcome %}
+
+{% endblock %}
+
+{% block detalles %}
+<h2></h2>
+{% endblock %}
+
+{% block grafico %}
+<h2></h2>
+{% endblock %}
+
+{% block notifications %}
+<h2></h2>
+{% endblock %}
+{% block table %}
+<div class="table-responsive">
+    <h2>Detalles de la Entidad: {{entidad.tipoEntidad}}-{{entidad.nombre}}</h2>
+    <!-- Tabla de PCs -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre de la PC</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pc in pcs %}
+                <tr>
+                    <td>{{ pc.nombre_equipo }}</td>
+                    <td>
+                        <a href="{% url 'expediente_pc' pc.id_pc %}" class="btn btn-info">
+                            <i class="fas fa-file-alt"></i> Generar Expediente
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No hay PCs asociadas a esta entidad.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+            <i class="fas fa-info-circle"></i> Volver
+        </a> 
+    </div>
+</div>
+{% endblock %}

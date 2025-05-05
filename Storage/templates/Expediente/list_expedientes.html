@@ -1,0 +1,58 @@
+{% extends 'base/index.html' %}
+
+{% block welcome %}
+<h2>Detalles de la Entidad</h2>
+{% endblock %}
+
+{% block detalles %}
+<h2></h2>
+{% endblock %}
+
+{% block grafico %}
+<h2></h2>
+{% endblock %}
+
+{% block notifications %}
+<h2></h2>
+{% endblock %}
+
+{% block table %}
+<div class="table-responsive">
+    <!-- Tabla de UEBs y sus PCs -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre de la Entidad</th>
+                <th>Cantidad de PC</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ent, pcs in entidad_with_pcs.items %}
+                <tr>
+                    <td>{{ ent.nombre }}</td>
+                    <td>
+                        {% if pcs != 0 %}
+                            {{ pcs }}
+                        {% else %}
+                            No hay PCs asociadas
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'lista_exp_por_nomb' ent.id_entidad %}" class="btn btn-info">
+                            <i class="fas fa-file-alt"></i> Detaaaaalles
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+            <i class="fas fa-info-circle"></i> Volver
+        </a> 
+    </div>
+</div>
+{% endblock %}

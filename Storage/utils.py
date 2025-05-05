@@ -110,7 +110,7 @@ def crear_componentes(pc, data):
     for adapter in data['network_adapters']:
         if adapter['ip'] != 'N/A':
             Tarjeta_Red.objects.create(
-                mac=adapter['mac'],
+                mac=adapter['mac '],
                 ip=adapter['ip'],
                 subnet=adapter['subnet'],
                 gateway=adapter['gateway'],

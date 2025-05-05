@@ -102,5 +102,9 @@ urlpatterns = [
     #===================== urls next ===================#
     
     path('expediente/<int:id_pc>/', expediente_pc, name='expediente_pc'),
+    path('list_Ueb_exp/', list_Ueb_exp , name="list_Ueb_exp"),
+    path('list_Complejo_exp/', list_Complejo_exp , name="list_Complejo_exp"),
+    path('list_Otros_exp/', list_Otros_exp , name="list_Otros_exp"),
+    path('lista_exp_por_nomb/<int:id_entidad>', lista_exp_por_nomb , name="lista_exp_por_nomb"),
     
 ]

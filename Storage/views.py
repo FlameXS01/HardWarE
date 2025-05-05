@@ -546,6 +546,7 @@ def del_entidad(request, id_entidad):
     
     return redirect('list_entidad')
 
+
 #==========================================> Expediente <============================================#
 def expediente_pc(request, id_pc):
     # Obtener el PC principal con todas sus relaciones
@@ -581,9 +582,69 @@ def expediente_pc(request, id_pc):
         context['error'] = f"Componente faltante: {str(e)}"
     
     return render(request, 'Expediente/expediente_pc.html', context)
-
-
-
+def list_Ueb_exp(request): 
+    # Obtener todas las entidades de tipo UEB
+    uebs_exp = Entidad.objects.filter(tipoEntidad='UEB')
+    
+    # Crear un diccionario para almacenar las PCs por cada UEB
+    entidad_with_pcs = {}
+    
+    for ent in uebs_exp:
+        # Obtener las PCs asociadas a cada UEB
+        pcs = Pc.objects.filter(id_entidad=ent)
+        contad = pcs.count()
+        entidad_with_pcs[ent] = contad
+    
+    context = {
+        'entidad_with_pcs': entidad_with_pcs,
+    }
+    return render(request, 'Expediente/list_expedientes.html', context)
+def list_Complejo_exp(request): 
+    # Obtener todas las entidades de tipo UEB
+    complejo_exp = Entidad.objects.filter(tipoEntidad='Complejo')
+    
+    # Crear un diccionario para almacenar las PCs por cada UEB
+    entidad_with_pcs = {}
+    
+    for ent in complejo_exp:
+        # Obtener las PCs asociadas a cada UEB
+        pcs = Pc.objects.filter(id_entidad=ent)
+        contad = pcs.count()
+        entidad_with_pcs[ent] = contad
+    
+    context = {
+        'entidad_with_pcs': entidad_with_pcs,
+    }
+    return render(request, 'Expediente/list_expedientes.html', context)
+def list_Otros_exp(request): 
+    # Obtener todas las entidades de tipo UEB
+    otros_exp = Entidad.objects.filter(tipoEntidad='Otros')
+    
+    # Crear un diccionario para almacenar las PCs por cada UEB
+    entidad_with_pcs = {}
+    
+    for ent in otros_exp:
+        # Obtener las PCs asociadas a cada UEB
+        pcs = Pc.objects.filter(id_entidad=ent)
+        contad = pcs.count()
+        entidad_with_pcs[ent] = contad
+    
+    context = {
+        'entidad_with_pcs': entidad_with_pcs,
+    }
+    return render(request, 'Expediente/list_expedientes.html', context)
+def lista_exp_por_nomb(request, id_entidad): 
+    
+    entidad = Entidad.objects.filter(id_entidad=id_entidad)    
+    # Filtrar las PCs asociadas a la entidad
+    pcs = Pc.objects.filter(id_entidad=id_entidad)
+    
+    context = {
+        'entidad': entidad[0],
+        'pcs': pcs,
+    }
+    
+    return render(request, 'Expediente/exp_x_pcs.html', context)
 
 
 #==========================================> Properties <============================================#

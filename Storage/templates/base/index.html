@@ -148,7 +148,7 @@
                                     <i class="icon icon-globe"></i><span class="nav-text">UEB</span>
                                 </a>
                                 <ul aria-expanded="false">
-                                    <li><a href="{% url 'list_Ueb' %}">Listar Expedientes</a></li>
+                                    <li><a href="{% url 'list_Ueb_exp' %}">Listar Expedientes</a></li>
                                 </ul>
                             </li>                     
 
@@ -159,7 +159,17 @@
                                     <i class="icon icon-building"></i><span class="nav-text">Complejos</span>
                                 </a>
                                 <ul aria-expanded="false">
-                                    <li><a href="{% url 'list_Complejo' %}">Listar Expedientes</a></li>
+                                    <li><a href="{% url 'list_Complejo_exp' %}">Listar Expedientes</a></li>
+                                </ul>
+                            </li>
+                            <!-- Submenú Otros -->
+
+                            <li>
+                                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="icon icon-building"></i><span class="nav-text">Otros</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    <li><a href="{% url 'list_Otros_exp' %}">Listar Expedientes</a></li>
                                 </ul>
                             </li>
                         </ul>

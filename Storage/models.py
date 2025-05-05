@@ -60,6 +60,10 @@ class Almacenamiento(models.Model):
 
     def __str__(self):
         return self.id_chasis
+    
+    @property
+    def capacidad_gb(self):
+        return round(self.capacidad_alm / 1024, 2)
 
 class Placa_Base(models.Model):
     id_placa = models.BigAutoField(primary_key=True)
