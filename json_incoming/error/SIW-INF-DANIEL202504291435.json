@@ -1,0 +1,215 @@
+{
+  "pc_name": "SIW-INF-DANIEL",
+  "chassis": [
+        {
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "To Be Filled By O.E.M."
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 10 Pro",
+      "service_pack": "0.0",
+      "architecture": "64-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "Gigabyte Technology Co., Ltd.",
+      "product": "B85M-DS3H",
+      "serial": "To be filled by O.E.M."
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Core(TM) i5-4460  CPU @ 3.20GHz",
+      "cores": 4,
+      "clock": 3201
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "ST1000DM003-1SB102",
+      "size_gb": 932,
+      "interface": "SCSI",
+      "serial": "Z9A93R2G"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "ChannelA-DIMM0",
+      "capacity_gb": 4,
+      "type_code": 24,
+      "form_factor": 8,
+      "serial": "C5160000",
+      "speed_mhz": 1333
+    },
+        {
+      "location": "ChannelB-DIMM0",
+      "capacity_gb": 4,
+      "type_code": 24,
+      "form_factor": 8,
+      "serial": "A4170000",
+      "speed_mhz": 1333
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-2",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-3",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-4",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-5",
+      "status": "available"
+    }
+  ],
+  "serial_ports": [
+        {
+    }
+  ],
+  "parallel_ports": [
+        {
+      "id": "LPT1",
+      "status": "operational",
+      "availability": "running"
+    }
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_8C2D&SUBSYS_50061458&REV_05\\3&11583659&0&D0",
+      "status": "operational",
+      "description": "USB EHCI nº 2 Intel(R) Serie 8/Serie C220 - 8C2D"
+    },
+        {
+      "id": "PCI\\VEN_8086&DEV_8C26&SUBSYS_50061458&REV_05\\3&11583659&0&E8",
+      "status": "operational",
+      "description": "USB EHCI nº 1 Intel(R) Serie 8/Serie C220 - 8C26"
+    },
+        {
+      "id": "PCI\\VEN_8086&DEV_8C31&SUBSYS_50071458&REV_05\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "Controladora de host USB genérico compatible con xHCI"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] Realtek PCIe GbE Family Controller",
+      "mac": "FC-AA-14-D0-F9-42",
+      "ip": "172.19.41.5",
+      "gateway": "172.19.41.254",
+      "subnet": "255.255.255.0"
+    },
+        {
+      "id": "[00000002] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (IP)",
+      "mac": "F4-9F-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (IPv6)",
+      "mac": "F4-9F-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] WAN Miniport (Network Monitor)",
+      "mac": "F4-9F-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Realtek PCIe GbE Family Controller",
+      "mac_address": "FC:AA:14:D0:F9:42",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "Wondershare PDF Converter",
+      "model": "Wondershare PDF Converter",
+      "port_name": "Wondershare PDF Converter Port"
+    },
+        {
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
+    },
+        {
+      "name": "Enviar a OneNote 16",
+      "model": "Send to Microsoft OneNote 16 Driver",
+      "port_name": "nul:"
+    }
+  ]
+}

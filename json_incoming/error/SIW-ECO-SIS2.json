@@ -1,59 +1,52 @@
 {
-  "pc_name": "DESKTOP-6REQC9G",
+  "pc_name": "SIW-ECO-SIS2",
   "chassis": [
         {
-      "type_code": 9,
-      "type_name": "Laptop"
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "Default string"
     }
   ],
   "operating_systems": [
         {
-      "version": "Microsoft Windows 11 Pro",
+      "version": "Microsoft Windows 10 Pro",
       "service_pack": "0.0",
-      "architecture": "64-bit",
+      "architecture": "32-bit",
       "language_code": 3082
     }
   ],
   "motherboards": [
         {
-      "manufacturer": "Dell Inc.",
-      "product": "      ",
-      "serial": "/9MHSR72/              /"
+      "manufacturer": "Gigabyte Technology Co., Ltd.",
+      "product": "B250M-DS3H-CF",
+      "serial": "Default string"
     }
   ],
   "cpus": [
         {
-      "name": "Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz",
+      "name": "Intel(R) Celeron(R) CPU G3920 @ 2.90GHz",
       "cores": 2,
-      "clock": 2501
+      "clock": 2900
     }
   ],
   "hard_drives": [
         {
       "id": "PHYSICALDRIVE0",
-      "model": "LITEON L8H-256V2G-41 M.2 2280 256GB SED",
-      "size_gb": 238,
-      "interface": "SCSI",
-      "serial": "TW0PV3P45508565UH336"
+      "model": "ST1000DM 010-2EP102 SCSI Disk Device",
+      "size_gb": 932,
+      "interface": "IDE",
+      "serial": "W9A57AAK"
     }
   ],
   "cdrom_drives": [
   ],
   "memory": [
         {
-      "location": "DIMM A",
-      "capacity_gb": 8,
+      "location": "ChannelA-DIMM0",
+      "capacity_gb": 4,
       "type_code": 0,
-      "form_factor": 12,
-      "serial": "12161215",
-      "speed_mhz": 2133
-    },
-        {
-      "location": "DIMM B",
-      "capacity_gb": 8,
-      "type_code": 0,
-      "form_factor": 12,
-      "serial": "12121212",
+      "form_factor": 8,
+      "serial": "41160100",
       "speed_mhz": 2133
     }
   ],
@@ -80,6 +73,8 @@
     }
   ],
   "serial_ports": [
+        {
+    }
   ],
   "parallel_ports": [
         {
@@ -90,7 +85,7 @@
   ],
   "usb_ports": [
         {
-      "id": "PCI\\VEN_8086&DEV_9D2F&SUBSYS_06DC1028&REV_21\\3&11583659&0&A0",
+      "id": "PCI\\VEN_8086&DEV_A2AF&SUBSYS_50071458&REV_00\\3&11583659&0&A0",
       "status": "operational",
       "description": "USB xHCI Compliant Host Controller"
     }
@@ -103,85 +98,65 @@
       "subnet": "N/A"
     },
         {
-      "id": "[00000001] Intel(R) Dual Band Wireless-AC 8260",
-      "ip": "192.168.223.153",
-      "gateway": "192.168.223.127",
+      "id": "[00000001] Realtek PCIe GBE Family Controller",
+      "mac": "1C-1B-0D-AB-8D-A5",
+      "ip": "172.19.41.137",
+      "gateway": "172.19.41.254",
       "subnet": "255.255.255.0"
     },
         {
-      "id": "[00000002] Intel(R) Ethernet Connection I219-LM",
+      "id": "[00000002] WAN Miniport (SSTP)",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000003] Microsoft Wi-Fi Direct Virtual Adapter",
+      "id": "[00000003] WAN Miniport (IKEv2)",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000004] Microsoft Wi-Fi Direct Virtual Adapter",
+      "id": "[00000004] WAN Miniport (L2TP)",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000005] WAN Miniport (SSTP)",
+      "id": "[00000005] WAN Miniport (PPTP)",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000006] WAN Miniport (IKEv2)",
+      "id": "[00000006] WAN Miniport (PPPOE)",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000007] WAN Miniport (L2TP)",
+      "id": "[00000007] WAN Miniport (IP)",
+      "mac": "A6-B3-20-52-41-53",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000008] WAN Miniport (PPTP)",
+      "id": "[00000008] WAN Miniport (IPv6)",
+      "mac": "B2-98-20-52-41-53",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000009] WAN Miniport (PPPOE)",
+      "id": "[00000009] WAN Miniport (Network Monitor)",
+      "mac": "B8-64-20-52-41-53",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
     },
         {
-      "id": "[00000010] WAN Miniport (IP)",
-      "ip": "N/A",
-      "gateway": "N/A",
-      "subnet": "N/A"
-    },
-        {
-      "id": "[00000011] WAN Miniport (IPv6)",
-      "ip": "N/A",
-      "gateway": "N/A",
-      "subnet": "N/A"
-    },
-        {
-      "id": "[00000012] WAN Miniport (Network Monitor)",
-      "ip": "N/A",
-      "gateway": "N/A",
-      "subnet": "N/A"
-    },
-        {
-      "id": "[00000013] Bluetooth Device (Personal Area Network)",
-      "ip": "N/A",
-      "gateway": "N/A",
-      "subnet": "N/A"
-    },
-        {
-      "id": "[00000014] Remote NDIS based Internet Sharing Device",
+      "id": "[00000010] Remote NDIS based Internet Sharing Device",
       "ip": "N/A",
       "gateway": "N/A",
       "subnet": "N/A"
@@ -189,21 +164,31 @@
   ],
   "network_connections": [
         {
-      "name": "Intel(R) Dual Band Wireless-AC 8260",
-      "mac_address": "E4:B3:18:1D:DB:F2",
+      "name": "Realtek PCIe GBE Family Controller",
+      "mac_address": "1C:1B:0D:AB:8D:A5",
       "status": "2"
     }
   ],
   "printers": [
         {
-      "name": "OneNote (Desktop)",
-      "model": "Send to Microsoft OneNote 16 Driver",
-      "port_name": "nul:"
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
     },
         {
       "name": "Microsoft Print to PDF",
       "model": "Microsoft Print To PDF",
       "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "HP LaserJet Professional P1606dn_1",
+      "model": "HP LaserJet Professional P1606dn",
+      "port_name": "IP_172.19.41.211"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
     }
   ]
 }

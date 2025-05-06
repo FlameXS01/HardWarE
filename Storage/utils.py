@@ -24,7 +24,7 @@ def procesar_json_files():
                     # Eliminar el archivo después de procesarlo
                 if os.path.exists(filepath):
                     os.remove(filepath)
-                    logger.info(f"Archivo {filename} eliminado correctamente")
+                    logger.info(f"Archivo {filename} >>>>>> procesado y eliminado correctamente <<<<<<")
                 else:
                     logger.warning(f"El archivo {filename} no existe o ya fue eliminado")
 
@@ -44,8 +44,13 @@ def procesar_pc(data):
             actualizar_componentes(pc, data )
 
 def procesar_pc_base(data):
-    serial_pc = data['motherboards'][0]['serial'].strip()
     pc_name = data['pc_name']
+    #serial_pc = ''
+    serial_pc_prov= data['motherboards'][0]['serial'].strip()
+    if serial_pc_prov != "Default string" and serial_pc_prov != 'To be filled by O.E.M.':
+        serial_pc = serial_pc_prov
+    else:
+        serial_pc = serial_pc_prov + pc_name
     
     try:
         segmento_medio = pc_name.split('-')[1].strip().upper()
@@ -60,22 +65,27 @@ def procesar_pc_base(data):
         defaults={'tipoEntidad': datos_entidad['tipo']}
     )   
     
+    chasis = procesar_chasis(data, serial_pc)
+    
     pc, created = Pc.objects.update_or_create(
         serial_pc=serial_pc,
         defaults={
             'nombre_equipo': data['pc_name'],
             'so': data['operating_systems'][0]['version'],
             'ultimo_reporte': datetime.now().date(),
-            'id_chasis': procesar_chasis(data),
+            'id_chasis':chasis,
             'id_entidad': entidad
         }
     )
+    print(pc)
     return pc, created
 
-def procesar_chasis(data):
-    chasis, _ = Chasis.objects.get_or_create(
-        tipo_chasis=data['chassis'][0]['type_name'],
-        serial_board=data['chassis'][0]['serial_board']
+def procesar_chasis(data, serial_board):
+    chasis, created = Chasis.objects.get_or_create(
+        serial_board=serial_board,
+        defaults={
+            'tipo_chasis': data['chassis'][0]['type_name']
+        }
     )
     return chasis
 
@@ -90,10 +100,11 @@ def crear_componentes(pc, data):
     
     # Procesador
     cpu = data['cpus'][0]
+    operating_systems = data['operating_systems'][0]
     Procesador.objects.create(
         desc_procesador=cpu['name'],
         velocidad_procesador=cpu['clock'],
-        arq_procesador=cpu['name'].split()[-1],  # Ej: 64-bit
+        arq_procesador=operating_systems['architecture'],
         id_placa=placa
     )
     
@@ -110,7 +121,7 @@ def crear_componentes(pc, data):
     for adapter in data['network_adapters']:
         if adapter['ip'] != 'N/A':
             Tarjeta_Red.objects.create(
-                mac=adapter['mac '],
+                mac=adapter['mac'],
                 ip=adapter['ip'],
                 subnet=adapter['subnet'],
                 gateway=adapter['gateway'],

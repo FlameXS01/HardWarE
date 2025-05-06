@@ -1,0 +1,223 @@
+{
+  "pc_name": "SIW-ECO-PLANIF2",
+  "chassis": [
+        {
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "Default string"
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 10 Pro",
+      "service_pack": "0.0",
+      "architecture": "64-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "Gigabyte Technology Co., Ltd.",
+      "product": "H510M H",
+      "serial": "Default string"
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Celeron(R) G5905 CPU @ 3.50GHz",
+      "cores": 2,
+      "clock": 3504
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "ST1000DM010-2EP102",
+      "size_gb": 932,
+      "interface": "IDE",
+      "serial": "ZN1MQ8YN"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "Controller0-ChannelB",
+      "capacity_gb": 4,
+      "type_code": 0,
+      "form_factor": 8,
+      "serial": "C90A0000",
+      "speed_mhz": 2400
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-2",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-3",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-4",
+      "status": "available"
+    }
+  ],
+  "serial_ports": [
+        {
+    }
+  ],
+  "parallel_ports": [
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_43ED&SUBSYS_50071458&REV_11\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "USB xHCI Compliant Host Controller"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] Realtek Gaming GbE Family Controller",
+      "mac": "18-C0-4D-F8-3E-53",
+      "ip": "169.254.111.205",
+      "gateway": "N/A",
+      "subnet": "255.255.0.0"
+    },
+        {
+      "id": "[00000002] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (IP)",
+      "mac": "56-02-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (IPv6)",
+      "mac": "58-60-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] WAN Miniport (Network Monitor)",
+      "mac": "66-B5-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Realtek Gaming GbE Family Controller",
+      "mac_address": "18:C0:4D:F8:3E:53",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "siw-imp-hp_planif (HP LaserJet Pro M201dw)",
+      "model": "HP LaserJet Pro M201-M202 PCL 6",
+      "port_name": "WSD-05040867-5e4b-4b65-912c-2aca5c75badf"
+    },
+        {
+      "name": "siw-imp-hp_inform (HP LaserJet Pro M201dw)",
+      "model": "HP LaserJet Pro M201-M202 PCL 6",
+      "port_name": "WSD-28f415e9-3bb2-42d6-af33-b1f4197f7b49"
+    },
+        {
+      "name": "NPI4EC2EA (HP LaserJet Pro M201dw)",
+      "model": "HP LaserJet Pro M201-M202 PCL 6",
+      "port_name": "WSD-51018d6a-447c-4700-b7b1-7452f3e885f6"
+    },
+        {
+      "name": "NPI03BAE9 (HP LaserJet Pro M201dw)",
+      "model": "HP LaserJet Pro M201-M202 PCL 6",
+      "port_name": "WSD-c0c0f057-3738-4511-9f7e-1ca393d47720"
+    },
+        {
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "imageRUNNER1435",
+      "model": "Canon iR1435 UFRII LT",
+      "port_name": "WSD-90d27c16-5ad6-4bf8-9b74-1f00702b0f45"
+    },
+        {
+      "name": "HP LaserJet Pro M201-M202 PCL 6",
+      "model": "HP LaserJet Pro M201-M202 PCL 6",
+      "port_name": "172.19.41.207"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
+    },
+        {
+      "name": "Enviar a OneNote 2010",
+      "model": "Send To Microsoft OneNote 2010 Driver",
+      "port_name": "nul:"
+    },
+        {
+      "name": "Canon iR1435 UFRII LT",
+      "model": "Canon iR1435 UFRII LT",
+      "port_name": "172.19.41.200"
+    },
+        {
+      "name": "Canon iR1133 UFRII LT",
+      "model": "Canon iR1133 UFRII LT",
+      "port_name": "172.19.41.200"
+    }
+  ]
+}

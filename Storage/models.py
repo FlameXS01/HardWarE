@@ -26,6 +26,11 @@ class Pc(models.Model):
     id_chasis = models.OneToOneField(Chasis, null=False, blank=False, on_delete=models.CASCADE, related_name='pc')
     id_entidad = models.ForeignKey('Entidad', null=True, blank=True, on_delete=models.CASCADE) 
     
+    def delete(self, *args, **kwargs):
+        if self.id_chasis:
+            self.id_chasis.delete()
+        super().delete(*args, **kwargs)
+    
     def __str__(self):
         return self.nombre_equipo
 

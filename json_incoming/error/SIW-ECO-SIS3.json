@@ -1,0 +1,198 @@
+{
+  "pc_name": "SIW-ECO-SIS3",
+  "chassis": [
+        {
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "Default string"
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 10 Pro",
+      "service_pack": "0.0",
+      "architecture": "32-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "Gigabyte Technology Co., Ltd.",
+      "product": "B250M-DS3H-CF",
+      "serial": "Default string"
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Celeron(R) CPU G3930 @ 2.90GHz",
+      "cores": 2,
+      "clock": 2900
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "ST1000DM010-2EP102",
+      "size_gb": 932,
+      "interface": "IDE",
+      "serial": "Z9ARFPEM"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "ChannelA-DIMM0",
+      "capacity_gb": 4,
+      "type_code": 0,
+      "form_factor": 8,
+      "serial": "8D2D0100",
+      "speed_mhz": 2133
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-2",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-3",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-4",
+      "status": "available"
+    }
+  ],
+  "serial_ports": [
+        {
+    }
+  ],
+  "parallel_ports": [
+        {
+      "id": "LPT1",
+      "status": "operational",
+      "availability": "running"
+    }
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_A2AF&SUBSYS_50071458&REV_00\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "USB xHCI Compliant Host Controller"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] Realtek PCIe GBE Family Controller",
+      "mac": "E0-D5-5E-E8-7B-6C",
+      "ip": "172.19.41.95",
+      "gateway": "172.19.41.254",
+      "subnet": "255.255.255.0"
+    },
+        {
+      "id": "[00000002] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (IP)",
+      "mac": "C6-86-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (IPv6)",
+      "mac": "D8-35-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] WAN Miniport (Network Monitor)",
+      "mac": "E8-E5-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Realtek PCIe GBE Family Controller",
+      "mac_address": "E0:D5:5E:E8:7B:6C",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "HP LaserJet Professional P1606dn",
+      "model": "HP LaserJet Professional P1606dn",
+      "port_name": "IP_172.19.41.211"
+    },
+        {
+      "name": "Foxit Reader PDF Printer",
+      "model": "Foxit Reader PDF Printer Driver",
+      "port_name": "FOXIT_Reader:"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
+    },
+        {
+      "name": "Enviar a OneNote 2010",
+      "model": "Send To Microsoft OneNote 2010 Driver",
+      "port_name": "nul:"
+    }
+  ]
+}

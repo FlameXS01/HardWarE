@@ -1,0 +1,213 @@
+{
+  "pc_name": "SIW-ECO-NOM",
+  "chassis": [
+        {
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "Default string"
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 10 Pro",
+      "service_pack": "0.0",
+      "architecture": "64-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "Gigabyte Technology Co., Ltd.",
+      "product": "B250M-DS3H-CF",
+      "serial": "Default string"
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Celeron(R) CPU G3920 @ 2.90GHz",
+      "cores": 2,
+      "clock": 2900
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "ST1000DM010-2EP102",
+      "size_gb": 932,
+      "interface": "IDE",
+      "serial": "W9A579VB"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "ChannelA-DIMM0",
+      "capacity_gb": 4,
+      "type_code": 0,
+      "form_factor": 8,
+      "serial": "9B160100",
+      "speed_mhz": 2133
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-2",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-3",
+      "status": "available"
+    },
+        {
+      "id": "SLOT-4",
+      "status": "available"
+    }
+  ],
+  "serial_ports": [
+        {
+    }
+  ],
+  "parallel_ports": [
+        {
+      "id": "LPT1",
+      "status": "operational",
+      "availability": "running"
+    }
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_A2AF&SUBSYS_50071458&REV_00\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "USB xHCI Compliant Host Controller"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] Realtek PCIe GbE Family Controller",
+      "mac": "1C-1B-0D-AB-8E-B4",
+      "ip": "172.19.41.97",
+      "gateway": "172.19.41.254",
+      "subnet": "255.255.255.0"
+    },
+        {
+      "id": "[00000002] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (IP)",
+      "mac": "0E-40-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (IPv6)",
+      "mac": "16-6B-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] WAN Miniport (Network Monitor)",
+      "mac": "18-C9-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Realtek PCIe GbE Family Controller",
+      "mac_address": "1C:1B:0D:AB:8E:B4",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "imageRUNNER1435",
+      "model": "Canon iR1435 UFRII LT",
+      "port_name": "IP_172.19.41.200"
+    },
+        {
+      "name": "HP LaserJet M201",
+      "model": "HP LaserJet M203-M206 PCL 6",
+      "port_name": "172.19.41.205_4"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
+    },
+        {
+      "name": "Enviar a OneNote 2010",
+      "model": "Send To Microsoft OneNote 2010 Driver",
+      "port_name": "nul:"
+    },
+        {
+      "name": "Brother PC-FAX v.3.2",
+      "model": "Brother PC-FAX v.3.2",
+      "port_name": "BRNB422009F3239"
+    },
+        {
+      "name": "Brother DCP-L5500D series",
+      "model": "Brother DCP-L5500D series",
+      "port_name": "172.19.41.205_2"
+    },
+        {
+      "name": "Brother MFC-L5900DW series",
+      "model": "Brother MFC-L5900DW series",
+      "port_name": "BRNB422009F3239"
+    }
+  ]
+}

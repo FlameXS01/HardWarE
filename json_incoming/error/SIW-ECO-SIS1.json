@@ -1,0 +1,176 @@
+{
+  "pc_name": "SIW-ECO-SIS1",
+  "chassis": [
+        {
+      "type_code": 3,
+      "type_name": "Desktop",
+      "serial_board": "Default string"
+    }
+  ],
+  "operating_systems": [
+        {
+      "version": "Microsoft Windows 10 Pro",
+      "service_pack": "0.0",
+      "architecture": "64-bit",
+      "language_code": 3082
+    }
+  ],
+  "motherboards": [
+        {
+      "manufacturer": "ASUSTeK COMPUTER INC.",
+      "product": "PRIME H510M-D",
+      "serial": "211194838402473"
+    }
+  ],
+  "cpus": [
+        {
+      "name": "Intel(R) Celeron(R) G5905 CPU @ 3.50GHz",
+      "cores": 2,
+      "clock": 3504
+    }
+  ],
+  "hard_drives": [
+        {
+      "id": "PHYSICALDRIVE0",
+      "model": "ST2000DM008-2FR102",
+      "size_gb": 1863,
+      "interface": "IDE",
+      "serial": "ZK20C5PV"
+    }
+  ],
+  "cdrom_drives": [
+  ],
+  "memory": [
+        {
+      "location": "Controller0-ChannelA",
+      "capacity_gb": 4,
+      "type_code": 0,
+      "form_factor": 8,
+      "serial": "00000184",
+      "speed_mhz": 2133
+    }
+  ],
+  "slots": [
+        {
+      "id": "SLOT-0",
+      "status": "occupied"
+    },
+        {
+      "id": "SLOT-1",
+      "status": "occupied"
+    }
+  ],
+  "serial_ports": [
+        {
+    }
+  ],
+  "parallel_ports": [
+        {
+      "id": "LPT1",
+      "status": "operational",
+      "availability": "running"
+    }
+  ],
+  "usb_ports": [
+        {
+      "id": "PCI\\VEN_8086&DEV_43ED&SUBSYS_86941043&REV_11\\3&11583659&0&A0",
+      "status": "operational",
+      "description": "USB xHCI Compliant Host Controller"
+    }
+  ],
+  "network_adapters": [
+        {
+      "id": "[00000000] Microsoft Kernel Debug Network Adapter",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000001] WAN Miniport (SSTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000002] WAN Miniport (IKEv2)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000003] WAN Miniport (L2TP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000004] WAN Miniport (PPTP)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000005] WAN Miniport (PPPOE)",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000006] WAN Miniport (IP)",
+      "mac": "5A-1F-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000007] WAN Miniport (IPv6)",
+      "mac": "66-02-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000008] WAN Miniport (Network Monitor)",
+      "mac": "6E-8A-20-52-41-53",
+      "ip": "N/A",
+      "gateway": "N/A",
+      "subnet": "N/A"
+    },
+        {
+      "id": "[00000009] Intel(R) Ethernet Connection (14) I219-V",
+      "mac": "50-EB-F6-2B-84-29",
+      "ip": "172.19.41.85",
+      "gateway": "172.19.41.254",
+      "subnet": "255.255.255.0"
+    }
+  ],
+  "network_connections": [
+        {
+      "name": "Intel(R) Ethernet Connection (14) I219-V",
+      "mac_address": "50:EB:F6:2B:84:29",
+      "status": "2"
+    }
+  ],
+  "printers": [
+        {
+      "name": "Microsoft XPS Document Writer",
+      "model": "Microsoft XPS Document Writer v4",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Microsoft Print to PDF",
+      "model": "Microsoft Print To PDF",
+      "port_name": "PORTPROMPT:"
+    },
+        {
+      "name": "Fax",
+      "model": "Microsoft Shared Fax Driver",
+      "port_name": "SHRFAX:"
+    },
+        {
+      "name": "Enviar a OneNote 2010",
+      "model": "Send To Microsoft OneNote 2010 Driver",
+      "port_name": "nul:"
+    }
+  ]
+}
