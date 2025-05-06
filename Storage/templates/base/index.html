@@ -1,8 +1,8 @@
-{% load static %} 
 
 <!DOCTYPE html>
 <html lang="en">
-
+    
+    {% load static %} 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -273,7 +273,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
+                    {% comment %} <div class="col-lg-3 col-sm-6">
                         <div class="card">
                             <div class="stat-widget-one card-body">
                                 <div class="stat-content d-inline-block">
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                     <div class="col-lg-3 col-sm-6">
                         <div class="card">
                             <div class="stat-widget-one card-body">
@@ -340,11 +340,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" style="flex: 0 0 30%;">
                         <div class="card">
-                            <div class="card-body">
-                                <div class="ct-pie-chart"></div>
-                            </div>
+                            <div class="card-header">Cantidad de PCs por Área</div>
+                                <div class="card-body">
+                                    <div class="ct-pie-chart">
+                                    </div> 
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -559,8 +561,7 @@
                 
                 
                 </div>
-        
-{%endblock%}
+                {%endblock%}
         <div class="footer">
             <div class="copyright">
                 <p>Copyright &copy; Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>

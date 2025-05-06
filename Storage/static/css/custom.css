@@ -1,0 +1,229 @@
+/* Mejoras generales de estilo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(168, 24, 24, 0.842);
+    transition: transform 0.3s ease;
+    margin: 15px 0;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #c50c0c, #881414);
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 15px;
+}
+
+.card-header h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.card-body {
+    background: #f8f9fa;
+    padding: 20px;
+}
+
+/* Mejora del menú lateral */
+.metismenu {
+    background: #2c3e50;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.metismenu > li > a {
+    color: #ecf0f1;
+    padding: 10px 20px;
+    display: block;
+    font-weight: 500;
+    margin: 2px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.metismenu > li > a:hover {
+    background: #d60734;
+    color: white;
+}
+
+.metismenu > li > a:active,
+.metismenu > li > a:focus {
+    background: #f1224f;
+    color: white;
+}
+
+/* Mejora de los estadísticos */
+.stat-widget-one {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon i {
+    font-size: 2.5rem;
+    background: #d61a1a;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.stat-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.stat-digit {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Mejora de la tabla */
+.table {
+    margin-top: 20px;
+}
+
+.table thead th {
+    background: #e60a2e;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+.table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Mejora de los botones */
+.btn-primary {
+    background: linear-gradient(45deg, #ec0606, #b31c1c);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 17, 9, 0.527);
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #10c469, #0ebf7b);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 196, 105, 0.3);
+}
+
+/* Mejora del navbar superior */
+.navbar {
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.navbar .search_bar {
+    margin-right: 20px;
+}
+
+.navbar .search_bar .search_icon {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navbar .search_bar .search_icon:hover {
+    transform: scale(1.1);
+}
+
+/* Mejora de las notificaciones */
+.notification_dropdown .dropdown-menu {
+    background: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.notification_dropdown .dropdown-item {
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.notification_dropdown .dropdown-item:hover {
+    background: #f8f9fa;
+}
+
+/* Mejora del pie de página */
+.footer {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.copyright p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Animaciones generales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    .stat-digit {
+        font-size: 2rem;
+    }
+    
+    .table thead th {
+        padding: 10px;
+    }
+    
+    .table tbody td {
+        padding: 8px;
+    }
+}
+
