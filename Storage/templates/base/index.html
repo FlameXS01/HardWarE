@@ -3,11 +3,13 @@
 <html lang="en">
     
     {% load static %} 
+    
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Focus - Bootstrap Admin Dashboard </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
     <link href="{% static 'vendor/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/chartist/css/chartist.min.css' %}" rel="stylesheet">
@@ -331,25 +333,74 @@
                 {%block grafico%}
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class=" card">
+                        <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Fee Collections and Expenses</h4>
+                                <h4 class="card-title">Cantidad de PCs por Entidad</h4>
                             </div>
                             <div class="card-body">
-                                <div class="ct-bar-chart mt-5"></div>
+                                <canvas id="pcsPorEntidadChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4" style="flex: 0 0 30%;">
+                    <div class="col-lg-4">
                         <div class="card">
-                            <div class="card-header">Cantidad de PCs por Área</div>
-                                <div class="card-body">
-                                    <div class="ct-pie-chart">
-                                    </div> 
-                                </div>
+                            <div class="card-header">Cantidad de Modelos de Placas</div>
+                            <div class="card-body">
+                                <canvas id="modelosPlacasChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    // Gráfico de barras: Cantidad de PCs por Entidad
+                    const ctx1 = document.getElementById('pcsPorEntidadChart').getContext('2d');
+                    new Chart(ctx1, {
+                        type: 'bar',
+                        data: {
+                            labels: {{ entidades_labels|safe }},
+                            datasets: [{
+                                label: 'Cantidad de PCs',
+                                data: {{ entidades_values|safe }},
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });
+
+                    // Gráfico de pastel: Cantidad de Modelos de Placas
+                    const ctx2 = document.getElementById('modelosPlacasChart').getContext('2d');
+                    new Chart(ctx2, {
+                        type: 'pie',
+                        data: {
+                            labels: {{ placas_labels|safe }},
+                            datasets: [{
+                                data: {{ placas_values|safe }},
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                        }
+                    });
+                </script>
                 {%endblock%}
                 {%block table%}
                 <div class="row">

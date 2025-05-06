@@ -1,31 +1,41 @@
 from django.shortcuts import render,redirect
 from Storage.form import*
 from Storage.models import*
-import wmi
-from django.utils import timezone
 from django.shortcuts import get_object_or_404
-#####
-import xml.etree.ElementTree as ET
-from django.utils import timezone
-from datetime import datetime
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
-from django.conf import settings
-import os
+from django.shortcuts import render
+from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
     #index view 
-def index (request): 
-    pc = Pc.objects.all()
+def index(request):
+    # Obtener todas las PCs y las incidencias
+    pcs = Pc.objects.all()
     incidencias = Incidencias.objects.all()
-    cont = pc.count()
     
+    # Contar la cantidad total de PCs
+    cont = pcs.count()
+    # Contar la cantidad de PCs por entidad
+    pcs_por_entidad = pcs.values('id_entidad__nombre').annotate(count=Count('id_entidad')).order_by()
+    
+    # Contar la cantidad de modelos de placas
+    modelos_placas = Placa_Base.objects.values('modelo_placa').annotate(count=Count('modelo_placa')).order_by()
+    # Preparar los datos para el gráfico de barras (Cantidad de PCs por Entidad)
+    entidades_labels = [entidad['id_entidad__nombre'] for entidad in pcs_por_entidad]
+    entidades_values = [entidad['count'] for entidad in pcs_por_entidad]
+    # Preparar los datos para el gráfico de pastel (Cantidad de Modelos de Placas)
+    placas_labels = [placa['modelo_placa'] for placa in modelos_placas]
+    placas_values = [placa['count'] for placa in modelos_placas]
     context = {
-        'pc': pc,
+        'pcs': pcs,
         'incidencias': incidencias,
-        'cont':cont,
+        'cont': cont,
+        'entidades_labels': entidades_labels,
+        'entidades_values': entidades_values,
+        'placas_labels': placas_labels,
+        'placas_values': placas_values,
     }
     return render(request, 'base/index.html', context)
 
@@ -648,4 +658,6 @@ def lista_exp_por_nomb(request, id_entidad):
 
 
 #==========================================> Properties <============================================#
+
+
 #==========================================> Properties <============================================#
