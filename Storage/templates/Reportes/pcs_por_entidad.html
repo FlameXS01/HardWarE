@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Distribución de PCs</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 15mm 10mm;
+            
+            /* Elimina números de página y URL */
+            @top-right { content: none }
+            @bottom-left { content: none }
+            @bottom-right { content: none }
+        }
+
+        @media print {
+            .corporate-watermark {
+                display: none;
+            }
+            
+            .data-table {
+                border-collapse: collapse !important;
+                width: 100% !important;
+            }
+            
+            .table td, .table th {
+                background-color: transparent !important;
+                border-color: #000 !important;
+            }
+            
+            .badge {
+                border: 1px solid #000 !important;
+            }
+
+            /* Ocultar elementos durante la impresión */
+            .no-print {
+                display: none !important;
+            }
+
+            .footer-report {
+                display: none !important;
+            }
+
+            .btn {
+                display: none !important;
+            }
+
+            .card {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Marca de agua solo para impresión */
+        @media print {
+            .corporate-watermark {
+                display: block;
+                position: fixed;
+                opacity: 0.1;
+                bottom: 20%;
+                left: 25%;
+                z-index: -1;
+            }
+            
+            .watermark-img {
+                width: 50%;
+                height: auto;
+            }
+        }
+        
+
+        .container-fluid {
+            min-height: 100vh;
+        }
+
+        .header-report {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .report-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .report-logo {
+            max-width: 200px;
+        }
+
+        .summary-card {
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .data-table {
+            margin: 20px 0;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: #fff;
+        }
+
+        .footer-report {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Encabezado corporativo -->
+        <div class="row align-items-center header-report mb-4">
+            <div class="col-8">
+                <h1 class="report-title text-dark mb-0">
+                    <i class="fas fa-chart-pie text-primary"></i> 
+                    Distribución de Equipos Informáticos
+                </h1>
+            </div>
+            <div class="col-4 text-right">
+                <img src="{% static 'images/logo.png' %}" 
+                    alt="Logo Corporativo" 
+                    class="report-logo img-fluid">
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="report-content">
+            <!-- Resumen estadístico -->
+            <div class="summary-card bg-light p-4 mb-4 rounded shadow-sm">
+                <div class="row">
+                    <div class="col-md-4 border-right">
+                        <h3 class="text-dark mb-0">
+                            <i class="fas fa-server text-primary"></i> 
+                            Total de Equipos
+                        </h3>
+                        <p class="display-4 text-dark">{{ total_pcs }}</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="text-muted mb-0">
+                            <i class="fas fa-info-circle text-primary"></i> 
+                            Distribución actualizada al {% now "d/m/Y" %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de datos -->
+            <div class="data-table card border-0 shadow">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th class="py-3">#</th>
+                                    <th class="py-3 text-dark" >Unidad Organizativa</th>
+                                    <th class="py-3 text-center text-dark">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for label, value in entidades_data %}
+                                <tr>
+                                    <td class="align-middle text-dark">{{ forloop.counter }}</td>
+                                    <td class="align-middle text-dark">
+                                        <i class="fas fa-building mr-2 text-primary"></i> 
+                                        {{ label }}
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-primary badge-pill px-3 py-2 text-dark">
+                                            {{ value }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-4">
+                                        <i class="fas fa-database fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">No se encontraron registros</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="no-print mt-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <button onclick="window.print()" 
+                                class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-print mr-2"></i> 
+                            Imprimir
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a href="/" 
+                            class="btn btn-outline-secondary btn-lg btn-block">
+                            <i class="fas fa-arrow-left mr-2"></i> 
+                            Volver al Panel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie de página -->
+        <footer class="footer-report mt-5 py-3 text-center">
+            <p class="text-muted mb-0 small">
+                <i class="fas fa-shield-alt text-primary"></i> 
+                Documento confidencial - Propiedad de CIMEX © {% now "Y" %}
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

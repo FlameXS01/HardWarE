@@ -229,7 +229,7 @@
                             <i class="icon icon-file-text"></i><span class="nav-text">Reportes</span>        
                         </a>
                         <ul aria-expanded="false">
-
+                            <li><a href="{% url 'reportes_pcs_por_entidad' %}">PCs por Entidad</a></li>
         
                         </ul>
         
@@ -332,21 +332,33 @@
                 {%endblock%}
                 {%block grafico%}
                 <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Cantidad de PCs por Entidad</h4>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h4 class="card-title">Cantidad de PCs por Entidad</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="pcsPorEntidadChart" class="w-100"></canvas>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <canvas id="pcsPorEntidadChart"></canvas>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-header">Cantidad de Modelos de Placas</div>
+                                <div class="card-body">
+                                    <canvas id="modelosPlacasChart" class="w-100"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-12 mt-4">
                         <div class="card">
-                            <div class="card-header">Cantidad de Modelos de Placas</div>
+                            <div class="card-header">
+                                <h5 class="card-title"> Distribución de Discos y Capacidades por Entidad</h5>
+                            </div>
                             <div class="card-body">
-                                <canvas id="modelosPlacasChart"></canvas>
+                                <canvas id="capacidadesDiscosChart" style="height: 400px;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -361,8 +373,18 @@
                             datasets: [{
                                 label: 'Cantidad de PCs',
                                 data: {{ entidades_values|safe }},
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                ],
                                 borderWidth: 1
                             }]
                         },
@@ -400,6 +422,38 @@
                             maintainAspectRatio: false,
                         }
                     });
+
+                    // Gráfico de capacidades apiladas
+                    const capacidadesChart = new Chart(
+                        document.getElementById('capacidadesDiscosChart').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: {
+                                labels: {{ discos_apilados_labels|safe }},
+                                datasets: {{ discos_apilados_datasets|safe }}
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    x: { stacked: true },
+                                    y: { 
+                                        stacked: true,
+                                        title: {
+                                            display: true,
+                                            text: 'Cantidad de Discos'
+                                        }
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                        labels: { boxWidth: 12 }
+                                    }
+                                }
+                            }
+                        }
+                    );
                 </script>
                 {%endblock%}
                 {%block table%}
@@ -410,10 +464,9 @@
                                 <h4 class="card-title">Detalles de equipos operativos</h4>
                             </div>
                             <div class="card-body">
-                               
                                 <div class="table-responsive">
                                     
-                                   <!-- Tabla de PCs -->
+                                <!-- Tabla de PCs -->
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -424,7 +477,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for pc in pc %}
+                                            {% for pc in pcs %}
                                             <tr>
                                                 <td>{{ pc.id_pc }}</td>
                                                 <td>{{ pc.nombre_equipo }}</td>

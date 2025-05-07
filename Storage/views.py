@@ -11,32 +11,16 @@ from django.core.exceptions import ObjectDoesNotExist
 
     #index view 
 def index(request):
-    # Obtener todas las PCs y las incidencias
-    pcs = Pc.objects.all()
-    incidencias = Incidencias.objects.all()
     
-    # Contar la cantidad total de PCs
-    cont = pcs.count()
-    # Contar la cantidad de PCs por entidad
-    pcs_por_entidad = pcs.values('id_entidad__nombre').annotate(count=Count('id_entidad')).order_by()
+    # Obtener datos
+    pcs_data = get_pcs_data()
+    discos_data = get_discos_data()
+    placas_data = get_placas_data()
+    capacidades_data = get_discos_capacidades_data()
     
-    # Contar la cantidad de modelos de placas
-    modelos_placas = Placa_Base.objects.values('modelo_placa').annotate(count=Count('modelo_placa')).order_by()
-    # Preparar los datos para el gráfico de barras (Cantidad de PCs por Entidad)
-    entidades_labels = [entidad['id_entidad__nombre'] for entidad in pcs_por_entidad]
-    entidades_values = [entidad['count'] for entidad in pcs_por_entidad]
-    # Preparar los datos para el gráfico de pastel (Cantidad de Modelos de Placas)
-    placas_labels = [placa['modelo_placa'] for placa in modelos_placas]
-    placas_values = [placa['count'] for placa in modelos_placas]
-    context = {
-        'pcs': pcs,
-        'incidencias': incidencias,
-        'cont': cont,
-        'entidades_labels': entidades_labels,
-        'entidades_values': entidades_values,
-        'placas_labels': placas_labels,
-        'placas_values': placas_values,
-    }
+    # Crear contexto
+    context = create_context(pcs_data, discos_data, placas_data, capacidades_data)
+    
     return render(request, 'base/index.html', context)
 
 #=================================> Pc <======================================#
@@ -657,7 +641,136 @@ def lista_exp_por_nomb(request, id_entidad):
     return render(request, 'Expediente/exp_x_pcs.html', context)
 
 
-#==========================================> Properties <============================================#
+#==========================================> Reportes <============================================#
+def get_pcs_data():
+    
+    pcs = Pc.objects.all()
+    total_pcs = pcs.count()
+    pcs_por_entidad = pcs.values('id_entidad__nombre').annotate(count=Count('id_entidad')).order_by()
+    entidades_labels = [entidad['id_entidad__nombre'] for entidad in pcs_por_entidad]
+    entidades_values = [entidad['count'] for entidad in pcs_por_entidad]
+    return {
+        'total_pcs': total_pcs,
+        'entidades_labels': entidades_labels,
+        'entidades_values': entidades_values
+    }
 
+def get_discos_data():
+
+    discos = Almacenamiento.objects.all()
+    discos_por_entidad = discos.values('id_chasis__pc__id_entidad__nombre').annotate(count=Count('id_chasis__pc__id_entidad')).order_by()
+    discos_labels = [entidad['id_chasis__pc__id_entidad__nombre'] for entidad in discos_por_entidad]
+    discos_values = [entidad['count'] for entidad in discos_por_entidad]
+    return {
+        'discos_labels': discos_labels,
+        'discos_values': discos_values
+    }
+
+def get_placas_data():
+
+    placas = Placa_Base.objects.values('modelo_placa').annotate(count=Count('modelo_placa')).order_by()
+    placas_labels = [placa['modelo_placa'] for placa in placas]
+    placas_values = [placa['count'] for placa in placas]
+    return {
+        'placas_labels': placas_labels,
+        'placas_values': placas_values
+    }
+
+def get_discos_capacidades_data():
+    discos = Almacenamiento.objects.all()
+    
+    # Consulta base
+    discos_capacidad = discos.values(
+        'id_chasis__pc__id_entidad__nombre', 
+        'capacidad_alm'
+    ).annotate(
+        total=Count('id_almacenamiento')
+    ).order_by('id_chasis__pc__id_entidad__nombre')
+
+    # Procesamiento de datos
+    capacidades_por_entidad = {}
+    for disco in discos_capacidad:
+        entidad = disco['id_chasis__pc__id_entidad__nombre']
+        capacidad_gb = disco['capacidad_alm'] / 1024  # Convertir MB a GB
+        
+        if entidad not in capacidades_por_entidad:
+            capacidades_por_entidad[entidad] = {}
+        
+        capacidad_str = f"{capacidad_gb:.0f} GB"
+        capacidades_por_entidad[entidad][capacidad_str] = disco['total']
+
+    # Preparar estructura para Chart.js
+    discos_apilados_labels = list(capacidades_por_entidad.keys())
+    capacidades_unicas = sorted({
+        capacidad 
+        for entidad in capacidades_por_entidad.values() 
+        for capacidad in entidad.keys()
+    }, reverse=True, key=lambda x: int(x.split()[0]))
+
+    # Generar datasets con colores únicos
+    colores = [
+        ('rgba(255, 99, 132, 0.8)', 'rgba(255, 99, 132, 1)'),
+        ('rgba(54, 162, 235, 0.8)', 'rgba(54, 162, 235, 1)'),
+        ('rgba(255, 206, 86, 0.8)', 'rgba(255, 206, 86, 1)'),
+        ('rgba(75, 192, 192, 0.8)', 'rgba(75, 192, 192, 1)'),
+    ]
+
+    discos_apilados_datasets = []
+    for i, capacidad in enumerate(capacidades_unicas):
+        data = [
+            capacidades_por_entidad[entidad].get(capacidad, 0)
+            for entidad in discos_apilados_labels
+        ]
+        discos_apilados_datasets.append({
+            'label': capacidad,
+            'data': data,
+            'backgroundColor': colores[i % len(colores)][0],
+            'borderColor': colores[i % len(colores)][1],
+            'borderWidth': 1
+        })
+
+    return {
+        'discos_apilados_labels': discos_apilados_labels,
+        'discos_apilados_datasets': discos_apilados_datasets
+    }
+
+def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data):
+
+    return {
+        'entidades_labels': pcs_data['entidades_labels'],
+        'entidades_values': pcs_data['entidades_values'],
+        'discos_labels': discos_data['discos_labels'],
+        'discos_values': discos_data['discos_values'],
+        'placas_labels': placas_data['placas_labels'],
+        'placas_values': placas_data['placas_values'],
+        'discos_apilados_labels': capacidades_data['discos_apilados_labels'],
+        'discos_apilados_datasets': capacidades_data['discos_apilados_datasets']
+    }
+    
+def create_context(pcs_data, discos_data, placas_data, capacidades_data):
+
+    chart_data = prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data)
+    return {
+        'pcs': Pc.objects.all(),
+        'incidencias': Incidencias.objects.all(),
+        'cont': pcs_data['total_pcs'],
+        **chart_data
+    }
+
+def reportes_pcs_por_entidad(request):
+
+    pcs = get_pcs_data()
+    
+    entidades_data = list(zip(
+        pcs['entidades_labels'], 
+        pcs['entidades_values']
+    ))
+    
+    context = {
+        'total_pcs': pcs['total_pcs'],
+        'entidades_data': entidades_data
+    }
+    
+    return render(request, 'Reportes/pcs_por_entidad.html', context)
 
 #==========================================> Properties <============================================#

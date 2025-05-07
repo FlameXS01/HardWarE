@@ -90,7 +90,7 @@ urlpatterns = [
     path('edit_tarjeta/<int:id_tarjeta>', edit_tarjeta, name="edit_tarjeta"),
     path('del_tarjeta/<int:id_tarjeta>', del_tarjeta, name="del_tarjeta"), 
     
-    #===================== urls next ===================#
+    #===================== urls entidad ===================#
     
     path('entidad/', list_entidad , name="list_entidad"),
     path('complejo/', list_Complejo , name="list_Complejo"),
@@ -99,7 +99,7 @@ urlpatterns = [
     path('edit_entidad/<int:id_entidad>', edit_entidad, name="edit_entidad"),
     path('del_entidad/<int:id_entidad>', del_entidad, name="del_entidad"), 
     
-    #===================== urls next ===================#
+    #===================== urls expedientes ===================#
     
     path('expediente/<int:id_pc>/', expediente_pc, name='expediente_pc'),
     path('list_Ueb_exp/', list_Ueb_exp , name="list_Ueb_exp"),
@@ -107,4 +107,6 @@ urlpatterns = [
     path('list_Otros_exp/', list_Otros_exp , name="list_Otros_exp"),
     path('lista_exp_por_nomb/<int:id_entidad>', lista_exp_por_nomb , name="lista_exp_por_nomb"),
     
+    #===================== urls reportes ===================#
+    path('reportes_pcs_por_entidad/', reportes_pcs_por_entidad, name='reportes_pcs_por_entidad'),
 ]
