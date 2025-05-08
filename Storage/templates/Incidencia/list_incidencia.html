@@ -43,12 +43,7 @@
                     <a href="{% url 'list_incidencia' %}" class="btn btn-info btn-sm" title="Mostrar">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <form action="{% url 'del_incidencia' inc.id_incidencia %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar este PC?');">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
+                    
                 </td>
             </tr>
             {% endfor %}

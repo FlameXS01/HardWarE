@@ -26,6 +26,10 @@ urlpatterns = [
     path('add_incidencia/',  add_incidencia ,name="add_incidencia"),
     path('edit_incidencia/<int:id_incidencia>', edit_incidencia, name="edit_incidencia"),
     path('del_incidencia/<int:id_incidencia>', del_incidencia, name="del_incidencia"), 
+    path('get_incidencias_por_ueb/', get_incidencias_por_ueb , name="get_incidencias_por_ueb"),
+    path('get_incidencias_por_complejo/', get_incidencias_por_complejo , name="get_incidencias_por_complejo"),
+    path('get_incidencias_otros/', get_incidencias_otros , name="get_incidencias_otros"),
+    path('detalle_incidencias_entidad/<str:nombre_entidad>/', detalle_incidencias_entidad , name="detalle_incidencias_entidad"),
     
     #===================== urls periferico ===================#
     
@@ -109,4 +113,6 @@ urlpatterns = [
     
     #===================== urls reportes ===================#
     path('reportes_pcs_por_entidad/', reportes_pcs_por_entidad, name='reportes_pcs_por_entidad'),
+    path('reportes_cap_discos_por_entidad/', reportes_cap_discos_por_entidad, name='reportes_cap_discos_por_entidad'),
+    path('reportes_modelos_board_por_entidad/', reportes_modelos_board_por_entidad, name='reportes_modelos_board_por_entidad'),
 ]

@@ -124,7 +124,7 @@
             <div class="col-8">
                 <h1 class="report-title text-dark mb-0">
                     <i class="fas fa-chart-pie text-primary"></i> 
-                    Distribución de Equipos Informáticos
+                    Distribución de Boards por Entidades
                 </h1>
             </div>
             <div class="col-4 text-right">
@@ -142,9 +142,9 @@
                     <div class="col-md-4 border-right">
                         <h3 class="text-dark mb-0">
                             <i class="fas fa-server text-primary"></i> 
-                            Total de Equipos
+                            Total de Placas Base
                         </h3>
-                        <p class="display-4 text-dark">{{ total_pcs }}</p>
+                        <p class="display-4 text-dark"> {{placas_total}} </p>
                     </div>
                     <div class="col-md-8">
                         <p class="text-muted mb-0">
@@ -162,23 +162,32 @@
                         <table class="table table-striped mb-0">
                             <thead class="bg-dark text-white">
                                 <tr>
-                                    <th class="py-3">#</th>
-                                    <th class="py-3 text-dark" >Unidad Organizativa</th>
-                                    <th class="py-3 text-center text-dark">Cantidad</th>
+                                    <th class="py-3">Unidad Organizativa</th>
+                                    <th class="py-3 text-center">Modelos</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for label, value in entidades_data %}
+                                {% for item in placas_data %}
                                 <tr>
-                                    <td class="align-middle text-dark">{{ forloop.counter }}</td>
-                                    <td class="align-middle text-dark">
-                                        <i class="fas fa-building mr-2 text-primary"></i> 
-                                        {{ label }}
+                                    <td class="align-middle">
+                                        <i class="fas fa-building mr-2 text-primary"></i>
+                                        {{ item.entidad }}
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="badge badge-primary badge-pill px-3 py-2 text-dark">
-                                            {{ value }}
-                                        </span>
+                                        <div class="d-flex flex-column">
+                                            {% for modelo in item.modelos %}
+                                            {% if modelo.cantidad > 0 %}
+                                            <div class="mb-2">
+                                                <span class="badge badge-primary px-3 py-2 mr-2">
+                                                    {{ modelo.modelo }}
+                                                </span>
+                                                <span class="badge badge-success px-3 py-2">
+                                                    cantidad: {{ modelo.cantidad }} 
+                                                </span>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
                                     </td>
                                 </tr>
                                 {% empty %}
@@ -190,6 +199,8 @@
                                 </tr>
                                 {% endfor %}
                             </tbody>
+                            
+                            
                         </table>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+from collections import defaultdict
 
 # Create your views here.
 
@@ -143,6 +144,59 @@ def del_incidencia(request, id_incidencia):
     incidencia_to_delete.delete()
     
     return redirect('list_incidencia')
+def get_incidencias_por_ueb(request):
+    # Obtener entidades de tipo 'Otros' con conteo de incidencias
+    entidades = Entidad.objects.filter(
+        tipoEntidad='UEB'
+    ).annotate(
+        total_incidencias=Count('pc__incidencias')
+    ).order_by('nombre')
+
+    context = {
+        'entidades': entidades
+    }
+    return render(request, 'Incidencia/incidencias_por_entidades.html', context)
+def get_incidencias_por_complejo(request):
+    # Obtener entidades de tipo 'Otros' con conteo de incidencias
+    entidades = Entidad.objects.filter(
+        tipoEntidad='Complejo'
+    ).annotate(
+        total_incidencias=Count('pc__incidencias')
+    ).order_by('nombre')
+
+    context = {
+        'entidades': entidades
+    }
+    return render(request, 'Incidencia/incidencias_por_entidades.html', context)
+def get_incidencias_otros(request):
+    # Obtener entidades de tipo 'Otros' con conteo de incidencias
+    entidades = Entidad.objects.filter(
+        tipoEntidad='Otros'
+    ).annotate(
+        total_incidencias=Count('pc__incidencias')
+    ).order_by('nombre')
+
+    context = {
+        'entidades': entidades
+    }
+    return render(request, 'Incidencia/incidencias_por_entidades.html', context)
+def detalle_incidencias_entidad(request, nombre_entidad):
+    # Buscar entidad por nombre (insensible a mayúsculas)
+    entidad = Entidad.objects.get(
+        nombre=nombre_entidad
+    )
+        
+        # Obtener incidencias relacionadas
+    incidencias = Incidencias.objects.filter(
+        id_pc__id_entidad=entidad
+    ).select_related('id_pc').order_by('-fecha_incidencia')
+        
+    context = {
+        'incidencias': incidencias
+    }
+        
+    
+    return render(request, 'Incidencia/list_incidencia.html', context)
 
 #==========================================> Periféricos <============================================#
             
@@ -654,7 +708,6 @@ def get_pcs_data():
         'entidades_labels': entidades_labels,
         'entidades_values': entidades_values
     }
-
 def get_discos_data():
 
     discos = Almacenamiento.objects.all()
@@ -665,7 +718,6 @@ def get_discos_data():
         'discos_labels': discos_labels,
         'discos_values': discos_values
     }
-
 def get_placas_data():
 
     placas = Placa_Base.objects.values('modelo_placa').annotate(count=Count('modelo_placa')).order_by()
@@ -675,7 +727,6 @@ def get_placas_data():
         'placas_labels': placas_labels,
         'placas_values': placas_values
     }
-
 def get_discos_capacidades_data():
     discos = Almacenamiento.objects.all()
     
@@ -733,7 +784,6 @@ def get_discos_capacidades_data():
         'discos_apilados_labels': discos_apilados_labels,
         'discos_apilados_datasets': discos_apilados_datasets
     }
-
 def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data):
 
     return {
@@ -746,7 +796,6 @@ def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data):
         'discos_apilados_labels': capacidades_data['discos_apilados_labels'],
         'discos_apilados_datasets': capacidades_data['discos_apilados_datasets']
     }
-    
 def create_context(pcs_data, discos_data, placas_data, capacidades_data):
 
     chart_data = prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data)
@@ -756,7 +805,6 @@ def create_context(pcs_data, discos_data, placas_data, capacidades_data):
         'cont': pcs_data['total_pcs'],
         **chart_data
     }
-
 def reportes_pcs_por_entidad(request):
 
     pcs = get_pcs_data()
@@ -772,5 +820,115 @@ def reportes_pcs_por_entidad(request):
     }
     
     return render(request, 'Reportes/pcs_por_entidad.html', context)
+def reportes_cap_discos_por_entidad(request):
+    discos = get_discos_capacidades_data()
+    
+    # Preparar datos para la tabla
+    discos_data = []
+    for i, entidad in enumerate(discos['discos_apilados_labels'], 1):
+        capacidades = []
+        for dataset in discos['discos_apilados_datasets']:
+            capacidad = {
+                'tamano': dataset['label'],
+                'cantidad': dataset['data'][i-1]  
+            }
+            capacidades.append(capacidad)
+        
+        discos_data.append({
+            'indice': i,
+            'entidad': entidad,
+            'capacidades': capacidades
+        })
+    total = Almacenamiento.objects.all().count()
+    context = {
+        'discos_data': discos_data,
+        'discos_total': total
+    }
+    
+    return render(request, 'Reportes/reportes_cap_discos_por_entidad.html', context)
+def get_modelos_board_data():
+    placas = Placa_Base.objects.all()
+    
+    placas_modelos = placas.values(
+        'id_chasis__pc__id_entidad__nombre', 
+        'modelo_placa'
+    ).annotate(
+        total=Count('id_placa')
+    ).order_by('id_chasis__pc__id_entidad__nombre')
+    
+    
+    modelos_por_entidad = {}
+    for placa in placas_modelos:
+        entidad = placa['id_chasis__pc__id_entidad__nombre']
+        modelo = placa['modelo_placa'] 
+        
+        if entidad not in modelos_por_entidad:
+            modelos_por_entidad[entidad] = {}
+        
+        modelos_por_entidad[entidad][modelo] = placa['total']
+        
+    placas_apilados_labels = list(modelos_por_entidad.keys())
+    
+    
+    modelos_unicas = sorted({
+        modelo 
+        for entidad in modelos_por_entidad.values() 
+        for modelo in entidad.keys()
+    }, reverse=True)  
 
-#==========================================> Properties <============================================#
+    colores = [
+        ('rgba(255, 99, 132, 0.8)', 'rgba(255, 99, 132, 1)'),
+        ('rgba(54, 162, 235, 0.8)', 'rgba(54, 162, 235, 1)'),
+        ('rgba(255, 206, 86, 0.8)', 'rgba(255, 206, 86, 1)'),
+        ('rgba(75, 192, 192, 0.8)', 'rgba(75, 192, 192, 1)'),
+    ]
+
+    placas_apilados_datasets = []
+    for i, modelo in enumerate(modelos_unicas):
+        data = [
+            modelos_por_entidad[entidad].get(modelo, 0)
+            for entidad in placas_apilados_labels
+        ]
+        placas_apilados_datasets.append({
+            'label': modelo,
+            'data': data,
+            'backgroundColor': colores[i % len(colores)][0],
+            'borderColor': colores[i % len(colores)][1],
+            'borderWidth': 1
+        })
+
+    return {
+        'placas_apilados_labels': placas_apilados_labels,
+        'placas_apilados_datasets': placas_apilados_datasets
+    }
+def reportes_modelos_board_por_entidad(request):
+    placas = get_modelos_board_data()
+    
+    # Preparar datos para la tabla
+    placas_data = []
+    for i, entidad in enumerate(placas['placas_apilados_labels']):
+        modelos = []
+        for dataset in placas['placas_apilados_datasets']:
+            # Asegúrate de que el índice no exceda el tamaño de data
+            cantidad = dataset['data'][i] if i < len(dataset['data']) else 0
+            modelo = {
+                'modelo': dataset['label'],
+                'cantidad': cantidad  
+            }
+            modelos.append(modelo)
+        
+        placas_data.append({
+            'indice': i + 1,  # Para que el índice comience en 1
+            'entidad': entidad,
+            'modelos': modelos  # Cambié 'modelo' a 'modelos'
+        })
+    
+    total = Placa_Base.objects.all().count()
+    context = {
+        'placas_data': placas_data,
+        'placas_total': total
+    }
+    
+    return render(request, 'Reportes/reportes_modelos_board_por_entidad.html', context)
+
+#==========================================> Otros <============================================#

@@ -215,13 +215,49 @@
         
                     <li>        
                         <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">        
-                            <i class="icon icon-alert"></i><span class="nav-text">Incidencias</span>        
+                            <i class="icon icon-folder"></i><span class="nav-text">Incidencias</span>        
                         </a>        
-                        <ul aria-expanded="false">        
-                            <li><a href="{% url 'list_incidencia' %}">Listar Incidencias</a></li>        
+                        <ul aria-expanded="false">  
+                            <li><a href="{% url 'list_incidencia' %}">Todas las Incidencias</a></li>        
                             <li><a href="{% url 'add_incidencia' %}">Agregar Incidencia</a></li>        
+                            <li>
+                                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                    <i class="icon icon-folder"></i><span class="nav-text">Entidades</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    <!-- Submenú UEB -->
+                                    <li>
+                                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                            <i class="icon icon-globe"></i><span class="nav-text">UEB</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li><a href="{% url 'get_incidencias_por_ueb' %}">Listar Incidencias</a></li>
+                                        </ul>
+                                    </li>                     
+                    
+                                    <!-- Submenú Complejos -->
+                                    <li>
+                                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                            <i class="icon icon-building"></i><span class="nav-text">Complejos</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li><a href="{% url 'get_incidencias_por_complejo' %}">Listar Incidencias</a></li>
+                                        </ul>
+                                    </li>
+                    
+                                    <!-- Submenú Otros -->
+                                    <li>
+                                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
+                                            <i class="icon icon-building"></i><span class="nav-text">Otros</span>
+                                        </a>
+                                        <ul aria-expanded="false">
+                                            <li><a href="{% url 'get_incidencias_otros' %}">Listar Incidencias</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>        
-                    </li>        
+                    </li>
         
                     <!-- Reportes -->        
                     <li>        
@@ -229,6 +265,9 @@
                             <i class="icon icon-file-text"></i><span class="nav-text">Reportes</span>        
                         </a>
                         <ul aria-expanded="false">
+                            <li><a href="{% url 'reportes_pcs_por_entidad' %}">PCs por Entidad</a></li>
+                            <li><a href="{% url 'reportes_cap_discos_por_entidad' %}">Discos y capacidades</a></li>
+                            <li><a href="{% url 'reportes_modelos_board_por_entidad' %}">Modelos Board  </a></li>
                             <li><a href="{% url 'reportes_pcs_por_entidad' %}">PCs por Entidad</a></li>
         
                         </ul>
