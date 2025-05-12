@@ -1,0 +1,49 @@
+
+{% extends 'base/index.html' %}
+
+{% block welcome %}
+
+{% endblock %}
+
+{% block detalles %}
+<h2></h2>
+{% endblock %}
+
+{% block grafico %}
+<h2></h2>
+{% endblock %}
+
+{% block notifications %}
+<h2></h2>
+{% endblock %}
+{% block table %}
+<body>
+    <h1>Historial de cambios: {{ pc.nombre_equipo }}</h1>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for version in historial %}
+            <tr>
+                <td>{{ version.fecha_version|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'version_expediente' version.id_historico %}" 
+                        class="btn btn-sm btn-info">
+                        Ver detalles
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'expediente_pc' pc.id_pc %}" class="btn btn-secondary">
+        Volver al expediente actual
+    </a>
+</body>
+{% endblock %}

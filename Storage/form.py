@@ -125,11 +125,9 @@ class TarjetaRedForm(forms.ModelForm):
 class Ranura_ExpansionForm(forms.ModelForm):
     class Meta:
         model = Ranura_Expansion
-        fields = ['id_slot', 'id_board', 'conector_ranura', 'uso', 'id_chasis']
+        fields = ['id_slot', 'uso', 'id_chasis']
         widgets = {
             'id_slot': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Slot', 'required': True}),
-            'id_board': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Board', 'required': True}),
-            'conector_ranura': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Conector', 'required': True}),
             'uso': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Uso', 'required': True}),
             'id_chasis': forms.Select(attrs={'class':'form-control', 'required': True}),
         }

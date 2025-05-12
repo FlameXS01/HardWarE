@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.serializers.json import DjangoJSONEncoder
 # Create your models here.
 
 class Chasis(models.Model):
@@ -36,8 +36,8 @@ class Pc(models.Model):
 
 class Lector(models.Model):
     id_lector = models.BigAutoField(primary_key=True)
-    desc_lector = models.CharField(max_length=50)
-    tipo_lector = models.CharField(max_length=50)
+    desc_lector = models.CharField(max_length=150)
+    tipo_lector = models.CharField(max_length=150)
     id_chasis = models.OneToOneField(Chasis, null = False, blank = False, on_delete = models.CASCADE)
     
     def __str__(self):
@@ -45,9 +45,9 @@ class Lector(models.Model):
 
 class Ranura_Expansion(models.Model):
     id_ranuras_expansion = models.BigAutoField(primary_key=True)
-    id_slot = models.IntegerField()
-    id_board = models.CharField(max_length=50)
-    conector_ranura = models.CharField(max_length=50)
+    id_slot = models.CharField(max_length=50) #a chardfield
+    #id_board = models.CharField(max_length=50)
+    #conector_ranura = models.CharField(max_length=50)
     uso = models.CharField(max_length=50)
     id_chasis = models.ForeignKey(Chasis, null = False, blank = False, on_delete = models.CASCADE)
     
@@ -152,3 +152,11 @@ class Entidad(models.Model):
     def __str__(self):
         return self.nombre
 
+class ExpedienteHistorico(models.Model):
+    id_historico = models.BigAutoField(primary_key=True)
+    fecha_version = models.DateTimeField(auto_now_add=True)
+    datos_json = models.JSONField(encoder=DjangoJSONEncoder)
+    pc = models.ForeignKey(Pc, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"Versión {self.fecha_version} - {self.pc.nombre_equipo}"

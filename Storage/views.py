@@ -594,8 +594,8 @@ def del_entidad(request, id_entidad):
     
     return redirect('list_entidad')
 
-
 #==========================================> Expediente <============================================#
+
 def expediente_pc(request, id_pc):
     # Obtener el PC principal con todas sus relaciones
     pc = get_object_or_404(Pc.objects.select_related(
@@ -693,9 +693,37 @@ def lista_exp_por_nomb(request, id_entidad):
     }
     
     return render(request, 'Expediente/exp_x_pcs.html', context)
-
+def historial_expediente(request, id_pc):
+    pc = get_object_or_404(Pc, id_pc=id_pc)
+    historial = ExpedienteHistorico.objects.filter(pc=pc).order_by('-fecha_version')
+    
+    return render(request, 'Expediente/listado_historial.html', {
+        'pc': pc,
+        'historial': historial
+    })
+def version_expediente(request, id_historico):
+    version = get_object_or_404(ExpedienteHistorico, id_historico=id_historico)
+    pc = version.pc
+    
+    # Obtener versiones para navegación
+    versiones = ExpedienteHistorico.objects.filter(pc=pc).order_by('-fecha_version')
+    
+    anterior = versiones.filter(fecha_version__gt=version.fecha_version).first()
+    siguiente = versiones.filter(fecha_version__lt=version.fecha_version).first()
+    
+    context = {
+        'pc': pc,
+        'version': version,
+        'anterior': anterior,
+        'siguiente': siguiente,
+        'total_versiones': versiones.count(),
+        'posicion_actual': list(versiones).index(version) + 1
+    }
+    
+    return render(request, 'Expediente/version_historica.html', context)
 
 #==========================================> Reportes <============================================#
+
 def get_pcs_data():
     
     pcs = Pc.objects.all()

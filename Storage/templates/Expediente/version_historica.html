@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Versión Histórica - {{ pc.nombre_equipo }}</title>
+    <style>
+        @media print {
+            @page {
+                size: letter;
+                margin: 0.8cm;
+            }
+            
+            body { 
+                margin: 0;
+                font-size: 10px;
+            }
+            
+            .logo-empresa {
+                width: 60px;
+                top: 5px;
+                right: 5px;
+            }
+            
+            h1 { font-size: 14px; }
+            h2 { font-size: 12px; }
+            
+            th, td {
+                padding: 4px;
+                font-size: 9px;
+            }
+            
+            .seccion {
+                margin-bottom: 10px;
+            }
+        
+            /* Ocultar botones de imprimir, anterior y adelante */
+            .print-button {
+                display: none;
+            }
+            
+            /* Ocultar botones de navegación */
+            .navegacion-versiones {
+                display: none;
+            }
+            
+            /* Ocultar botón de "Volver al listado" */
+            .btn-outline-secondary {
+                display: none;
+            }
+        }
+        
+
+        .print-button {
+            background: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        body { 
+            font-family: 'Arial', sans-serif; 
+            margin: 10px;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+        
+        .logo-empresa {
+            width: 80px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+        
+        .header {
+            margin-top: 70px;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 16px;
+            margin: 5px 0;
+            color: #2c3e50;
+        }
+        
+        h2 {
+            font-size: 13px;
+            margin: 8px 0 5px;
+            padding: 3px 5px;
+            background: #f8f9fa;
+            display: inline-block;
+            border-left: 3px solid #3498db;
+        }
+        
+        .seccion { 
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+        
+        table { 
+            width: 100%;
+            border-collapse: collapse;
+            margin: 5px 0 10px;
+        }
+
+        th, td { 
+            border: 0.5px solid #ddd; 
+            padding: 6px;
+            font-size: 11px;
+        }
+
+        th { 
+            background-color: #f8f9fa; 
+            font-weight: 600;
+        }
+
+        .cambio {
+            background-color: #fff3cd;
+            border-left: 3px solid #ffc107;
+            padding: 2px 5px;
+        }
+
+        .version-info {
+            background-color: #e9f5ff;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+<body>
+    <img src="/media/logo_empresa.png" class="logo-empresa">
+    <div class="header">
+        <h1>Versión histórica - {{ version.fecha_version|date:"d/m/Y H:i"}}</h1>
+        <div class="version-info">
+            <strong>Equipo:</strong> {{ version.datos_json.pc.nombre_equipo  }}<br>
+            <strong>Registrado por:</strong> Sistema automático
+        </div>
+        <a href="{% url 'historial_expediente' pc.id_pc %}" 
+            class="btn btn-sm btn-outline-secondary"
+            style="position: absolute; right: 120px; top: 60px;">
+            Volver al Historial
+        </a>
+    </div>
+    
+    <!-- Sección de Componentes -->
+    <div class="seccion">
+        <table>
+            <tr>
+                <th width="25%">Serial PC:</th>
+                <td width="25%">{{ version.datos_json.pc.serial_pc}}</td>
+                <th width="25%">S.O.:</th>
+                <td width="25%">{{ version.datos_json.pc.so }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Chasis y Placa Base -->
+    <div class="seccion">
+        <table>
+            <tr class="seccion-header"><th colspan="4">Chasis: {{version.datos_json.chasis.tipo_chasis}}</th></tr>
+            
+        </table>
+    </div>
+
+    <!-- Procesador -->
+    <div class="seccion">
+        <h2>Procesador</h2>
+        <table>
+            <tr>
+                <th>Modelo</th>
+                <th>Arquitectura</th>
+                <th>Velocidad (MHz)</th>
+            </tr>
+            <tr>
+                <td>{{ version.datos_json.componentes.procesador.desc_procesador }}</td>
+                <td>{{ version.datos_json.componentes.procesador.arq_procesador }}</td>
+                <td>{{ version.datos_json.componentes.procesador.velocidad_procesador }}</td>
+                
+            </tr>
+        </table>
+    </div>
+
+    <!-- Memoria RAM -->
+    <div class="seccion">
+        <h2>Memoria RAM</h2>
+        <table>
+            <tr>
+                <th>Capacidad (GB)</th>
+                <th>Serial</th>
+                <th>Tipo</th>
+            </tr>
+            {% for ram in version.datos_json.componentes.rams %}
+            <tr>
+                <td>{{ ram.capacidad_ram }}</td>
+                <td>{{ ram.no_serie_ram }}</td>
+                <td>{{ ram.tipo_ram }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Almacenamiento -->
+    <div class="seccion">
+        <h2>Almacenamiento</h2>
+        <table>
+            <tr>
+                <th>Dispositivo</th>
+                <th>Capacidad (GB)</th>
+                <th>Serial</th>
+                <th>Modelo</th>
+            </tr>
+            {% for almacenamiento in version.datos_json.componentes.almacenamiento %}
+            <tr>
+                <td>{{ almacenamiento.tipo_alm }}</td>
+                <td>{{ almacenamiento.capacidad_alm|floatformat:0 }}</td>
+                <td>{{ almacenamiento.no_serie_alm }}</td>
+                <td>{{ almacenamiento.modelo_alm }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Red -->
+    <div class="seccion">
+        <h2>Configuración de Red</h2>
+        <table>
+            <tr>
+                <th>Adaptador</th>
+                <th>Dirección IP</th>
+                <th>MAC</th>
+                <th>Gateway</th>
+            </tr>
+            {% for tarjeta in version.datos_json.componentes.tarjetas_red %}
+            <tr>
+                <td>{{ tarjeta.descripcion|default:"default" }}</td>
+                <td>{{ tarjeta.ip|default:"-" }}</td>
+                <td>{{ tarjeta.mac|default:"-" }}</td>
+                <td>{{ tarjeta.gateway|default:"-" }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- Periféricos -->
+    <div class="seccion">
+        <h2>Periféricos Registrados</h2>
+        <table>
+            <tr>
+                <th>Tipo</th>
+                <th>Fabricante</th>
+                <th>Modelo</th>
+                <th>Serial</th>
+            </tr>
+            {% for periferico in version.datos_json.componentes.perifericos %}
+            <tr>
+                <td>{{ periferico.tipo_periferico }}</td>
+                <td>{{ periferico.fabricante_periferico }}</td>
+                <td>{{ periferico.modelo_periferico }}</td>
+                <td>{{ periferico.no_serie_periferico }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <!-- expediente_historico.html -->
+    <div class="header">
+        <h1>Versión histórica - {{ version.fecha_version|date:"d/m/Y H:i" }}</h1>
+        
+        <!-- Navegación -->
+        <div class="navegacion-versiones">
+            {% if anterior %}
+            <a href="{% url 'version_expediente' anterior.id_historico %}" 
+                class="btn btn-sm btn-outline-primary">
+                ← Anterior ({{ anterior.fecha_version|date:"d/m/Y" }})
+            </a>
+            {% endif %}
+            
+            <span class="badge bg-secondary">
+                {{ posicion_actual }} de {{ total_versiones }}
+            </span>
+            
+            {% if siguiente %}
+            <a href="{% url 'version_expediente' siguiente.id_historico %}" 
+                class="btn btn-sm btn-outline-primary">
+                Siguiente ({{ siguiente.fecha_version|date:"d/m/Y" }}) →
+            </a>
+            {% endif %}
+        </div>
+        
+        <a href="{% url 'historial_expediente' pc.id_pc %}" 
+            class="btn btn-sm btn-outline-secondary"
+            style="position: absolute; right: 120px; top: 70px;">
+            Volver al listado
+        </a>
+        <button onclick="window.print()" class="print-button">Imprimir Expediente</button>
+    </div>
+
+
+    <!-- Nota de Versión -->
+    <div class="seccion" style="margin-top: 20px;">
+        <div style="border-top: 1px solid #eee; padding-top: 10px;">
+            <small class="text-muted">Esta es una versión histórica registrada automáticamente por el sistema.</small>
+        </div>
+    </div>
+
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    {% load static %}
 <head>
     <title>Expediente Técnico - {{ pc.nombre_equipo }}</title>
     <style>
@@ -106,7 +107,7 @@
     </style>
 </head>
 <body>
-    <img src="/media/logo_empresa.png" class="logo-empresa">
+    <img src="/images/logo.png" class="logo-empresa">
     <button onclick="window.print()" class="print-button">Imprimir Expediente</button>
     <div class="header">
         <h1>Expediente Técnico: {{ pc.nombre_equipo }} -- {{pc.ultimo_reporte}}</h1>

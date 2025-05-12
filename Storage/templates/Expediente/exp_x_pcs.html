@@ -31,10 +31,28 @@
                 <tr>
                     <td>{{ pc.nombre_equipo }}</td>
                     <td>
-                        <a href="{% url 'expediente_pc' pc.id_pc %}" class="btn btn-info">
-                            <i class="fas fa-file-alt"></i> Generar Expediente
-                        </a>
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'expediente_pc' pc.id_pc %}" 
+                                class="btn btn-info"
+                                title="Generar reporte técnico actual">
+                                <i class="fas fa-file-pdf"></i> Expediente
+                            </a>
+                            
+                            {% if pc.expedientehistorico_set.count > 0 %}
+                                <a href="{% url 'historial_expediente' pc.id_pc %}" 
+                                    class="btn btn-secondary"
+                                    title="Ver todas las versiones históricas">
+                                    <i class="fas fa-history"></i> Historial
+                                </a>
+                            {% else %}
+                                <span class="btn btn-outline-secondary disabled"
+                                        title="No existen versiones anteriores">
+                                    <i class="fas fa-clock"></i> Sin cambios
+                                </span>
+                            {% endif %}
+                        </div>
                     </td>
+                    
                 </tr>
             {% empty %}
                 <tr>

@@ -110,6 +110,8 @@ urlpatterns = [
     path('list_Complejo_exp/', list_Complejo_exp , name="list_Complejo_exp"),
     path('list_Otros_exp/', list_Otros_exp , name="list_Otros_exp"),
     path('lista_exp_por_nomb/<int:id_entidad>', lista_exp_por_nomb , name="lista_exp_por_nomb"),
+    path('historial_expediente/<int:id_pc>', historial_expediente , name="historial_expediente"),
+    path('version_expediente/<int:id_historico>', version_expediente , name="version_expediente"),
     
     #===================== urls reportes ===================#
     path('reportes_pcs_por_entidad/', reportes_pcs_por_entidad, name='reportes_pcs_por_entidad'),
