@@ -52,7 +52,6 @@
             .card {
                 page-break-inside: avoid;
             }
-
         }
 
         
@@ -124,7 +123,7 @@
             <div class="col-8">
                 <h1 class="report-title text-dark mb-0">
                     <i class="fas fa-chart-pie text-primary"></i> 
-                    Distribución de HDD por Entidades
+                    Distribución de Rams para {{entidad}}
                 </h1>
             </div>
             <div class="col-4 text-right">
@@ -137,23 +136,7 @@
         <!-- Contenido principal -->
         <div class="report-content">
             <!-- Resumen estadístico -->
-            <div class="summary-card bg-light p-4 mb-4 rounded shadow-sm">
-                <div class="row">
-                    <div class="col-md-4 border-right">
-                        <h3 class="text-dark mb-0">
-                            <i class="fas fa-server text-primary"></i> 
-                            Total de Discos
-                        </h3>
-                        <p class="display-4 text-dark"> {{discos_total}} </p>
-                    </div>
-                    <div class="col-md-8">
-                        <p class="text-muted mb-0">
-                            <i class="fas fa-info-circle text-primary"></i> 
-                            Distribución actualizada al {% now "d/m/Y" %}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Tabla de datos -->
             <div class="data-table card border-0 shadow">
@@ -162,42 +145,28 @@
                         <table class="table table-striped mb-0">
                             <thead class="bg-dark text-white">
                                 <tr>
-                                    <th class="py-3">Unidad Organizativa</th>
-                                    <th class="py-3 text-center">Capacidades</th>
-                                    <th></th>
+                                    <th class="py-3 text-center">Listado PC </th>
+                                    <th class="py-3 text-center"> Tarjetas Rams </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for item in discos_data %}
+                                {% for item in pcs %}
                                 <tr>
                                     <td class="align-middle">
                                         <i class="fas fa-building mr-2 text-primary"></i>
-                                        {{ item.entidad }}
+                                        {{ item.nombre_pc }}
                                     </td>
                                     <td class="align-middle text-center">
                                         <div class="d-flex flex-column">
-                                            {% for capacidad in item.capacidades %}
-                                            {% if capacidad.cantidad > 0 %}
+                                            {% for ram in item.tamanos_ram %}
                                             <div class="mb-2">
                                                 <span class="badge badge-primary px-3 py-2 mr-2">
-                                                    {{ capacidad.tamano }}
-                                                </span>
-                                                <span class="badge badge-success px-3 py-2">
-                                                    {{ capacidad.cantidad }} unidades
+                                                    {{ ram }} GB
                                                 </span>
                                             </div>
                                             
-                                            {% endif %}
                                             {% endfor %}
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="mt-2">
-                                                <button class="btn btn-primary btn-sm ml-2">
-                                                    <a href="{% url 'reporte_ram_por_entidad_pc' item.entidad %}"> Detalles  </a>
-                                                </button>
-                                                
-                                            </div>
                                     </td>
                                 </tr>
                                 {% empty %}

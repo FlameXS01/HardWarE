@@ -36,6 +36,13 @@
       "size_gb": 932,
       "interface": "IDE",
       "serial": "W9A579VB"
+    },
+        {
+      "id": "PHYSICALDRIVE7",
+      "model": "ST1000hhDM010-2EP102",
+      "size_gb": 932,
+      "interface": "IDE",
+      "serial": "W9A5hh79VB"
     }
   ],
   "cdrom_drives": [
@@ -47,14 +54,6 @@
       "type_code": 0,
       "form_factor": 8,
       "serial": "9B160100",
-      "speed_mhz": 2133
-    },
-        {
-      "location": "ChannelB-DIMM0",
-      "capacity_gb": 8,
-      "type_code": 0,
-      "form_factor": 8,
-      "serial": "9B1hh60100",
       "speed_mhz": 2133
     }
   ],

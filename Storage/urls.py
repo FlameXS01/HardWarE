@@ -116,5 +116,8 @@ urlpatterns = [
     #===================== urls reportes ===================#
     path('reportes_pcs_por_entidad/', reportes_pcs_por_entidad, name='reportes_pcs_por_entidad'),
     path('reportes_cap_discos_por_entidad/', reportes_cap_discos_por_entidad, name='reportes_cap_discos_por_entidad'),
+    path('reportes_ram_por_entidad/', reportes_ram_por_entidad, name='reportes_ram_por_entidad'),
     path('reportes_modelos_board_por_entidad/', reportes_modelos_board_por_entidad, name='reportes_modelos_board_por_entidad'),
+    path('reporte_disco_por_entidad_pc/<str:nombre_entidad>', reporte_disco_por_entidad_pc, name='reporte_disco_por_entidad_pc'),
+    path('reporte_ram_por_entidad_pc/<str:nombre_entidad>', reporte_ram_por_entidad_pc, name='reporte_ram_por_entidad_pc'),
 ]

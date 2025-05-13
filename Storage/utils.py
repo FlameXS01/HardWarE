@@ -515,8 +515,12 @@ MAPEO_ENTIDADES = {
     
     # agregar nomencladores de municipios
     'SSP': ('Complejo Sancti Spiritus', 'Complejo '),
+    
     'CAB': ('Complejo Cabaiguan', 'Complejo'),
+    
     'TAG': ('Complejo Taguasco', 'Complejo'),
+    'JAT': ('Complejo Taguasco', 'Complejo'),
+    
     'TRI': ('Complejo Trinidad', 'Complejo'),
     
     # UEBs

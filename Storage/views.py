@@ -742,9 +742,66 @@ def get_discos_data():
     discos_por_entidad = discos.values('id_chasis__pc__id_entidad__nombre').annotate(count=Count('id_chasis__pc__id_entidad')).order_by()
     discos_labels = [entidad['id_chasis__pc__id_entidad__nombre'] for entidad in discos_por_entidad]
     discos_values = [entidad['count'] for entidad in discos_por_entidad]
+    print ('>>>>discos_labels', discos_labels,'>>>>discos_values',discos_values )
     return {
         'discos_labels': discos_labels,
         'discos_values': discos_values
+    }
+def get_rams_data():
+    rams = Ram.objects.all()
+    
+    # Consulta base
+    rams_capacidad = rams.values(
+        'id_placa__id_chasis__pc__id_entidad__nombre', 
+        'capacidad_ram'
+    ).annotate(
+        total=Count('id_placa__id_chasis__pc__id_entidad__nombre')
+    ).order_by('id_placa__id_chasis__pc__id_entidad__nombre')
+
+    # Procesamiento de datos
+    capacidades_por_entidad = {}
+    for ram in rams_capacidad:
+        entidad = ram['id_placa__id_chasis__pc__id_entidad__nombre']
+        capacidad_gb = ram['capacidad_ram']  # La capacidad ya está en GB
+        
+        if entidad not in capacidades_por_entidad:
+            capacidades_por_entidad[entidad] = {}
+        
+        capacidad_str = f"{capacidad_gb} GB"
+        capacidades_por_entidad[entidad][capacidad_str] = ram['total']
+
+    # Preparar estructura para Chart.js
+    rams_apilados_labels = list(capacidades_por_entidad.keys())
+    capacidades_unicas = sorted({
+        capacidad 
+        for entidad in capacidades_por_entidad.values() 
+        for capacidad in entidad.keys()
+    }, reverse=True, key=lambda x: int(x.split()[0]))
+
+    # Generar datasets con colores únicos
+    colores = [
+        ('rgba(255, 99, 132, 0.8)', 'rgba(255, 99, 132, 1)'),
+        ('rgba(54, 162, 235, 0.8)', 'rgba(54, 162, 235, 1)'),
+        ('rgba(255, 206, 86, 0.8)', 'rgba(255, 206, 86, 1)'),
+        ('rgba(75, 192, 192, 0.8)', 'rgba(75, 192, 192, 1)'),
+    ]
+
+    rams_apilados_datasets = []
+    for i, capacidad in enumerate(capacidades_unicas):
+        data = [
+            capacidades_por_entidad[entidad].get(capacidad, 0)
+            for entidad in rams_apilados_labels
+        ]
+        rams_apilados_datasets.append({
+            'label': capacidad,
+            'data': data,
+            'backgroundColor': colores[i % len(colores)][0],
+            'borderColor': colores[i % len(colores)][1],
+            'borderWidth': 1
+        })
+    return {
+        'rams_apilados_labels': rams_apilados_labels,
+        'rams_apilados_datasets': rams_apilados_datasets
     }
 def get_placas_data():
 
@@ -850,7 +907,6 @@ def reportes_pcs_por_entidad(request):
     return render(request, 'Reportes/pcs_por_entidad.html', context)
 def reportes_cap_discos_por_entidad(request):
     discos = get_discos_capacidades_data()
-    
     # Preparar datos para la tabla
     discos_data = []
     for i, entidad in enumerate(discos['discos_apilados_labels'], 1):
@@ -872,8 +928,32 @@ def reportes_cap_discos_por_entidad(request):
         'discos_data': discos_data,
         'discos_total': total
     }
-    
     return render(request, 'Reportes/reportes_cap_discos_por_entidad.html', context)
+def reportes_ram_por_entidad(request):
+    rams = get_rams_data()
+    
+    rams_data = []
+    
+    for i, entidad in enumerate(rams['rams_apilados_labels'], 1):
+        capacidades = []
+        for dataset in rams['rams_apilados_datasets']:
+            capacidad = {
+                'tamano': dataset['label'],
+                'cantidad': dataset['data'][i-1]  
+            }
+            capacidades.append(capacidad)
+        
+        rams_data.append({
+            'indice': i,
+            'entidad': entidad,
+            'capacidades': capacidades
+        })
+    total = Ram.objects.all().count()
+    context = {
+        'rams_data': rams_data,
+        'rams_total': total
+    }
+    return render(request, 'Reportes/reportes_ram_por_entidad.html', context)
 def get_modelos_board_data():
     placas = Placa_Base.objects.all()
     
@@ -958,5 +1038,63 @@ def reportes_modelos_board_por_entidad(request):
     }
     
     return render(request, 'Reportes/reportes_modelos_board_por_entidad.html', context)
+def reporte_disco_por_entidad_pc(request, nombre_entidad):
+    
+    entidad = Entidad.objects.filter(nombre=nombre_entidad)[0]
+    pcs = Pc.objects.filter(id_entidad = entidad )
+    
+    pcs_con_discos = []
+    
+    for pc in pcs: 
+        chasis = pc.id_chasis
+        discos = Almacenamiento.objects.filter(id_chasis=chasis)
+        tamanos_discos = []
+        
+        for disco in discos:
+            tamanos_discos.append(disco.capacidad_alm /1024 )    
+        
+        pc_data = {
+                "nombre_pc": pc.nombre_equipo,
+                "tamanos_discos": tamanos_discos
+            }
+        
+        pcs_con_discos.append(pc_data)
+        
+    context = {
+            "pcs": pcs_con_discos,
+            "entidad": entidad
+        }
+    return render(request, 'Reportes/reporte_disco_por_entidad_pc.html', context)
+def reporte_ram_por_entidad_pc(request, nombre_entidad):
+    
+    entidad = Entidad.objects.filter(nombre=nombre_entidad)[0]
+    pcs = Pc.objects.filter(id_entidad = entidad )
+    
+    pcs_con_rams = []
+    
+    for pc in pcs: 
+        chasis = pc.id_chasis
+        placa = Placa_Base.objects.filter(id_chasis=chasis)[0]
+
+        rams = Ram.objects.filter(id_placa = placa)
+        capacidades_rams = []
+            
+        for ram in rams: 
+            capacidades_rams.append(ram.capacidad_ram  )    
+                
+        
+        pc_data = {
+                "nombre_pc": pc.nombre_equipo,
+                "tamanos_ram": capacidades_rams
+            }
+        
+        pcs_con_rams.append(pc_data)
+        
+    context = {
+            "pcs": pcs_con_rams,
+            "entidad": entidad
+        }
+    return render(request, 'Reportes/reporte_ram_por_entidad_pc.html', context)
+
 
 #==========================================> Otros <============================================#
