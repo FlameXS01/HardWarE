@@ -262,9 +262,8 @@ def detectar_cambios(pc, new_data):
     
     # RAM
     rams_nuevas = len(new_data['memory'])
-    rams_viejas = Ram.objects.filter(id_placa__id_chasis=pc.id_chasis)
-    
-    if rams_nuevas != rams_viejas:
+    rams_viejas = Ram.objects.filter(id_placa__id_chasis=pc.id_chasis)    
+    if rams_nuevas != len(rams_viejas):
         cambios[f'Rams'] = 'Cambio en Unidades Ram'
     else:
         for i, ram_nueva in enumerate(new_data['memory']):
