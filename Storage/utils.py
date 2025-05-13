@@ -1,6 +1,5 @@
 import os
 import json
-from django.conf import settings
 import logging
 from .models import *
 from django.db import transaction
@@ -262,32 +261,42 @@ def detectar_cambios(pc, new_data):
     # Comparar componentes hardware
     
     # RAM
+    rams_nuevas = len(new_data['memory'])
     rams_viejas = Ram.objects.filter(id_placa__id_chasis=pc.id_chasis)
-    for i, ram_nueva in enumerate(new_data['memory']):
-        if i < len(rams_viejas):
-            ram_vieja = rams_viejas[i]
-            if ram_vieja.no_serie_ram != ram_nueva['serial']:
-                cambios[f'RAM_{i}'] = f"Serial cambió {ram_vieja.no_serie_ram} -> {ram_nueva['serial']}"
-        else:
-            cambios[f'RAM_{i}'] = f"RAM nueva detectada: {ram_nueva['serial']}"
+    
+    if rams_nuevas != rams_viejas:
+        cambios[f'Rams'] = 'Cambio en Unidades Ram'
+    else:
+        for i, ram_nueva in enumerate(new_data['memory']):
+            if i < len(rams_viejas):
+                ram_vieja = rams_viejas[i]
+                if ram_vieja.no_serie_ram != ram_nueva['serial']:
+                    cambios[f'RAM_{i}'] = f"Serial cambió {ram_vieja.no_serie_ram} -> {ram_nueva['serial']}"
+            else:
+                cambios[f'RAM_{i}'] = f"RAM nueva detectada: {ram_nueva['serial']}"
 
     # Almacenamiento
+    alm_nuevos = len(new_data['hard_drives'])
     almacenamientos_viejos = Almacenamiento.objects.filter(id_chasis=pc.id_chasis)
-    for i, almacenamiento_nuevo in enumerate(new_data['hard_drives']):
-        if i < len(almacenamientos_viejos):
-            almacenamiento_viejo = almacenamientos_viejos[i]
-            if (almacenamiento_viejo.modelo_alm != almacenamiento_nuevo['model'] or
-                almacenamiento_viejo.no_serie_alm != almacenamiento_nuevo['serial'] or
-                almacenamiento_viejo.tipo_alm != almacenamiento_nuevo['interface'] or
-                almacenamiento_viejo.capacidad_alm != almacenamiento_nuevo['size_gb'] * 1024 ):
-                cambios[f'Almacenamiento_{i}'] = (
-                    f"Modelo: {almacenamiento_viejo.modelo_alm} -> {almacenamiento_nuevo['model']}, "
-                    f"Serial: {almacenamiento_viejo.no_serie_alm} -> {almacenamiento_nuevo['serial']}, "
-                    f"Tipo: {almacenamiento_viejo.tipo_alm} -> {almacenamiento_nuevo['interface']}, "
-                    f"Capacidad: {almacenamiento_viejo.capacidad_alm} -> {almacenamiento_nuevo['size_gb']}"
-                )
-        else:
-            cambios[f'Almacenamiento_{i}'] = f"Almacenamiento nuevo detectado: {almacenamiento_nuevo['model']}"
+    if alm_nuevos != len(almacenamientos_viejos):
+        cambios[f'Almacenamiento'] = 'Cambio en Unidades de Almacenamiento'
+    else:
+        almacenamientos_viejos = Almacenamiento.objects.filter(id_chasis=pc.id_chasis)
+        for i, almacenamiento_nuevo in enumerate(new_data['hard_drives']):
+            if i < len(almacenamientos_viejos):
+                almacenamiento_viejo = almacenamientos_viejos[i]
+                if (almacenamiento_viejo.modelo_alm != almacenamiento_nuevo['model'] or
+                    almacenamiento_viejo.no_serie_alm != almacenamiento_nuevo['serial'] or
+                    almacenamiento_viejo.tipo_alm != almacenamiento_nuevo['interface'] or
+                    almacenamiento_viejo.capacidad_alm != almacenamiento_nuevo['size_gb'] * 1024 ):
+                    cambios[f'Almacenamiento_{i}'] = (
+                        f"Modelo: {almacenamiento_viejo.modelo_alm} -> {almacenamiento_nuevo['model']}, "
+                        f"Serial: {almacenamiento_viejo.no_serie_alm} -> {almacenamiento_nuevo['serial']}, "
+                        f"Tipo: {almacenamiento_viejo.tipo_alm} -> {almacenamiento_nuevo['interface']}, "
+                        f"Capacidad: {almacenamiento_viejo.capacidad_alm} -> {almacenamiento_nuevo['size_gb']}"
+                    )
+            else:
+                cambios[f'Almacenamiento_{i}'] = f"Almacenamiento nuevo detectado: {almacenamiento_nuevo['model']}"
 
     # Procesador
     procesador_viejo = Procesador.objects.get(id_placa__id_chasis=pc.id_chasis)
@@ -402,7 +411,7 @@ def registrar_incidencia(pc, cambios):
     Incidencias.objects.create(
         desc_incidencia="Modificación de hardware",
         fecha_incidencia=datetime.now().date(),
-        observacion=desc[:50], 
+        observacion=desc[:250], 
         id_pc=pc
     )
 
@@ -504,6 +513,8 @@ def aplicar_cambios_componentes(pc, new_data):
 
 MAPEO_ENTIDADES = { 
     # Complejos 
+    
+    # agregar nomencladores de municipios
     'SSP': ('Complejo Sancti Spiritus', 'Complejo '),
     'CAB': ('Complejo Cabaiguan', 'Complejo'),
     'TAG': ('Complejo Taguasco', 'Complejo'),

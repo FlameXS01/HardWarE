@@ -138,7 +138,7 @@ class Incidencias(models.Model):
     id_incidencia = models.BigAutoField(primary_key=True)
     desc_incidencia = models.CharField(max_length=50)
     fecha_incidencia = models.CharField(max_length=50)
-    observacion = models.CharField(max_length=50)
+    observacion = models.CharField(max_length=250)
     id_pc = models.ForeignKey(Pc, null=False, blank=False, on_delete=models.CASCADE)    
 
     def __str__(self):

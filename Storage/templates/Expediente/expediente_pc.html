@@ -107,7 +107,7 @@
     </style>
 </head>
 <body>
-    <img src="/images/logo.png" class="logo-empresa">
+    <img src="{% static 'images/logo.png' %}" class="logo-empresa">
     <button onclick="window.print()" class="print-button">Imprimir Expediente</button>
     <div class="header">
         <h1>Expediente Técnico: {{ pc.nombre_equipo }} -- {{pc.ultimo_reporte}}</h1>
@@ -133,8 +133,6 @@
             <tr>
                 <th width="20%">Tipo:</th>
                 <td width="30%">{{ chasis.tipo_chasis }}</td>
-                <th width="20%"># Sello:</th>
-                <td width="30%"></td>
             </tr>
     
             <!-- Placa Base -->
@@ -235,7 +233,7 @@
             <table>
                 <tr><th>Potencia:</th><td>{{ fuente.potencia_fuente }}W</td></tr>
                 <tr><th>Fabricante:</th><td>{{ fuente.fabricante_fuente }}</td></tr>
-                <tr><th>Serial:</th><td>{{ fuente.no_serie_fuente }}</td></tr>
+                <tr><th>Serial:</th><td width="60%">{{ fuente.no_serie_fuente }}</td></tr>
             </table>
         </div>
     </div>
