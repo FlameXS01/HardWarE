@@ -3,10 +3,12 @@ from Storage.form import*
 from Storage.models import*
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
-from collections import defaultdict
+from .utils import aplicar_cambios_pendientes
+from django.contrib import messages
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your views here.
 
@@ -18,9 +20,17 @@ def index(request):
     discos_data = get_discos_data()
     placas_data = get_placas_data()
     capacidades_data = get_discos_capacidades_data()
+    pendientes = PendienteActualizacion.objects.filter(estado='PENDIENTE')
+    
+    hace_una_semana = timezone.now() - timedelta(days=7)
+    
+    pendientes_recientes = PendienteActualizacion.objects.filter(
+        estado='PENDIENTE',
+        fecha_pendiente__gte=hace_una_semana
+    ).order_by('-fecha_pendiente')[:10]
     
     # Crear contexto
-    context = create_context(pcs_data, discos_data, placas_data, capacidades_data)
+    context = create_context(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes)
     
     return render(request, 'base/index.html', context)
 
@@ -722,6 +732,22 @@ def version_expediente(request, id_historico):
     
     return render(request, 'Expediente/version_historica.html', context)
 
+#==========================================> Pendientes <============================================#
+
+def list_pendientes(request):
+    pendientes = PendienteActualizacion.objects.filter(estado='PENDIENTE')
+    return render(request, 'Pendiente/list_pendientes.html', {'pendientes': pendientes})
+def aplicar_cambios_pendientes_view(request, id_pendiente):
+    aplicado = aplicar_cambios_pendientes(id_pendiente)
+    if aplicado:
+        messages.success(request, "Los cambios se aplicaron correctamente.")
+    else:
+        messages.error(request, "No se pudieron aplicar los cambios.")
+    
+    return index(request)
+def validar_antes_aplicar(request, id_pendiente):
+    return render(request, 'Pendiente/aplicar_cambios.html',{'id': id_pendiente})
+
 #==========================================> Reportes <============================================#
 
 def get_pcs_data():
@@ -742,7 +768,6 @@ def get_discos_data():
     discos_por_entidad = discos.values('id_chasis__pc__id_entidad__nombre').annotate(count=Count('id_chasis__pc__id_entidad')).order_by()
     discos_labels = [entidad['id_chasis__pc__id_entidad__nombre'] for entidad in discos_por_entidad]
     discos_values = [entidad['count'] for entidad in discos_por_entidad]
-    print ('>>>>discos_labels', discos_labels,'>>>>discos_values',discos_values )
     return {
         'discos_labels': discos_labels,
         'discos_values': discos_values
@@ -869,7 +894,7 @@ def get_discos_capacidades_data():
         'discos_apilados_labels': discos_apilados_labels,
         'discos_apilados_datasets': discos_apilados_datasets
     }
-def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data):
+def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes):
 
     return {
         'entidades_labels': pcs_data['entidades_labels'],
@@ -879,14 +904,16 @@ def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data):
         'placas_labels': placas_data['placas_labels'],
         'placas_values': placas_data['placas_values'],
         'discos_apilados_labels': capacidades_data['discos_apilados_labels'],
-        'discos_apilados_datasets': capacidades_data['discos_apilados_datasets']
+        'discos_apilados_datasets': capacidades_data['discos_apilados_datasets'],
+        'pendientes': pendientes,
+        'pendientes_recientes': pendientes_recientes
     }
-def create_context(pcs_data, discos_data, placas_data, capacidades_data):
+def create_context(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes):
 
-    chart_data = prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data)
+    chart_data = prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes )
     return {
-        'pcs': Pc.objects.all(),
-        'incidencias': Incidencias.objects.all(),
+        'pcs': Pc.objects.all()[:10],
+        'incidencias': Incidencias.objects.all()[:10],
         'cont': pcs_data['total_pcs'],
         **chart_data
     }

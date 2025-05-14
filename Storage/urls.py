@@ -120,4 +120,11 @@ urlpatterns = [
     path('reportes_modelos_board_por_entidad/', reportes_modelos_board_por_entidad, name='reportes_modelos_board_por_entidad'),
     path('reporte_disco_por_entidad_pc/<str:nombre_entidad>', reporte_disco_por_entidad_pc, name='reporte_disco_por_entidad_pc'),
     path('reporte_ram_por_entidad_pc/<str:nombre_entidad>', reporte_ram_por_entidad_pc, name='reporte_ram_por_entidad_pc'),
+    
+    #===================== urls pendientes ===================#
+    path('list_pendientes/', list_pendientes, name='list_pendientes'),
+    path('validar_antes_aplicar/<int:id_pendiente>', validar_antes_aplicar, name='validar_antes_aplicar'),
+    path('aplicar_cambios_pendientes_view/<int:id_pendiente>', aplicar_cambios_pendientes_view, name='aplicar_cambios_pendientes_view'),
+    
+    
 ]

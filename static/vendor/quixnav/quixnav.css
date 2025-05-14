@@ -3056,37 +3056,62 @@ svg.pulse-svg {
 
 /* pulse in CSS */
 .pulse-css {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 0.5rem;
-  border-radius: 3.5rem;
-  height: .4rem;
-  position: absolute;
-  background: #5D78FF;
-  right: 5px;
-  top: .6rem;
-  width: .4rem; }
-  .pulse-css:after, .pulse-css:before {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    position: absolute;
+    background: #ff0000; /* Color rojo */
+    right: 10px;
+    top: 10px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.pulse-css:after,
+.pulse-css:before {
     content: '';
-    width: 1rem;
-    height: 1rem;
-    border-radius: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
-    left: -.2rem;
-    background-color: #5D78FF;
+    left: -0.5rem;
+    background-color: #ff0000;
     margin: auto;
-    -webkit-transform: scale(0.3);
     transform: scale(0.3);
-    -webkit-transform-origin: center center;
     transform-origin: center center;
-    -webkit-animation: pulse-me 3s linear infinite;
-    animation: pulse-me 3s linear infinite; }
-    [direction="rtl"] .pulse-css:after, [direction="rtl"] .pulse-css:before {
-      left: auto;
-      right: -.2rem; }
+    animation: pulse-me 3s linear infinite;
+}
+
+[direction="rtl"] .pulse-css:after,
+[direction="rtl"] .pulse-css:before {
+    left: auto;
+    right: -0.5rem;
+}
+
+@keyframes pulse-me {
+    0% {
+        transform: scale(0.3);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(0.3);
+        opacity: 0.8;
+    }
+}
+
+.pulse-css:hover {
+    background: #ffffff;
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
 
 @-webkit-keyframes pulse-me {
   0% {

@@ -160,3 +160,14 @@ class ExpedienteHistorico(models.Model):
     
     def __str__(self):
         return f"Versión {self.fecha_version} - {self.pc.nombre_equipo}"
+
+class PendienteActualizacion(models.Model):
+    id_pendiente = models.BigAutoField(primary_key=True)
+    id_pc = models.ForeignKey(Pc, on_delete=models.CASCADE)
+    fecha_pendiente = models.DateTimeField(auto_now_add=True)
+    datos_nuevos = models.JSONField()  
+    estado = models.CharField(max_length=20, choices=[
+        ('PENDIENTE', 'Pendiente'),
+        ('APLICADO', 'Aplicado'),
+        ('RECHAZADO', 'Rechazado')
+    ], default='PENDIENTE')

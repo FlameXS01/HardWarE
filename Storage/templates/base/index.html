@@ -63,61 +63,36 @@
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
-                                    <div class="pulse-css"></div>
+                                    {% if pendientes %}
+                                        <div class="pulse-css"></div>
+                                    {% endif %}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="list-unstyled">
-                                        <li class="media dropdown-item">
-                                            <span class="success"><i class="ti-user"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="primary"><i class="ti-shopping-cart"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="danger"><i class="ti-bookmark"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="primary"><i class="ti-heart"></i></span>
-                                            <div class="media-body">
-                                                < a href="#">
-                                                    <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
-                                        </li>
-                                        <li class="media dropdown-item">
-                                            <span class="success"><i class="ti-image"></i></span>
-                                            <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
-                                                    </p>
-                                                </a>
-                                            </div>
-                                            <span class="notify-time">3:20 am</span>
+                                        {% if pendientes %}
+                                            {% for pendiente in pendientes %}
+                                                <li class="media dropdown-item">
+                                                    <div class="media-body">
+                                                        <a href="{% url 'list_pendientes' %}">
+                                                            <p><strong>{{ pendiente.id_pc.nombre_equipo }}</strong> tiene actualizaciones pendientes</p>
+                                                        </a>
+                                                    </div>
+                                                    <span class="notify-time">{{ pendiente.fecha_pendiente }}</span>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li class="media dropdown-item">
+                                                <div class="media-body">
+                                                    <p>No hay actualizaciones pendientes</p>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                        <li class="dropdown-item text-center">
+                                            <a href="{% url 'list_pendientes' %}" class="text-primary">
+                                                Ver todas las actualizaciones pendientes
+                                            </a>
                                         </li>
                                     </ul>
-                                    <a class="all-notification" href="#">See all notifications <i
-                                            class="ti-arrow-right"></i></a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown header-profile">
@@ -544,83 +519,38 @@
                         </div>
                     </div>
                     {%block notifications%}
-                    {%block Timeline%}
+                    {% block Timeline %}
                     <div class="col-lg-6 col-xl-4 col-xxl-6 col-md-6">
                         <div class="card">
-                            
                             <div class="card-header">
                                 <h4 class="card-title">Timeline</h4>
                             </div>
                             <div class="card-body">
                                 <div class="widget-timeline">
                                     <ul class="timeline">
+                                        {% for pendiente in pendientes_recientes %}
                                         <li>
-                                            <div class="timeline-badge primary"></div>
+                                            <div class="timeline-badge {% if pendiente.estado == 'PENDIENTE' %}warning{% elif pendiente.estado == 'APLICADO' %}success{% else %}danger{% endif %}"></div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="m-t-5">Youtube, a video-sharing website, goes live.</h6>
+                                                <span>{{ pendiente.fecha_pendiente|date:"H:i A" }}</span>
+                                                <h6 class="m-t-5">{{ pendiente.id_pc.nombre_equipo }} - {{ pendiente.estado }}</h6>
                                             </a>
                                         </li>
-
+                                        {% empty %}
                                         <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
+                                            <div class="timeline-badge dark"></div>
                                             <a class="timeline-panel text-muted" href="#">
-                                                <span >20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
+                                                <span>Ahora</span>
+                                                <h6 class="m-t-5">No hay nada en cambios recientes.</h6>
                                             </a>
                                         </li>
-
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge success">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="m-t-5">StumbleUpon is acquired by eBay. </h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="m-t-5">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <div class="timeline-badge info">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="#">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="m-t-5">Google acquires Youtube.</h6>
-                                            </a>
-                                        </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {%endblock%}
+                    {% endblock %}
                     {%block Incidencias%}
                     <div class="col-xl-4 col-lg-6 col-xxl-6 col-md-6">
                         <div class="card">

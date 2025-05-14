@@ -111,7 +111,6 @@ def procesar_pc(data):
         #created = false cuando se actualiza, true cuando hay q crearlo
         if created:
             crear_componentes(pc, data )
-            crear_snapshot_historico(pc)
         else:
             actualizar_componentes(pc, data )
 
@@ -226,15 +225,24 @@ def crear_componentes(pc, data):
             id_chasis=pc.id_chasis
         )
 
+#funciona correctamente
+# def actualizar_componentes(pc, data):
+#     with transaction.atomic():
+#         cambios = detectar_cambios(pc, data)
+#         if cambios:
+#             crear_snapshot_historico(pc)
+#             aplicar_cambios_componentes(pc, data)  
+#             registrar_incidencia(pc, cambios)
+#         pc.ultimo_reporte = datetime.now().date()
+#         pc.save()
+
 def actualizar_componentes(pc, data):
     with transaction.atomic():
         cambios = detectar_cambios(pc, data)
-        #print ('cambios >>>>',cambios)
+        print(cambios)
         if cambios:
-            crear_snapshot_historico(pc)
-            aplicar_cambios_componentes(pc, data)  
-            registrar_incidencia(pc, cambios)
-        # Actualizar fecha siempre
+            crear_pendiente(pc, data)
+            logger.info(f"Se detectaron cambios para {pc.nombre_equipo} y se guardaron como pendientes")
         pc.ultimo_reporte = datetime.now().date()
         pc.save()
 
@@ -300,14 +308,23 @@ def detectar_cambios(pc, new_data):
     # Procesador
     procesador_viejo = Procesador.objects.get(id_placa__id_chasis=pc.id_chasis)
     procesador_nuevo = new_data['cpus'][0]
-    if (procesador_viejo.desc_procesador != procesador_nuevo['name'] or
-        procesador_viejo.velocidad_procesador != procesador_nuevo['clock'] or
-        procesador_viejo.arq_procesador != (str(procesador_nuevo['cores']) + ' cores')):
-        cambios['Procesador'] = (
-            f"Descripción: {procesador_viejo.desc_procesador} -> {procesador_nuevo['name']}, "
-            f"Velocidad: {procesador_viejo.velocidad_procesador} -> {procesador_nuevo['clock']} MHz, "
-            f"Núcleos: {procesador_viejo.arq_procesador} -> {procesador_nuevo['cores']} cores"
-        )
+    operating_systems = new_data['operating_systems'][0]
+    
+    # Verificar cada condición por separado
+    cambio_descripcion = procesador_viejo.desc_procesador != procesador_nuevo['name']
+    cambio_velocidad = procesador_viejo.velocidad_procesador != procesador_nuevo['clock']
+    cambio_arquitectura = procesador_viejo.arq_procesador != operating_systems['architecture']
+    
+    if cambio_descripcion:
+        cambios['Procesador'] = f"Descripción: {procesador_viejo.desc_procesador} -> {procesador_nuevo['name']}"
+
+    elif cambio_velocidad:
+        cambios['Procesador'] = f"Velocidad: {procesador_viejo.velocidad_procesador} -> {procesador_nuevo['clock']} MHz"
+
+    elif cambio_arquitectura:
+        cambios['Procesador'] = f"Núcleos: {procesador_viejo.arq_procesador} -> {operating_systems['architecture']}"
+
+
 
     # Placa Base
     placa_base_vieja = Placa_Base.objects.all().filter(id_chasis=pc.id_chasis)[0]
@@ -505,10 +522,50 @@ def aplicar_cambios_componentes(pc, new_data):
             )
 
             logger.info(f"Componentes actualizados para {pc.nombre_equipo}")
-
+            return True
     except Exception as e:
         logger.error(f"Error actualizando componentes de {pc}: {str(e)}")
+        return False
         raise
+
+def crear_pendiente(pc, data):
+
+    try:
+        
+        # Crear registro pendiente
+        PendienteActualizacion.objects.create(
+            id_pc=pc,
+            datos_nuevos=data
+        )
+        
+        logger.info(f"Se creó un registro pendiente para {pc.nombre_equipo}")
+        return True
+    except Exception as e:
+        logger.error(f"Error creando pendiente para {pc}: {str(e)}")
+        return False
+
+def aplicar_cambios_pendientes(pendiente_id):
+    try:
+        pendiente = PendienteActualizacion.objects.get(id_pendiente=pendiente_id)
+        pc = pendiente.id_pc
+        
+        if not pendiente.datos_nuevos:
+            raise ValueError("No hay datos nuevos para aplicar.")
+        
+        exito = aplicar_cambios_componentes(pc, pendiente.datos_nuevos)
+        if exito:
+            crear_snapshot_historico(pc)
+        else:
+            return False 
+        
+        pendiente.estado = 'APLICADO'
+        pendiente.save()
+        
+        logger.info(f"Se aplicaron los cambios pendientes para {pc.nombre_equipo}")
+        return True
+    except Exception as e:
+        logger.error(f"Error aplicando cambios pendientes: {str(e)}")
+        return False
 
 MAPEO_ENTIDADES = { 
     # Complejos 
