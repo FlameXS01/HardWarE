@@ -16,41 +16,36 @@
 
 {% block table %}
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Actualizaciones Pendientes</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Computador</th>
-                                    <th>Fecha Pendiente</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for pendiente in pendientes %}
-                                    <tr>
-                                        <td>{{ pendiente.id_pc }} </td>
-                                        <td>{{ pendiente.fecha_pendiente }}</td>
-                                        <td>
-                                            <a href="{% url 'validar_antes_aplicar' pendiente.id_pendiente %}" class="btn btn-primary">
-                                                Validar Cambios
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Computador</th>
+                <th>Fecha Pendiente</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pendiente in pendientes %}
+        <tr>
+            <td>{{ pendiente.id_pc }} </td>
+            <td>{{ pendiente.fecha_pendiente }}</td>
+            <td>
+                <a href="{% url 'aplicar_cambios_pendientes_view' pendiente.id_pendiente %}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Validar
+                </a>
+            </td>
+                                        
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+            <i class="fas fa-info-circle"></i> Volver
+        </a> 
+        
     </div>
 </div>
 {%endblock%}

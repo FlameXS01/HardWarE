@@ -21,7 +21,6 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Clasificación</th>
             <th>Conexión </th>
             <th>Capacidad</th>
             <th>Modelo</th>
@@ -32,7 +31,6 @@
         {% for alm in almacenamientos %}
             <tr>
                 <td>{{ alm.tipo_alm }}</td>
-                <td>{{ alm.interface_alm }}</td>
                 <td>{{ alm.capacidad_alm }}</td>
                 <td>{{ alm.modelo_alm }}</td>
                 <td>

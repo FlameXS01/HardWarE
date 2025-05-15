@@ -123,7 +123,6 @@ urlpatterns = [
     
     #===================== urls pendientes ===================#
     path('list_pendientes/', list_pendientes, name='list_pendientes'),
-    path('validar_antes_aplicar/<int:id_pendiente>', validar_antes_aplicar, name='validar_antes_aplicar'),
     path('aplicar_cambios_pendientes_view/<int:id_pendiente>', aplicar_cambios_pendientes_view, name='aplicar_cambios_pendientes_view'),
     
     

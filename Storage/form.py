@@ -1,5 +1,6 @@
 from django import forms
 from .models import *
+from django.contrib.auth.models import User
 
 class PcForm(forms.ModelForm):
     class Meta:
@@ -18,7 +19,6 @@ class PcForm(forms.ModelForm):
         super(PcForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
         self.fields['id_entidad'].queryset = Entidad.objects.all()
-
 class ChasisForm(forms.ModelForm):
     
     nombre_equipo = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
@@ -33,7 +33,6 @@ class ChasisForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:  
             self.initial['nombre_equipo'] = self.instance.nombre_equipo_relacionado
-
 class LectorForm(forms.ModelForm):
     class Meta:
         model = Lector
@@ -46,7 +45,6 @@ class LectorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LectorForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-
 class AlmacenamientoForm(forms.ModelForm):
     class Meta:
         model = Almacenamiento
@@ -63,7 +61,6 @@ class AlmacenamientoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AlmacenamientoForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-
 class PlacaBaseForm(forms.ModelForm):
     class Meta:
         model = Placa_Base
@@ -77,7 +74,6 @@ class PlacaBaseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PlacaBaseForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-
 class ProcesadorForm(forms.ModelForm):
     class Meta:
         model = Procesador
@@ -92,7 +88,6 @@ class ProcesadorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProcesadorForm, self).__init__(*args, **kwargs)
         self.fields['id_placa'].queryset = Placa_Base.objects.all()
-
 class RamForm(forms.ModelForm):
     class Meta:
         model = Ram
@@ -106,7 +101,6 @@ class RamForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RamForm, self).__init__(*args, **kwargs)
         self.fields['id_placa'].queryset = Placa_Base.objects.all()
-
 class TarjetaRedForm(forms.ModelForm):
     class Meta:
         model = Tarjeta_Red
@@ -121,7 +115,6 @@ class TarjetaRedForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(TarjetaRedForm, self).__init__(*args, **kwargs)
         self.fields['id_placa'].queryset = Placa_Base.objects.all()
-
 class Ranura_ExpansionForm(forms.ModelForm):
     class Meta:
         model = Ranura_Expansion
@@ -134,7 +127,6 @@ class Ranura_ExpansionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(Ranura_ExpansionForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-
 class FuenteForm(forms.ModelForm):
     class Meta:
         model = Fuente
@@ -148,7 +140,6 @@ class FuenteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FuenteForm, self).__init__(*args, **kwargs)
         self.fields['id_chasis'].queryset = Chasis.objects.all()
-
 class PerifericosForm(forms.ModelForm):
     class Meta:
         model = Perifericos
@@ -163,7 +154,6 @@ class PerifericosForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PerifericosForm, self).__init__(*args, **kwargs)
         self.fields['id_pc'].queryset = Pc.objects.all() 
-
 class IncidenciasForm(forms.ModelForm):
     class Meta: 
         model = Incidencias
@@ -193,7 +183,29 @@ class EntidadForm(forms.ModelForm):
                 ]
             ),
         }
-        
-        
 
+    class Meta: 
 
+        model = User
+        fields = ['username', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Nombre', 'required': True}),
+            'password': forms.PasswordInput(attrs={'class':'form-control', 'placeholder': '*********', 'required': True})
+        }
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'is_active', 'is_superuser']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nombre de usuario','required': True}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nombre','required': True}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Apellido','required': True}),
+            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder': 'Correo electrónico','required': True}),
+            'is_superuser': forms.Select(
+                attrs={'class': 'form-control','required': True},
+                choices=[
+                    (True, 'Superusuario'),
+                    (False, 'Usuario estándar')
+                ]
+            ),
+        }

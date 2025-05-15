@@ -1,14 +1,16 @@
-from django.shortcuts import render,redirect
 from Storage.form import*
 from Storage.models import*
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 from .utils import aplicar_cambios_pendientes
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
+from django.contrib.messages import error
+from django.shortcuts import redirect, render
 
 # Create your views here.
 
@@ -24,10 +26,9 @@ def index(request):
     
     hace_una_semana = timezone.now() - timedelta(days=7)
     
-    pendientes_recientes = PendienteActualizacion.objects.filter(
-        estado='PENDIENTE',
+    pendientes_recientes = PendienteActualizacion.objects.filter(     
         fecha_pendiente__gte=hace_una_semana
-    ).order_by('-fecha_pendiente')[:10]
+    ).order_by('fecha_pendiente')[:10]
     
     # Crear contexto
     context = create_context(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes)
@@ -738,15 +739,41 @@ def list_pendientes(request):
     pendientes = PendienteActualizacion.objects.filter(estado='PENDIENTE')
     return render(request, 'Pendiente/list_pendientes.html', {'pendientes': pendientes})
 def aplicar_cambios_pendientes_view(request, id_pendiente):
-    aplicado = aplicar_cambios_pendientes(id_pendiente)
-    if aplicado:
-        messages.success(request, "Los cambios se aplicaron correctamente.")
-    else:
-        messages.error(request, "No se pudieron aplicar los cambios.")
+    error = None
     
-    return index(request)
-def validar_antes_aplicar(request, id_pendiente):
-    return render(request, 'Pendiente/aplicar_cambios.html',{'id': id_pendiente})
+    if request.method == 'POST':
+        val_form = AuthenticationForm(request, data= request.POST or None)  
+        
+        if val_form.is_valid():
+
+            username = val_form.cleaned_data['username']
+            password = val_form.cleaned_data['password']
+            
+            # Autenticar usuario
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None and user.is_staff:
+                # Si es válido y es staff, aplicar cambios
+                aplicar_cambios_pendientes(id_pendiente)
+                return redirect('list_pendientes')  # Redirigir después de éxito
+            else:
+                error = "Credenciales inválidas o no tienes permisos de staff."
+        else:
+            error = "Por favor corrige los errores en el formulario."
+        
+        return render(request, 'Pendiente/aplicar_cambios.html', {
+            'val_form': val_form,
+            'id': id_pendiente,
+            'error': error
+        })
+    
+    else:
+        # Si es GET, mostrar formulario vacío
+        val_form = AuthenticationForm()
+        return render(request, 'Pendiente/aplicar_cambios.html', {
+            'val_form': val_form,
+            'id': id_pendiente
+        })
 
 #==========================================> Reportes <============================================#
 
@@ -895,7 +922,6 @@ def get_discos_capacidades_data():
         'discos_apilados_datasets': discos_apilados_datasets
     }
 def prepare_chart_data(pcs_data, discos_data, placas_data, capacidades_data, pendientes, pendientes_recientes):
-
     return {
         'entidades_labels': pcs_data['entidades_labels'],
         'entidades_values': pcs_data['entidades_values'],
