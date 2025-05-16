@@ -4,13 +4,13 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
 from .utils import aplicar_cambios_pendientes
-from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
-from django.contrib.messages import error
+from django.contrib.auth import authenticate
 from django.shortcuts import redirect, render
+from django.db.models import Q
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -566,6 +566,9 @@ def del_tarjeta(request, id_tarjeta):
 def list_entidad(request):
     entidades = Entidad.objects.all() 
     return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
+def list_entidad_tipo(request, tipo):
+    entidades = Entidad.objects.filter(tipoEntidad=tipo) 
+    return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
 def list_Complejo(request):
     entidades = Entidad.objects.filter(tipoEntidad='Complejo') 
     return render(request, 'Entidad/list_entidad.html', {'entidades': entidades})
@@ -759,7 +762,7 @@ def aplicar_cambios_pendientes_view(request, id_pendiente):
             else:
                 error = "Credenciales inválidas o no tienes permisos de staff."
         else:
-            error = "Por favor corrige los errores en el formulario."
+            error = "Por favor corrige los errores en el formulario. Credenciales inválidas."
         
         return render(request, 'Pendiente/aplicar_cambios.html', {
             'val_form': val_form,
@@ -1149,5 +1152,77 @@ def reporte_ram_por_entidad_pc(request, nombre_entidad):
         }
     return render(request, 'Reportes/reporte_ram_por_entidad_pc.html', context)
 
+
+#==========================================> Busqueda <============================================#
+
+
+def buscar(request):
+    query = request.GET.get('q', '').strip()
+    results = {
+        'pcs': [],
+        'incidencias': [],
+        'entidades': [],
+        'pendientes': []
+    }
+
+    if query:
+        # Búsqueda en PCs
+        results['pcs'] = Pc.objects.filter(
+            Q(nombre_equipo__icontains=query) |
+            Q(serial_pc__icontains=query) |
+            Q(id_chasis__placa_base__modelo_placa__icontains=query)
+        ).select_related('id_entidad')[:5]
+
+
+        # Búsqueda en Incidencias
+        results['incidencias'] = Incidencias.objects.filter(
+            Q(observacion__icontains=query) |
+            Q(desc_incidencia__icontains=query)
+        ).select_related('id_pc')[:5]
+
+        # Búsqueda en Entidades
+        results['entidades'] = Entidad.objects.filter(
+            Q(nombre__icontains=query) |
+            Q(tipoEntidad__icontains=query)
+        )[:3]
+
+        # Búsqueda en Pendientes
+        results['pendientes'] = PendienteActualizacion.objects.filter(
+            Q(datos_nuevos__icontains=query) |
+            Q(id_pc__nombre_equipo__icontains=query)
+        ).select_related('id_pc')[:3]
+
+    # Respuesta Estructurada para el Json 
+    return JsonResponse({
+        'results': {
+            'pcs': [{
+                'title': pc.nombre_equipo,
+                'subtitle': f"{pc.id_entidad.nombre} | {pc.so}",
+                'url': f"/expediente/{pc.id_pc}",
+                'icon': 'fas fa-desktop'
+            } for pc in results['pcs']],
+            
+            'incidencias': [{
+                'title': inc.observacion[:40] + ('...' if len(inc.observacion) > 40 else ''),
+                'subtitle': f"Incidencia en {inc.id_pc.nombre_equipo}",
+                'url': f"/incidencia/{inc.id_incidencia}",
+                'icon': 'fas fa-exclamation-triangle'
+            } for inc in results['incidencias']],
+                        
+            'entidades': [{
+                'title': ent.nombre,
+                'subtitle': f"Tipo: {ent.tipoEntidad}",
+                'url': f"/list_entidad/{ent.tipoEntidad}",
+                'icon': 'fas fa-building'
+            } for ent in results['entidades']],
+            
+            'pendientes': [{
+                'title': f"Actualización pendiente para {pend.id_pc.nombre_equipo}",
+                'subtitle': f"Estado: {pend.estado}",
+                'url': f"/pendientes/{pend.id_pendiente}",
+                'icon': 'fas fa-clock'
+            } for pend in results['pendientes']]
+        }
+    })
 
 #==========================================> Otros <============================================#

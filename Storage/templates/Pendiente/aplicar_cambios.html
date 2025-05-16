@@ -1,148 +1,188 @@
-
-
 {% extends 'base/index.html' %}
+{% load static %}
 
-{%load static%}
-{%block welcome%}
-<h2></h2>
-{%endblock%}
-{%block detalles%}
-<h2></h2>
-{%endblock%}
-{%block grafico%}
-<h2></h2>
-{%endblock%}
-{%block notifications%}
-<h2></h2>
-{%endblock%}
-
-
+{% block navbarSuperior %}{% endblock %}
+{% block focus %}{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block welcome %}{% endblock %}
+{% block detalles %}{% endblock %}
+{% block grafico %}{% endblock %}
+{% block notifications %}{% endblock %}
 
 {% block table %}
-<div class="container-fluid">
-    <div class="row justify-content-center min-vh-100 align-items-center">
-        <div class="col-xl-8 col-xxl-6">
-            <div class="card shadow-lg border-0" style="min-width: 800px; border-radius: 2rem; padding: 2.5rem;">
-                <div class="card-header bg-danger border-0 text-center py-4">
-                    <div class="d-flex justify-content-center align-items-center mb-4">
-                        <i class="fas fa-shield-alt fa-3x text-white me-3"></i>
-                        <h1 class="text-white mb-0 fw-bold display-5">CONFIRMACIÓN REQUERIDA</h1>
+
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-xl border-0" style="width: 800px; border-radius: 20px;">
+                <!-- Encabezado -->
+                <div class="card-header bg-danger text-center py-4 border-0" style="border-radius: 20px 20px 0 0;">
+                    <div class="d-flex flex-column align-items-center">
+                        <h1 class="text-white mb-0 fw-bold display-5">VALIDACIÓN DE ACCESO</h1>
+                        <p class="text-white-50 mb-0 mt-2">Sistema de autorización de expedientes</p>
+                    </div>
+                    <div class="text-center mb-5">
+                        <img src="{% static 'images/logo.png' %}" alt="Logo Cimex" style="height: 100px; margin-bottom: 0.5rem; transform: scale(1.1); transition: transform 0.3s;">
                     </div>
                 </div>
-                
-                <div class="card-body p-4">
+
+                <!-- Cuerpo del formulario -->
+                <div class="card-body p-5">
+                    
+
                     <form method="POST" class="needs-validation" novalidate>
                         {% csrf_token %}
+
+                        <div class="mx-auto" style="max-width: 500px;">
+                            <!-- Campo Administrador -->
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <label class="form-label text-danger fw-bold mb-0 fs-5" style="min-width: 150px;">
+                                        <i class="fas fa-users-cog me-2"></i>USUARIO ADMINISTRADOR
+                                    </label>
+                                    <div class="input-group border-2 border-danger rounded-3" style="height: 50px;">
+                                        <span class="input-group-text bg-danger border-0">
+                                            <i class="fas fa-user-circle text-white"></i>
+                                        </span>
+                                        {{ val_form.username }}
+                                    </div>
+                                </div>
+                                <div class="text-danger ms-3">
+                                    {{ val_form.username.errors }}
+                                </div>
+                            </div>
+
+                            <!-- Campo Contraseña -->
+                            <div class="mb-5">
+                                <div class="d-flex align-items-center gap-3">
+                                    <label class="form-label text-danger fw-bold mb-0 fs-5" style="min-width: 150px;">
+                                        <i class="fas fa-lock me-2"></i>CONTRASEÑA DE ACCESO
+                                    </label>
+                                    <div class="input-group border-2 border-danger rounded-3" style="height: 50px;">
+                                        <span class="input-group-text bg-danger border-0">
+                                            <i class="fas fa-key text-white"></i>
+                                        </span>
+                                        {{ val_form.password }}
+                                    </div>
+                                </div>
+                                <div class="text-danger ms-3">
+                                    {{ val_form.password.errors }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de Advertencia -->
+                        <div class="alert alert-warning alert-dismissible fade show mb-5" role="alert">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-exclamation-circle me-3 fs-4"></i>
+                                <div>
+                                    <strong>Advertencia:</strong> Al aceptar y validar, se actualizarán los datos del expediente de la computadora y se creará un historial de cambios. Si no está seguro, no continúe.
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Botones Centrados -->
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-md-8 text-center">
+                                <div class="d-grid gap-3">
+                                    <button type="submit" class="btn btn-danger btn-lg py-3 fw-bold position-relative overflow-hidden">
+                                        <i class="fas fa-check-circle me-2"></i>VALIDAR ACCESO
+                                        <div class="position-absolute w-0 h-0"></div>
+                                    </button>
+                                    <a href="{% url 'list_pendientes' %}" class="btn btn-outline-danger btn-lg py-3">
+                                        <i class="fas fa-arrow-left me-2"></i>REGRESAR
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de Error Centrado -->
+                        {% if error %}
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-md-8 text-center">
+                                <div class="alert alert-danger d-inline-flex align-items-center border-2 border-danger">
+                                    <i class="fas fa-exclamation-triangle me-3 fa-lg"></i>
+                                    <div class="fw-bold">{{ error }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
                         
-                        <div class="row align-items-center mb-4">
-                            <div class="col-md-3">
-                                <label for="id_username" class="form-label text-white bg-danger d-inline-block px-3 py-2 rounded-2 fw-bold mb-0">
-                                    <i class="fas fa-user-circle me-2"></i>USUARIO
-                                </label>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="input-group border rounded-3" style="border-color: #ff4444!important;">
-                                    <span class="input-group-text bg-white border-0">
-                                        <i class="fas fa-user text-danger fs-5"></i>
-                                    </span>
-                                    {{ val_form.username }}
-                                </div>
-                                {{ val_form.username.errors }}
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center mb-4">
-                            <div class="col-md-3">
-                                <label for="id_password" class="form-label text-white bg-danger d-inline-block px-3 py-2 rounded-2 fw-bold mb-0">
-                                    <i class="fas fa-key me-2"></i>CONTRASEÑA
-                                </label>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="input-group border rounded-3" style="border-color: #ff4444!important;">
-                                    <span class="input-group-text bg-white border-0">
-                                        <i class="fas fa-lock text-danger fs-5"></i>
-                                    </span>
-                                    {{ val_form.password }}
-                                </div>
-                                {{ val_form.password.errors }}
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-3 mt-5">
-                            <button type="submit" class="btn btn-danger btn-lg py-3 fw-bold text-uppercase">
-                                <i class="fas fa-check-circle me-3"></i>APLICAR CAMBIOS
-                            </button>
-                            <a href="{% url 'list_pendientes' %}" class="btn btn-outline-danger btn-lg py-3">
-                                <i class="fas fa-arrow-left me-2"></i>VOLVER AL LISTADO
-                            </a>
-                        </div>
                     </form>
 
-                    {% if error %}
-                    <div class="alert alert-custom mt-4 d-flex align-items-center" style="background: #ffe6e6; border: 2px solid #ff4444;">
-                        <i class="fas fa-exclamation-circle me-3 fs-4 text-danger"></i>
-                        <div class="text-danger fw-bold">{{ error }}</div>
-                    </div>
-                    {% endif %}
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+{% endblock %}
+{% block footer %}{% endblock %}
+
+
 <style>
-    body {
-        background: linear-gradient(135deg, #ffffff 0%, #fff5f5 100%);
-    }
-    
-    .card {
-        transition: transform 0.3s;
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1)!important;
-    }
-    
     .form-control {
+        border: 2px solid #ff4444 !important;
+        border-radius: 10px !important;
+        padding: 1rem 1.5rem;
         font-size: 1.1rem;
-        padding: 1rem;
-        border: none!important;
-        background: #fff!important;
-        height: 3.5rem;
+        text-align: center;
     }
 
-    
     .form-control:focus {
-        box-shadow: none!important;
-        border-color:rgb(37, 14, 238)!important;
+        box-shadow: none !important;
+        border-color: #cc0000 !important;
+        outline: none;
     }
-    
-    .btn-danger {
-        background: #ff4444;
-        border: none;
-        transition: all 0.3s;
-        letter-spacing: 1px;
-    }
-    
-    .btn-danger:hover {
-        background: #cc0000;
-        letter-spacing: 2px;
-    }
-    
-    .btn-outline-danger {
-        border: 2px solid #ff4444;
-        color: #ff4444;
-        transition: all 0.3s;
-    }
-    
+
     .input-group-text {
-        padding: 0 1.5rem;
+        border-radius: 10px 0 0 10px !important;
+        width: 50px;
+        justify-content: center;
     }
-    
-    label.bg-danger {
-        box-shadow: 0 0.5rem 1rem rgba(255, 68, 68, 0.15);
+
+    .btn-danger {
+        transition: all 0.3s;
+        border-radius: 10px;
+        padding: 0 20px;
     }
-    
-    .alert-custom {
-        border-radius: 15px;
-        padding: 1.5rem;
+
+    .btn-danger:hover {
+        background-color: #cc0000;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #ff4444;
+        color: white;
+    }
+
+    @media (max-width: 992px) {
+        .card {
+            width: 95% !important;
+        }
+        .card-header h1 {
+            font-size: 1.75rem;
+        }
+        .form-control {
+            padding: 0.8rem;
+            font-size: 1rem;
+        }
+        .input-group {
+            max-width: 100% !important;
+        }
+    }
+
+    /* Animación hover para el logo */
+    .logo-hover {
+        transition: transform 0.3s;
+    }
+
+    .logo-hover:hover {
+        transform: scale(1.05);
     }
 </style>
-{% endblock %}

@@ -97,6 +97,7 @@ urlpatterns = [
     #===================== urls entidad ===================#
     
     path('entidad/', list_entidad , name="list_entidad"),
+    path('list_entidad/<str:tipo>', list_entidad_tipo , name="list_entidad_tipo"),
     path('complejo/', list_Complejo , name="list_Complejo"),
     path('ueb/', list_Ueb , name="list_Ueb"),
     path('add_entidad/',  add_entidad ,name="add_entidad"),
@@ -114,6 +115,7 @@ urlpatterns = [
     path('version_expediente/<int:id_historico>', version_expediente , name="version_expediente"),
     
     #===================== urls reportes ===================#
+    
     path('reportes_pcs_por_entidad/', reportes_pcs_por_entidad, name='reportes_pcs_por_entidad'),
     path('reportes_cap_discos_por_entidad/', reportes_cap_discos_por_entidad, name='reportes_cap_discos_por_entidad'),
     path('reportes_ram_por_entidad/', reportes_ram_por_entidad, name='reportes_ram_por_entidad'),
@@ -125,5 +127,7 @@ urlpatterns = [
     path('list_pendientes/', list_pendientes, name='list_pendientes'),
     path('aplicar_cambios_pendientes_view/<int:id_pendiente>', aplicar_cambios_pendientes_view, name='aplicar_cambios_pendientes_view'),
     
-    
+    #===================== urls pendientes ===================#
+
+    path('buscar/', buscar, name='buscar'),
 ]

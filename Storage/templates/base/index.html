@@ -8,9 +8,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>INVHardW - Hardware System </title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/logo.png' %}">
     <link href="{% static 'vendor/pg-calendar/css/pignose.calendar.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendor/chartist/css/chartist.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -27,6 +27,7 @@
     </div>
 
     <div id="main-wrapper">
+        {%block focus%}
         <div class="nav-header">
             <a href="{% url 'index' %}" class="brand-logo">
                 <img class="logo-abbr" src="{% static 'images/logo.png' %}" alt="">
@@ -39,23 +40,21 @@
                 </div>
             </div>
         </div>
+        {%endblock%}
         {%block navbarSuperior%}
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         {%block buscar%}
-                        <div class="header-left">
-                            <div class="search_bar dropdown">
-                                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-                                    <i class="mdi mdi-magnify"></i>
-                                </span>                                
-                                <div class="dropdown-menu p-0 m-0">
-                                    <form>
-                                        <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-                                    </form>
-                                </div>
-                            </div>
+                        <!-- En la sección del buscador que ya tienes -->
+                        <div class="search_bar dropdown">
+                            <input type="text" 
+                                id="searchInput" 
+                                class="form-control" 
+                                placeholder="Buscar equipos, incidencias, componentes..."
+                                autocomplete="off">
+                            <div id="searchResults" class="dropdown-menu p-0 m-0" style="width: 100%;"></div>
                         </div>
                         {%endblock%}
                         {%block notification%}
@@ -107,6 +106,7 @@
             </div>
         </div>
         {%endblock%}
+        {%block sidebar%}
         <div class="quixnav">
             <div class="quixnav-scroll">
                 
@@ -254,6 +254,7 @@
 
             </div>
         </div>
+        {%endblock%}
         {%block content%}
         <div class="content-body">
         <div class="container-fluid">
@@ -595,14 +596,14 @@
                 
                 
                 </div>
-                {%endblock%}
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-            </div>
-        </div>
+            {%endblock%}
+            {%block footer%}
+            <div class="footer">
+                <div class="copyright">
+                    <p>Copyright &copy; Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+                </div>
+            {%endblock%}
 
-        </div>
 
     <script src="{% static 'vendor/global/global.min.js' %}"></script>
     <script src="{% static 'js/quixnav-init.js' %}"></script>
@@ -614,6 +615,81 @@
     <script src="{% static 'vendor/pg-calendar/js/pignose.calendar.min.js' %}"></script>
 
     <script src="{% static 'js/dashboard/dashboard-2.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        let searchTimer;
+        
+        $('#searchInput').on('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                const query = $(this).val().trim();
+                
+                if (query.length > 2) {
+                    $.ajax({
+                        url: "{% url 'buscar' %}",
+                        data: { 'q': query },
+                        beforeSend: function() {
+                            $('#searchResults').html('<div class="dropdown-item">Cargando...</div>');
+                        },
+                        success: function(data) {
+                            const results = $('#searchResults');
+                            results.empty();
+                            
+                            // Mostrar categorías con resultados
+                            const categories = {
+                                pcs: 'Equipos',
+                                incidencias: 'Incidencias',
+                                componentes: 'Componentes',
+                                entidades: 'Entidades',
+                                pendientes: 'Pendientes'
+                            };
+                            
+                            Object.entries(categories).forEach(([key, title]) => {
+                                // Verificar si existe la categoría y si tiene resultados
+                                if (data.results?.[key] && data.results[key].length > 0) {
+                                    results.append(`<h6 class="dropdown-header">${title}</h6>`);
+                                    data.results[key].forEach(item => {
+                                        results.append(`
+                                            <a class="dropdown-item d-flex align-items-center" href="${item.url}">
+                                                <i class="${item.icon} mr-2"></i>
+                                                <div>
+                                                    <div class="small">${item.subtitle}</div>
+                                                    <span>${item.title}</span>
+                                                </div>
+                                            </a>
+                                        `);
+                                    });
+                                }
+                            });
+                            
+                            if (results.children().length === 0) {
+                                results.html('<div class="dropdown-item">No se encontraron resultados</div>');
+                            } else {
+                                results.show();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            $('#searchResults').html(`
+                                <div class="dropdown-item">
+                                    Error en la búsqueda: ${error}
+                                </div>
+                            `);
+                        }
+                    });
+                }
+            }, 300); // Delay de 300ms para evitar múltiples requests
+        });
+        
+        // Ocultar resultados al hacer clic fuera
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.search_bar').length) {
+                $('#searchResults').hide();
+            }
+        });
+    });
+
+</script>
+        
 </body>
 
 </html>

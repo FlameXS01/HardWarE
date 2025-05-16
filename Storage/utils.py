@@ -225,23 +225,13 @@ def crear_componentes(pc, data):
             id_chasis=pc.id_chasis
         )
 
-#funciona correctamente
-# def actualizar_componentes(pc, data):
-#     with transaction.atomic():
-#         cambios = detectar_cambios(pc, data)
-#         if cambios:
-#             crear_snapshot_historico(pc)
-#             aplicar_cambios_componentes(pc, data)  
-#             registrar_incidencia(pc, cambios)
-#         pc.ultimo_reporte = datetime.now().date()
-#         pc.save()
-
 def actualizar_componentes(pc, data):
     with transaction.atomic():
         cambios = detectar_cambios(pc, data)
         print(cambios)
         if cambios:
             crear_pendiente(pc, data)
+            registrar_incidencia(pc, cambios)
             logger.info(f"Se detectaron cambios para {pc.nombre_equipo} y se guardaron como pendientes")
         pc.ultimo_reporte = datetime.now().date()
         pc.save()
