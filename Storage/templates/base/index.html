@@ -27,40 +27,54 @@
     </div>
 
     <div id="main-wrapper">
-        {%block focus%}
+        {% block focus %}
         <div class="nav-header">
-            <a href="{% url 'index' %}" class="brand-logo">
-                <img class="logo-abbr" src="{% static 'images/logo.png' %}" alt="">
-                <img class="logo-compact" src="{% static 'images/logo-text.png' %}" alt="">
-                <img class="brand-title" src="{% static 'images/logo-text.png' %}" alt="">
+            <a href="{% url 'index' %}" class="brand-logo" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                font-weight: 700; 
+                font-size: 1.8rem; 
+                color:rgb(233, 232, 232); /* Fuego rojo oscuro, profesional */
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+                letter-spacing: 2px;
+                text-decoration: none;">
+                InvHardW
             </a>
-            <div class="nav-control">
-                <div class="hamburger">
-                    <span class="line"></span><span class="line"></span><span class="line"></span>
-                </div>
-            </div>
+            
         </div>
+
         {%endblock%}
         {%block navbarSuperior%}
-        <div class="header">
+        <div class="header" style="background:rgb(167, 26, 26); 
+                        border-bottom: 2px solid #8B0000;">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         {%block buscar%}
                         <!-- En la sección del buscador que ya tienes -->
                         <div class="search_bar dropdown">
-                            <input type="text" 
-                                id="searchInput" 
-                                class="form-control" 
-                                placeholder="Buscar equipos, incidencias, componentes..."
-                                autocomplete="off">
-                            <div id="searchResults" class="dropdown-menu p-0 m-0" style="width: 100%;"></div>
+                                <div class="col-sm-2 col-md-2">
+                                    <h4 class="mb-0" style="color:rgb(235, 232, 232); font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-search mr-2"></i>
+                                    </h4>
+                                </div>
+                                <div class="col-sm-10 col-md-10">
+                                    <div class="input-group">
+                                        <input type="text" 
+                                            id="searchInput" 
+                                            class="form-control form-control-lg"
+                                            style="border: 2px solid #8B0000; border-radius: 25px; padding: 15px 25px; font-size: 1.1rem;"
+                                            placeholder="Buscar equipos, incidencias, componentes..."
+                                            autocomplete="off">
+                                        <div id="searchResults" class="dropdown-menu p-0 m-0" 
+                                            style="width: 100%; border: 2px solid #8B0000; border-top: none; border-radius: 0 0 25px 25px;">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {%endblock%}
                         {%block notification%}
-                        <ul class="navbar-nav header-right">
+                        <ul class="navbar-nav ml-auto d-flex flex-row align-items-center">
                             <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                <a class="nav-link py-0 px-3" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
                                     {% if pendientes %}
                                         <div class="pulse-css"></div>
@@ -107,9 +121,9 @@
         </div>
         {%endblock%}
         {%block sidebar%}
-        <div class="quixnav">
+        <div class="quixnav" style="background:rgb(167, 26, 26); 
+                        border-right: 1px solid #660000;">
             <div class="quixnav-scroll">
-                
                 <ul class="metismenu" id="menu">
                     <!-- Menú Principal -->        
                     <li class="nav-label first">Utilidades</li>   
@@ -258,19 +272,22 @@
         {%block content%}
         <div class="content-body">
         <div class="container-fluid">
-                {%block welcome%}
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
+                {% block welcome %}
+                <div class="row page-titles mx-0 align-items-center">
+                    <div class="col-sm-8 p-md-0">
                         <div class="welcome-text">
-                            <h4>Hi, welcome back!</h4>
-                            <p class="mb-0">Your business dashboard template</p>
+                            <h2 style="color: red;">Plataforma InvHardW, Sancti Spíritus-Cimex</h2>
+                            <p class="mb-0" style="color: darkred; font-size: 1.2rem;">Sistema Integral para Control de Activos y Operaciones Técnicas</p>
+                            <p class="mb-0 text-sm" style="color: red; font-size: 1.1rem;">
+                                Monitorización en tiempo real de equipos informáticos | 
+                                Gestión centralizada de incidencias | 
+                                Histórico digitalizado de mantenimientos | 
+                                Control de ciclo de vida del hardware
+                            </p>
                         </div>
                     </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Layout</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Blank</a></li>
-                        </ol>
+                    <div class="col-sm-4 text-right">
+                        <img src="{% static 'images/logo.png' %}" alt="Logo" style="max-height: 300px;"/> <!-- Ajusta la ruta y el tamaño según sea necesario -->
                     </div>
                 </div>
                 {%endblock%}
@@ -598,9 +615,10 @@
                 </div>
             {%endblock%}
             {%block footer%}
-            <div class="footer">
+            <div class="footer" style="background:rgb(243, 3, 3);
+                            border-top: 2px solid #660000;">
                 <div class="copyright">
-                    <p>Copyright &copy; Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+                    <p>Copyright &copy; Diseñada &amp; Desarrollada por <a href="#" target="_blank">SS-CIMEX</a> 2025</p>
                 </div>
             {%endblock%}
 
@@ -615,81 +633,140 @@
     <script src="{% static 'vendor/pg-calendar/js/pignose.calendar.min.js' %}"></script>
 
     <script src="{% static 'js/dashboard/dashboard-2.js' %}"></script>
-<script>
-    $(document).ready(function() {
-        let searchTimer;
-        
-        $('#searchInput').on('input', function() {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => {
-                const query = $(this).val().trim();
-                
-                if (query.length > 2) {
-                    $.ajax({
-                        url: "{% url 'buscar' %}",
-                        data: { 'q': query },
-                        beforeSend: function() {
-                            $('#searchResults').html('<div class="dropdown-item">Cargando...</div>');
-                        },
-                        success: function(data) {
-                            const results = $('#searchResults');
-                            results.empty();
-                            
-                            // Mostrar categorías con resultados
-                            const categories = {
-                                pcs: 'Equipos',
-                                incidencias: 'Incidencias',
-                                componentes: 'Componentes',
-                                entidades: 'Entidades',
-                                pendientes: 'Pendientes'
-                            };
-                            
-                            Object.entries(categories).forEach(([key, title]) => {
-                                // Verificar si existe la categoría y si tiene resultados
-                                if (data.results?.[key] && data.results[key].length > 0) {
-                                    results.append(`<h6 class="dropdown-header">${title}</h6>`);
-                                    data.results[key].forEach(item => {
-                                        results.append(`
-                                            <a class="dropdown-item d-flex align-items-center" href="${item.url}">
-                                                <i class="${item.icon} mr-2"></i>
-                                                <div>
-                                                    <div class="small">${item.subtitle}</div>
-                                                    <span>${item.title}</span>
-                                                </div>
-                                            </a>
-                                        `);
-                                    });
+    <script>
+        $(document).ready(function() {
+            let searchTimer;
+            
+            $('#searchInput').on('input', function() {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(() => {
+                    const query = $(this).val().trim();
+                    
+                    if (query.length > 2) {
+                        $.ajax({
+                            url: "{% url 'buscar' %}",
+                            data: { 'q': query },
+                            beforeSend: function() {
+                                $('#searchResults').html('<div class="dropdown-item">Cargando...</div>');
+                            },
+                            success: function(data) {
+                                const results = $('#searchResults');
+                                results.empty();
+                                
+                                // Mostrar categorías con resultados
+                                const categories = {
+                                    pcs: 'Equipos',
+                                    incidencias: 'Incidencias',
+                                    componentes: 'Componentes',
+                                    entidades: 'Entidades',
+                                    pendientes: 'Pendientes'
+                                };
+                                
+                                Object.entries(categories).forEach(([key, title]) => {
+                                    // Verificar si existe la categoría y si tiene resultados
+                                    if (data.results?.[key] && data.results[key].length > 0) {
+                                        results.append(`<h6 class="dropdown-header">${title}</h6>`);
+                                        data.results[key].forEach(item => {
+                                            results.append(`
+                                                <a class="dropdown-item d-flex align-items-center" href="${item.url}">
+                                                    <i class="${item.icon} mr-2"></i>
+                                                    <div>
+                                                        <div class="small">${item.subtitle}</div>
+                                                        <span>${item.title}</span>
+                                                    </div>
+                                                </a>
+                                            `);
+                                        });
+                                    }
+                                });
+                                
+                                if (results.children().length === 0) {
+                                    results.html('<div class="dropdown-item">No se encontraron resultados</div>');
+                                } else {
+                                    results.show();
                                 }
-                            });
-                            
-                            if (results.children().length === 0) {
-                                results.html('<div class="dropdown-item">No se encontraron resultados</div>');
-                            } else {
-                                results.show();
+                            },
+                            error: function(xhr, status, error) {
+                                $('#searchResults').html(`
+                                    <div class="dropdown-item">
+                                        Error en la búsqueda: ${error}
+                                    </div>
+                                `);
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            $('#searchResults').html(`
-                                <div class="dropdown-item">
-                                    Error en la búsqueda: ${error}
-                                </div>
-                            `);
-                        }
-                    });
+                        });
+                    }
+                }, 300); // Delay de 300ms para evitar múltiples requests
+            });
+            
+            // Ocultar resultados al hacer clic fuera
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.search_bar').length) {
+                    $('#searchResults').hide();
                 }
-            }, 300); // Delay de 300ms para evitar múltiples requests
+            });
         });
-        
-        // Ocultar resultados al hacer clic fuera
-        $(document).on('click', function(e) {
-            if (!$(e.target).closest('.search_bar').length) {
-                $('#searchResults').hide();
-            }
-        });
-    });
 
-</script>
+    </script>
+    <style>
         
+        .table thead th {
+            background: #B22222 !important;
+            color: white !important;
+        }
+
+        .card {
+            border: 1px solid #8B0000 !important;
+        }
+
+        .pulse-css {
+            background: #FF0000 !important; 
+        }
+        .nav-header {
+            background:rgb(167, 26, 26) 
+        }
+
+        .dropdown-menu {
+            border: 1px solid #8B0000 !important;
+        }
+
+        .btn-primary {
+            background: #8B0000 !important;
+            border-color: #660000 !important;
+        }
+
+        .btn-primary:hover {
+            background: #B22222 !important;
+        }
+
+        .card-header {
+            background: #B22222 !important;
+            color: white !important;
+        }
+        .card-title {
+            background: #B22222 !important;
+            color: white !important;
+        }
+
+        .timeline-badge {
+            background: #8B0000 !important;
+        }
+        .metismenu .nav-text,
+        .metismenu .icon {
+            color: #FFFFFF !important; 
+        }
+
+        .metismenu a:hover,
+        .metismenu a:focus,
+        .metismenu .mm-active > a {
+            background: #B22222 !important; 
+            color: #FFFFFF !important;
+        }
+
+        /* Submenu */
+        .metismenu .mm-collapse {
+            background: #A52A2A !important; 
+        }
+    </style>
 </body>
 
 </html>
