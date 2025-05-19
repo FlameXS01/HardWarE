@@ -564,9 +564,13 @@ MAPEO_ENTIDADES = {
     'SSP': ('Complejo Sancti Spiritus', 'Complejo '),
     
     'CAB': ('Complejo Cabaiguan', 'Complejo'),
+    'FOM': ('Complejo Cabaiguan', 'Complejo'),
+    'YAG': ('Complejo Cabaiguan', 'Complejo'),
     
     'TAG': ('Complejo Taguasco', 'Complejo'),
+    'ZAZ': ('Complejo Taguasco', 'Complejo'),
     'JAT': ('Complejo Taguasco', 'Complejo'),
+    'SIE': ('Complejo Taguasco', 'Complejo'),
     
     'TRI': ('Complejo Trinidad', 'Complejo'),
     

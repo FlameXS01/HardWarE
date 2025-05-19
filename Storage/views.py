@@ -634,15 +634,13 @@ def expediente_pc(request, id_pc):
         # Componentes del chasis
         context['almacenamientos'] = Almacenamiento.objects.filter(id_chasis=context['chasis'])
         context['ranuras'] = Ranura_Expansion.objects.filter(id_chasis=context['chasis'])
-        context['fuente'] = Fuente.objects.get(id_chasis=context['chasis'])
+        context['fuente'] = Fuente.objects.filter(id_chasis=context['chasis'])
         context['lector'] = Lector.objects.get(id_chasis=context['chasis'])
         
         # Componentes adicionales
         context['perifericos'] = pc.perifericos_set.all()
-        
     except ObjectDoesNotExist as e:
         context['error'] = f"Componente faltante: {str(e)}"
-    
     return render(request, 'Expediente/expediente_pc.html', context)
 def list_Ueb_exp(request): 
     # Obtener todas las entidades de tipo UEB

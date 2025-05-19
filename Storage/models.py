@@ -41,7 +41,7 @@ class Lector(models.Model):
     id_chasis = models.OneToOneField(Chasis, null = False, blank = False, on_delete = models.CASCADE)
     
     def __str__(self):
-        return self.id_chasis
+        return str(self.id_chasis)
 
 class Ranura_Expansion(models.Model):
     id_ranuras_expansion = models.BigAutoField(primary_key=True)

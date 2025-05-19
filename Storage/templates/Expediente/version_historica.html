@@ -127,11 +127,11 @@
             margin-bottom: 15px;
             border-radius: 4px;
         }
+        {% load static %}
     </style>
-
 </head>
 <body>
-    <img src="/media/logo_empresa.png" class="logo-empresa">
+    <img src="{% static 'images/logo.png' %}" class="logo-empresa">
     <div class="header">
         <h1>Versión histórica - {{ version.fecha_version|date:"d/m/Y H:i"}}</h1>
         <div class="version-info">
@@ -178,6 +178,18 @@
                 <td>{{ version.datos_json.componentes.procesador.desc_procesador }}</td>
                 <td>{{ version.datos_json.componentes.procesador.arq_procesador }}</td>
                 <td>{{ version.datos_json.componentes.procesador.velocidad_procesador }}</td>
+                
+            </tr>
+        </table>
+    </div>
+    <div class="seccion">
+        <h2>Lector</h2>
+        <table>
+            <tr>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td>{{ version.datos_json.componentes.lector.desc_lector}}-- {{version.datos_json.componentes.lector.desc_lector}}</td>
                 
             </tr>
         </table>

@@ -171,7 +171,8 @@
             {% endfor %}
         </table>
     </div>
-
+<h1>   aqui {{ lector }} -*5
+</h1>
     <!-- Almacenamiento Optimizado -->
     <div class="seccion">
         <h2>Almacenamiento</h2>
@@ -187,6 +188,17 @@
             {% empty %}
             <tr><td colspan="4" style="text-align: center;">Sin dispositivos</td></tr>
             {% endfor %}
+        </table>
+    </div>
+
+    <div class="seccion">
+        <h2>Lector</h2>
+        <table>
+            <tr class="seccion-header"><th colspan="4">Lector</th></tr>
+            <tr>
+                <th>Descripción:</th>
+                <td colspan="3">{{ lector.desc_lector }} --- {{lector.tipo_lector}}</td>
+            </tr>
         </table>
     </div>
 

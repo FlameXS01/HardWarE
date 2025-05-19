@@ -623,7 +623,8 @@
             {%endblock%}
 
 
-    <script src="{% static 'vendor/global/global.min.js' %}"></script>
+    
+            <script src="{% static 'vendor/global/global.min.js' %}"></script>
     <script src="{% static 'js/quixnav-init.js' %}"></script>
     <script src="{% static 'js/custom.min.js' %}"></script>
 
@@ -711,6 +712,16 @@
         
         .table thead th {
             background: #B22222 !important;
+            color: white !important;
+        }
+        .table tbody td {
+            color:rgb(255, 255, 255); /* Color gris oscuro para el texto */
+        }
+        .table tbody tr:hover {
+            background-color: rgba(4, 44, 245, 0.1); /* Color de fondo al pasar el mouse */
+        }
+        .table-responsive {
+            background:rgb(196, 55, 55) !important;
             color: white !important;
         }
 
