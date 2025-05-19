@@ -19,41 +19,47 @@
         }
 
         @media print {
-            .corporate-watermark {
-                display: none;
-            }
-            
-            .data-table {
-                border-collapse: collapse !important;
-                width: 100% !important;
-            }
-            
-            .table td, .table th {
-                background-color: transparent !important;
-                border-color: #000 !important;
-            }
-            
-            .badge {
-                border: 1px solid #000 !important;
-            }
-
-            /* Ocultar elementos durante la impresión */
-            .no-print {
-                display: none !important;
-            }
-
-            .footer-report {
-                display: none !important;
-            }
-
-            .btn {
-                display: none !important;
-            }
-
-            .card {
-                page-break-inside: avoid;
-            }
+        .table tbody td, .table tbody th {
+            color: #000 !important; /* Color negro para el texto */
+            background-color: transparent !important; /* Fondo transparente */
         }
+
+        .corporate-watermark {
+            display: none;
+        }
+        
+        .data-table {
+            border-collapse: collapse !important;
+            width: 100% !important;
+        }
+        
+        .table td, .table th {
+            background-color: transparent !important;
+            border-color: #000 !important;
+        }
+        
+        .badge {
+            border: 1px solid #000 !important;
+        }
+
+        /* Ocultar elementos durante la impresión */
+        .no-print {
+            display: none !important;
+        }
+
+        .footer-report {
+            display: none !important;
+        }
+
+        .btn {
+            display: none !important;
+        }
+
+        .card {
+            page-break-inside: avoid;
+        }
+    }
+
 
         
 
@@ -88,14 +94,15 @@
             color: white !important;
         }
         .table tbody td {
-            background:rgb(159, 58, 58) !important;
-            color:rgb(255, 255, 255); /* Color gris oscuro para el texto */
+            background:rgb(139, 43, 43) !important;
+            color:rgb(255, 255, 255) !important; 
         }
-        
-        .table-responsive {
-            background:rgb(196, 55, 55) !important;
-            color: white !important;
+        .badge.badge-primary.badge-pill.px-3.py-2.text-dark {
+            background-color: #FFD966 !important; 
+            color:rgb(2, 0, 0) !important; 
+            border: 1px solidrgb(178, 53, 0) !important; /
         }
+
 
         .card {
             border: 1px solid #8B0000 !important;
